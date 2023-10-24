@@ -14,13 +14,13 @@ const Footer = () => {
         <div className="flex flex-row justify-between pt-16 pb-8 ">
 
             <FooterList>
-                <h3 className="text-base font-bold mb-2">
+                <h3 className="font-bold mb-2 text-sm">
                     Need Help?</h3>
                     <Link href='#'> Chat with Us</Link>
                     <Link href='#'> Help Center</Link>
                     <Link href='#'> Contact Us</Link>
 
-                    <h3 className="text-base font-bold mb-2 mt-2">
+                    <h3 className="text-sm font-bold mb-2 mt-2">
                     USEFUL LINKS</h3>
                     <Link href='#'>Track Your Order </Link>
                     <Link href='#'>Shipping and delivery</Link>
@@ -34,7 +34,7 @@ const Footer = () => {
                     
             </FooterList>
             <FooterList>
-                <h3 className="text-base font-bold mb-2">
+                <h3 className="text-sm font-bold mb-2">
                     About Nova</h3>
                     <Link href='#'> About us</Link>
                     <Link href='#'> Returns and Refunds Policy</Link>
@@ -50,7 +50,7 @@ const Footer = () => {
             </FooterList>
 
             <FooterList>
-                <h3 className="text-base font-bold mb-2">
+                <h3 className="text-sm font-bold mb-2">
                     Make Money with Nova</h3>
                     <Link href='#'> Sell on Nova</Link>
                     <Link href='#'> Vendor Hub</Link>
@@ -62,7 +62,7 @@ const Footer = () => {
             </FooterList>
            
             <FooterListCol>
-  <h3 className="text-base font-bold mb-2">NOVA INTERNATIONAL</h3>
+  <h3 className="text-sm font-bold mb-2">NOVA INTERNATIONAL</h3>
   <div className="flex flex-wrap">
     <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
       <Link href='#'>Algeria</Link>
@@ -100,7 +100,7 @@ const Footer = () => {
         <div className="flex flex-row  justify-between   pt-0 pb-8 ">
          
             <FooterList >
-            <h3 className="text-base font-bold mb-2">
+            <h3 className="text-sm font-bold mb-2">
                     Join Us</h3>
                     <div className="flex gap-3">
                     <Link href='#'>
@@ -122,7 +122,7 @@ const Footer = () => {
 
 
             <FooterList>
-            <h3 className="text-base font-bold mb-2">
+            <h3 className="text-sm font-bold mb-2">
                     Payment Methods</h3>
                     <div className="flex gap-3">
                     <Link href='#'>
@@ -158,7 +158,83 @@ const Footer = () => {
             
         </div>
      
-       
+
+        <div className="flex flex-row  justify-between   pt-0 pb-8 ">
+        <FooterList>
+                    <Link href='#'> Adidas</Link>
+                    <Link href='#'> AILYONS</Link>
+                    <Link href='#'> Apple</Link>
+                    <Link href='#'> Asus</Link>
+                    <Link href='#'> Bruhm</Link>
+                    <Link href='#'> Canon</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> Cantu</Link>
+                    <Link href='#'> Coke</Link>
+                    <Link href='#'> Dell</Link>
+                    <Link href='#'> Dove</Link>
+                    <Link href='#'> Dr.Rashel</Link>
+                    
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> Epson</Link>
+                    <Link href='#'> Garnier</Link>
+                    <Link href='#'> Hisense</Link>
+                    <Link href='#'> HP</Link>
+                    <Link href='#'> Infinix</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> itel</Link>
+                    <Link href='#'> Jameson</Link>
+                    <Link href='#'> L Oréal Paris</Link>
+                    <Link href='#'> Lenovo</Link>
+                    <Link href='#'> Logitech</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> Maybeline</Link>
+                    <Link href='#'> Mika</Link>
+                    <Link href='#'> NIVEA</Link>
+                    <Link href='#'> Nunix</Link>
+                    <Link href='#'> Oppo</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> Ramtons</Link>
+                    <Link href='#'> Roch</Link>
+                    <Link href='#'> Samsung</Link>
+                    <Link href='#'> Sandisk</Link>
+                    <Link href='#'> Skyworth</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> Sony</Link>
+                    <Link href='#'> TCL</Link>
+                    <Link href='#'> Tecno</Link>
+                    <Link href='#'> Transcend</Link>
+                    <Link href='#'> Tusker</Link>
+            </FooterList>
+        <FooterList>
+                    <Link href='#'> USN</Link>
+                    <Link href='#'> Vision Plus</Link>
+                    <Link href='#'> Vitron</Link>
+                    <Link href='#'> VON</Link>
+                    <Link href='#'> XIAOMI</Link>
+            </FooterList>
+        </div>
+
+        <div className="border-b border-gray-300 my-1"></div>
+
+
+        <div className="flex flex-row justify-center pt-3 pb-8 gap-6 ">
+
+        <Link href='#' style={{fontSize: "13px"}} className=" flex flex-row">
+                     <AiOutlineSlack size={23} /><span className="mt-1">Party</span>
+                    </Link>
+
+                    <Link href='#' style={{fontSize: "13px"}} className=" flex flex-row">
+                     <span className="mt-1">Nova</span><AiOutlineSlack size={23} /><span className="mt-1">Pay</span>
+                    </Link>
+        </div>
+
+
        </Container>
     </footer> );
 }
