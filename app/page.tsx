@@ -2,8 +2,8 @@
 
 export default function Home() {
   return (
-    <main>
+    <div>
       <div>Nova</div>
-    </main>
+    </div>
   )
 }
