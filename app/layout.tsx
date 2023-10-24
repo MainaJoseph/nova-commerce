@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import NavBar from './components/nav/NavBar'
 import Footer from './components/footer/Footer'
+import Navy from './components/navy/Navy'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '700'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <main className='flex-grow'>
         {children}
         </main>
+        <Navy />
         <Footer />
         </div>
         

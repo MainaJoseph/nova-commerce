@@ -9,7 +9,7 @@ import {FiFacebook} from "react-icons/fi"
 import {AiFillInstagram, AiFillYoutube, AiOutlineSlack} from "react-icons/ai"
 
 const Footer = () => {
-    return ( <footer className="bg-slate-700 text-slate-200 text-xs mt-16" style={{ fontSize: '11px' }}>
+    return ( <footer className="bg-slate-700 text-slate-200 text-xs mt-0" style={{ fontSize: '11px' }}>
        <Container>
         <div className="flex flex-row justify-between pt-16 pb-8 ">
 
