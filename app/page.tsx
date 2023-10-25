@@ -1,13 +1,16 @@
-import Container from "./components/Container";
-import HomeBanner from "./components/HomeBanner";
+import React from 'react';
+import Container from './components/Container';
+import Carousel from './components/banners/Carousel';
+
+
 
 
 export default function Home() {
   return (
     <div className="p-8">
       <Container>
-        <HomeBanner />
+        <Carousel />
       </Container>
     </div>
-  )
+  );
 }
