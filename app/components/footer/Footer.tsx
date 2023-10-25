@@ -58,7 +58,7 @@ const Footer = () => {
                     <Link href='#'className="hover:underline"> Become a Logistics Service Partner</Link>
                     <Link href='#'className="hover:underline"> Nova City Partner Program</Link>
 
-                    <p className="mt-4 hover:text-orange-500">&copy; {new Date().getFullYear()} Nova. All rights reserved</p>
+                    <p className="mt-4 hover:text-orange-500 sm:hidden md:block">&copy; {new Date().getFullYear()} Nova. All rights reserved</p>
             </FooterList>
            
             <FooterListCol>
@@ -149,6 +149,7 @@ const Footer = () => {
             </FooterList>
             <FooterList>
                     <div className="flex gap-2">
+                    <p className="mt-4 hover:text-orange-500 md:hidden">&copy; {new Date().getFullYear()} Nova. All rights reserved</p>
                     </div>
             </FooterList>
 
