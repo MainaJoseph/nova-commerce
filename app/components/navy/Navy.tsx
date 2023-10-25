@@ -1,6 +1,6 @@
 import Container from "../Container";
 import NavyList from "./NavyList";
-import {FcDoughnutChart} from "react-icons/fc"
+import {FcEngineering} from "react-icons/fc"
 import {FaGooglePlay} from "react-icons/fa"
 import {AiOutlineApple} from "react-icons/ai"
 import Link from "next/link";
@@ -16,7 +16,7 @@ const Navy = () => {
         <div className="flex flex-row sm:justify-betweem md:justify-evenly pt-4 pb-0 ">
             <div className="hidden md:block">
             <NavyList>
-            <Link  href='/' className={`${redressed.className} font-bold text-3xl flex flex-row`}>Nova<span className="mt-2"><FcDoughnutChart size={24} /></span></Link> 
+            <Link  href='/' className={`${redressed.className} font-bold text-3xl flex flex-row`}>Nova<span className="mt-2"><FcEngineering size={24} /></span></Link> 
             </NavyList>
             </div>
            
@@ -53,7 +53,7 @@ const Navy = () => {
   <div className="flex flex-row">
 
     <Link href='/' className={`${redressed.className} `}>
-      <FcDoughnutChart size={60} />
+      <FcEngineering size={60} />
     </Link>
 
 
