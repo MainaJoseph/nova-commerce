@@ -13,7 +13,7 @@ const redressed = Redressed({subsets: ['latin'], weight: ['400']})
 const Navy = () => {
     return ( <div className="bg-gray-600 text-white mt-16">
         <Container>
-        <div className="flex flex-row sm:justify-betweem md:justify-evenly pt-4 pb-8 ">
+        <div className="flex flex-row sm:justify-betweem md:justify-evenly pt-4 pb-0 ">
             <div className="hidden md:block">
             <NavyList>
             <Link  href='/' className={`${redressed.className} font-bold text-3xl flex flex-row`}>Nova<span className="mt-2"><FcDoughnutChart size={24} /></span></Link> 
@@ -27,16 +27,20 @@ const Navy = () => {
     New to Nova?
   </h3>
   <p style={{ fontSize: '11px' }}>Subscribe</p>
-  <div className="flex flex-col sm:flex-row gap-2">
+  <div className="flex flex-col  gap-2">
     <EmailInput />
-    <button className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 text-sm ">
+    <div className="flex flex-col lg:flex-row gap-2 sm:py-2">
+    <button className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 text-sm h-9 w-19 ">
       MALE
     </button>
-    <button className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 text-sm ">
+    <button className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 text-sm h-9 w-19 ">
       FEMALE
     </button>
+    </div>
+    
   </div>
 </NavyList>
+
 
 
 
