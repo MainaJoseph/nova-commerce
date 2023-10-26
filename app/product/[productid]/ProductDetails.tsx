@@ -1,16 +1,45 @@
 "use client";
 
+import React, { useState } from "react";
 import { Rating } from "@mui/material";
 
-interface productDetailsProps {
+interface ProductDetailsProps {
   product: any;
 }
 
+export interface CartProductType {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  brand: string;
+  selectedImg: SelectedImgType;
+  quantity: number;
+  price: number;
+}
+
+export interface SelectedImgType {
+  color: string;
+  colorCode: string;
+  image: string;
+}
+
 const Horizontal = () => {
-  return <hr className="w-[30%] my-2 " />;
+  return <hr className="w-[30%] my-2" />;
 };
 
-const productDetails: React.FC<productDetailsProps> = ({ product }) => {
+const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
+  const [cartProduct, setCartProduct] = useState<CartProductType>({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    category: product.category,
+    brand: product.brand,
+    selectedImg: { ...product.images[0] },
+    quantity: 1,
+    price: product.price,
+  });
+
   const productRating =
     product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
     product.reviews.length;
@@ -19,7 +48,7 @@ const productDetails: React.FC<productDetailsProps> = ({ product }) => {
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12">
       <div>Images</div>
       <div className="flex flex-col gap-1 text-slate-500 text-sm">
-        <h2 className="text-3xl font-medium text-slate-700 ">{product.name}</h2>
+        <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
         <div className="flex items-center gap-2">
           <Rating value={productRating} readOnly />
           <div>{product.reviews.length} Reviews</div>
@@ -39,12 +68,12 @@ const productDetails: React.FC<productDetailsProps> = ({ product }) => {
         <Horizontal />
         <div>Quantity</div>
         <Horizontal />
-        <div>color</div>
+        <div>Color</div>
         <Horizontal />
-        <div>add to cart</div>
+        <div>Add to Cart</div>
       </div>
     </div>
   );
 };
 
-export default productDetails;
+export default ProductDetails;
