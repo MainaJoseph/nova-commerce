@@ -1,5 +1,7 @@
 "use client";
 
+import { FormatPrice } from "@/utils/FormatPrice";
+import { TruncateText } from "@/utils/TruncateText";
 import Image from "next/image";
 
 interface ProductCardProps {
@@ -19,10 +21,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
             height={400}
           />
         </div>
+        <div className="mt-4">{TruncateText(data.name)}</div>
         <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div>{data.reviews.length} reviews</div>
+        <div>{FormatPrice(data.price)}</div>
       </div>
     </div>
   );
