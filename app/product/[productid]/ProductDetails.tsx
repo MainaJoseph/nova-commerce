@@ -55,10 +55,14 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   }, []);
 
   const handleQtyIncrease = useCallback(() => {
+    if (cartProduct.quantity === 25) {
+      return;
+    }
+
     setCartProduct((prev) => {
       return { ...prev, quantity: prev.quantity + 1 };
     });
-  }, []);
+  }, [cartProduct]);
 
   const handleQtyDecrease = useCallback(() => {
     if (cartProduct.quantity === 1) {
