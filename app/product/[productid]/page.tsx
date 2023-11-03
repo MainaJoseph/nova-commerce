@@ -4,6 +4,7 @@ import ProductDetails from "./ProductDetails"; // Corrected the import statement
 import { singleProduct } from "@/utils/singleProduct";
 
 import productDetails from "./ProductDetails";
+import ListRating from "./ListRating";
 
 interface IParams {
   productid?: string;
@@ -19,7 +20,7 @@ const Product = ({ params }: { params: IParams }) => {
         <ProductDetails product={product} />
         <div className="flex flex-col mt-20 gap-4">
           <div>Add Rating</div>
-          <div>List Of Rating</div>
+          <ListRating product={product} />
         </div>
       </Container>
     </div>
