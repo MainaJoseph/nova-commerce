@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from "react";
 import { Rating } from "@mui/material";
 import SetColor from "@/app/components/products/SetColor";
-import SetQuantity from "@/app/components/products/setQuantity";
+import SetQuantity from "@/app/components/products/SetQuantity";
 import Button from "@/app/components/Button";
 
 interface ProductDetailsProps {
@@ -110,7 +110,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           handleQtyDecrease={handleQtyDecrease}
         />
         <Horizontal />
-        <div>
+        <div className="max-w-[300px]">
           <Button label="Add To Cart" onClick={() => {}} />
         </div>
       </div>
