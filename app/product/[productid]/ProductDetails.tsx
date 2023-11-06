@@ -6,6 +6,7 @@ import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import Button from "@/app/components/Button";
 import ProductImage from "@/app/components/products/ProductImage";
+import { useCart } from "@/hooks/useCart";
 
 interface ProductDetailsProps {
   product: any;
@@ -43,8 +44,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     quantity: 1,
     price: product.price,
   });
-
-  console.log(cartProduct);
 
   const productRating =
     product.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
