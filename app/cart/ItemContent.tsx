@@ -46,7 +46,9 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
           handleQtyDecrease={() => {}}
         />
       </div>
-      <div className="justify-self-end"></div>
+      <div className="justify-self-end font-semibold">
+        {FormatPrice(item.price * item.quantity)}
+      </div>
     </div>
   );
 };
