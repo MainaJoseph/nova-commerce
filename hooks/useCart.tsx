@@ -30,6 +30,8 @@ export const CartContextProvider = (props: Props) => {
         updatedCart = [product];
       }
 
+      localStorage.setItem("novaItems", JSON.stringify(updatedCart));
+
       return updatedCart;
     });
   }, []);
