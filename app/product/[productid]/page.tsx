@@ -2,8 +2,6 @@ import React from "react";
 import Container from "@/app/components/Container";
 import ProductDetails from "./ProductDetails"; // Corrected the import statement
 import { singleProduct } from "@/utils/singleProduct";
-
-import productDetails from "./ProductDetails";
 import ListRating from "./ListRating";
 
 interface IParams {
