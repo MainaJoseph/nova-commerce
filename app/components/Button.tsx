@@ -5,6 +5,7 @@ interface ButtonProps {
   label: string;
   disabled?: boolean;
   outline?: boolean;
+  clear?: boolean;
   small?: boolean;
   custom?: string;
   icon?: React.ElementType; // Use React.ElementType for the icon prop
@@ -15,6 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   label,
   disabled,
   outline,
+  clear,
   small,
   custom,
   icon,
@@ -36,6 +38,7 @@ const Button: React.FC<ButtonProps> = ({
     items-center
     justify-center
     gap-2
+    ${clear ? "bg-rose-500" : "bg-orange-500"}
     ${outline ? "bg-orange-500" : "bg-orange-500"}
     ${outline ? "border-slate-500" : "border-orange-500"}
     ${outline ? "text-white" : "text-white"}

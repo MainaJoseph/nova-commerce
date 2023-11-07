@@ -42,8 +42,8 @@ const CartClient = () => {
           })}
       </div>
       <div>
-        <div className="w-[90px]">
-          <Button label="Clear Cart" onClick={() => {}} small outline />
+        <div className="w-[90px] ">
+          <Button label="Clear Cart" onClick={() => {}} small clear />
         </div>
       </div>
     </div>
