@@ -8,6 +8,8 @@ import {
   useState,
 } from "react";
 
+import { toast } from "react-toastify";
+
 type cartContextType = {
   cartTotalQty: number;
   cartProducts: CartProductType[] | null;
@@ -26,6 +28,8 @@ export const CartContextProvider = (props: Props) => {
     null
   );
 
+  const [isToastVisible, setIsToastVisible] = useState(false);
+
   useEffect(() => {
     const cartItems: any = localStorage.getItem("novaItems");
     const cProducts: CartProductType[] | null = JSON.parse(cartItems);
@@ -42,6 +46,8 @@ export const CartContextProvider = (props: Props) => {
       } else {
         updatedCart = [product];
       }
+
+      toast.success("Product Added to cart 👌");
 
       localStorage.setItem("novaItems", JSON.stringify(updatedCart));
 
