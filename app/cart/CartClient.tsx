@@ -41,9 +41,26 @@ const CartClient = () => {
             return <div key={item.id}>{item.name}</div>;
           })}
       </div>
-      <div>
+      <div className="border-t-[1.5px] border-slate-300 py-4 flex justify-between gap-4">
         <div className="w-[90px] ">
           <Button label="Clear Cart" onClick={() => {}} small clear />
+        </div>
+        <div className="text-sm flex flex-col gap-1 items-start">
+          <div className="flex justify-between w-full texxt-base font-semibold">
+            <span>Subtotals</span>
+            <span>Ksh 4000</span>
+          </div>
+          <p className="text-slate-500">
+            Taxes and Shipping Calculated at checkout
+          </p>
+          <Button label="Check Out" onClick={() => {}} />
+          <Link
+            href={"/"}
+            className="text-orange-500 flex items-center gap-1mt-2"
+          >
+            <MdArrowBack size={40} />
+            <span className="text-slate-500">Continue Shopping</span>
+          </Link>
         </div>
       </div>
     </div>
