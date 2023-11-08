@@ -125,7 +125,7 @@ export const CartContextProvider = (props: Props) => {
     setCartProducts(null);
     setCartTotalQty(0);
     localStorage.setItem("novaItems", JSON.stringify(null));
-  }, [cartProducts]);
+  }, []);
 
   const value = {
     cartTotalQty,
