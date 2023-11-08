@@ -10,18 +10,21 @@ const CartCount = () => {
 
   return (
     <div
-      className="relative cursor-pointer"
+      className="flex gap-3 font-bold items-center"
       onClick={() => router.push("/cart")}
     >
-      <div className="text-3xl">
-        <BsCart4 />
-      </div>
-      <span
-        className="absolute top-[-10px] right-[-10px] bg-orange-500 text-white h-6 w-6 rounded-full
+      <div className="relative cursor-pointer">
+        <div className="text-3xl">
+          <BsCart4 />
+        </div>
+        <span
+          className="absolute top-[-10px] right-[-10px] bg-orange-500 text-white h-6 w-6 rounded-full
       flex items-center justify-center text-sm"
-      >
-        {cartTotalQty}
-      </span>
+        >
+          {cartTotalQty}
+        </span>
+      </div>
+      <span className="cursor-pointer">Cart</span>
     </div>
   );
 };
