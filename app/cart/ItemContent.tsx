@@ -63,7 +63,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
           }}
         />
       </div>
-      <div className="justify-self-end font-semibold0">
+      <div className="justify-self-end font-semibold">
         {FormatPrice(item.price * item.quantity)}
       </div>
     </div>
