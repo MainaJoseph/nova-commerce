@@ -1,15 +1,15 @@
 import React from "react";
 import Container from "@/app/components/Container";
 import ProductDetails from "./ProductDetails"; // Corrected the import statement
-import { singleProduct } from "@/utils/singleProduct";
 import ListRating from "./ListRating";
+import { products } from "@/utils/product";
 
 interface IParams {
   productid?: string;
 }
 
 const Product = ({ params }: { params: IParams }) => {
-  const product = singleProduct; // Use the imported singleProduct
+  const product = products.find((item) => item.id === params.productid);
   console.log("params", params);
 
   return (
