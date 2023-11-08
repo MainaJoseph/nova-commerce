@@ -1,4 +1,5 @@
 import { CartProductType } from "@/app/product/[productid]/ProductDetails";
+import { it } from "node:test";
 import { type } from "os";
 import {
   createContext,
@@ -31,6 +32,10 @@ export const CartContextProvider = (props: Props) => {
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
     null
   );
+  const [cartTotalAmount, setCartTotalAmount] = useState(0);
+
+  console.log("qty", cartTotalQty);
+  console.log("amount", cartTotalAmount);
 
   const [isToastVisible, setIsToastVisible] = useState(false);
 
@@ -40,6 +45,28 @@ export const CartContextProvider = (props: Props) => {
 
     setCartProducts(cProducts);
   }, []);
+
+  useEffect(() => {
+    const getTotals = () => {
+      if (cartProducts) {
+        const { total, qty } = cartProducts?.reduce(
+          (acc, item) => {
+            const itemTotal = item.price * item.quantity;
+
+            acc.total += itemTotal;
+            acc.qty += item.quantity;
+
+            return acc;
+          },
+          { total: 0, qty: 0 }
+        );
+        setCartTotalQty(qty);
+        setCartTotalAmount(total);
+      }
+    };
+
+    const totals = getTotals();
+  }, [cartProducts]);
 
   const handleAddProductToCart = useCallback((product: CartProductType) => {
     setCartProducts((prev) => {
@@ -124,6 +151,7 @@ export const CartContextProvider = (props: Props) => {
   const handleClearCart = useCallback(() => {
     setCartProducts(null);
     setCartTotalQty(0);
+    toast.warning("Cart Cleared");
     localStorage.setItem("novaItems", JSON.stringify(null));
   }, []);
 
