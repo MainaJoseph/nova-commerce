@@ -9,6 +9,7 @@ import ProductImage from "@/app/components/products/ProductImage";
 import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 interface ProductDetailsProps {
   product: any;
@@ -78,7 +79,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
   const handleQtyIncrease = useCallback(() => {
     if (cartProduct.quantity === 25) {
-      return;
+      return toast.error("OPPS Maximum reached");
     }
 
     setCartProduct((prev) => {
@@ -88,7 +89,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
   const handleQtyDecrease = useCallback(() => {
     if (cartProduct.quantity === 1) {
-      return;
+      return toast.error("OPPS Minimum reached");
     }
 
     setCartProduct((prev) => {
