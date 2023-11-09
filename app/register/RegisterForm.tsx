@@ -5,6 +5,8 @@ import Heading from "../components/Heading";
 import Input from "../components/input/Input";
 import { useState } from "react";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
+import Button from "../components/Button";
+import Link from "next/link";
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,10 @@ const RegisterForm = () => {
       password: "",
     },
   });
+
+  const onsubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+  };
 
   return (
     <div className="space-y-4 w-full">
@@ -56,6 +62,16 @@ const RegisterForm = () => {
         required
         type="password"
       />
+      <Button
+        label={isLoading ? "Loading" : "SignUp"}
+        onClick={handleSubmit(onsubmit)}
+      />
+      <p className="text-sm">
+        Already Have an Acccount?{" "}
+        <Link className="underline text-orange-500" href="/login">
+          Login
+        </Link>
+      </p>
     </div>
   );
 };
