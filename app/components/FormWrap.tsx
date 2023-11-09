@@ -19,7 +19,7 @@ const FormWrap = ({ children }: { children: React.ReactNode }) => {
       g-6
       items-center
       shadow-xl
-      shadow-slate-200
+      shadow-slate-400
       rounded-md
       p-4
       md:p-8"
