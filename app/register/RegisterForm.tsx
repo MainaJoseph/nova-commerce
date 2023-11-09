@@ -2,12 +2,12 @@
 
 import Heading from "../components/Heading";
 
-const ResgisterForm = () => {
+const RegisterForm = () => {
   return (
     <>
       <Heading title="Sign Up For Nova" />
       <hr
-        className="bg-slate-300
+        className="bg-orange-300
       w-full
       h-px"
       />
@@ -15,4 +15,4 @@ const ResgisterForm = () => {
   );
 };
 
-export default ResgisterForm;
+export default RegisterForm;
