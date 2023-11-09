@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
+import { AiOutlineGooglePlus } from "react-icons/ai";
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,12 @@ const RegisterForm = () => {
         <Heading title="Sign Up For Nova" />
         <FcEngineering size={24} className="mt-2" />
       </div>
+      <Button
+        google
+        icon={AiOutlineGooglePlus}
+        label="SignUp with Google"
+        onClick={() => {}}
+      />
       <hr className="bg-orange-300 w-full h-px" />
       <Input
         id="name"
