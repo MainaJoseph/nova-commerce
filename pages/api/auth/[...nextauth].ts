@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/libs/prismadb";
-import { error } from "console";
+import bcrypt from "bcrypt";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -37,7 +37,26 @@ export default NextAuth({
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid Email or Password");
         }
+
+        const isCorrectPassword = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        );
+
+        if (!isCorrectPassword) {
+          throw new Error("Invalid Email or Password");
+        }
+
+        return user;
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
+  debug: process.env.NODE_ENV === "development",
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
