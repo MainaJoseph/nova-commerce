@@ -21,17 +21,16 @@ const RegisterForm = () => {
   });
 
   return (
-    <>
-      <div className="flex gap-1 items-center">
+    <div className="space-y-4 w-full">
+      {" "}
+      {/* Add a container with spacing */}
+      <div className="flex gap-4 items-center justify-center">
+        {" "}
+        {/* Add spacing to the heading and icon */}
         <Heading title="Sign Up For Nova" />
         <FcEngineering size={24} className="mt-2" />
       </div>
-
-      <hr
-        className="bg-orange-300
-      w-full
-      h-px"
-      />
+      <hr className="bg-orange-300 w-full h-px" />
       <Input
         id="name"
         label="Name"
@@ -40,7 +39,24 @@ const RegisterForm = () => {
         errors={errors}
         required
       />
-    </>
+      <Input
+        id="email"
+        label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="password"
+        label="Password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+        type="password"
+      />
+    </div>
   );
 };
 
