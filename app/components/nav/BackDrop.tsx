@@ -6,7 +6,7 @@ const BackDrop: React.FC<BackDropProps> = ({ onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="z-20 bg-slate-200 opacity-50 w-screen h-screen fixed t-0 left-0"
+      className="z-20 bg-slate-200 opacity-50 w-screen h-screen fixed top-0 right-0"
     ></div>
   );
 };
