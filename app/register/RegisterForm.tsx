@@ -11,7 +11,6 @@ import { AiOutlineGooglePlus } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
-import { ok } from "assert";
 import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
@@ -43,7 +42,7 @@ const RegisterForm = () => {
           redirect: false,
         }).then((callback) => {
           if (callback?.ok) {
-            router.push("/cart");
+            router.replace("/cart");
             router.refresh();
             toast.success("Logged In");
           }
