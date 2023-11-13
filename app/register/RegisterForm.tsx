@@ -3,7 +3,7 @@
 import { FcEngineering } from "react-icons/fc";
 import Heading from "../components/Heading";
 import Input from "../components/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
@@ -12,8 +12,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { SafeUser } from "@/types";
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  currentUser: SafeUser | null;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -28,6 +33,13 @@ const RegisterForm = () => {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/cart");
+      router.refresh();
+    }
+  }, [currentUser, router]);
 
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -58,6 +70,17 @@ const RegisterForm = () => {
         setIsLoading(false);
       });
   };
+
+  if (currentUser) {
+    return (
+      <p
+        className="text-center shadow-xs
+      shadow-slate-400"
+      >
+        Registered. Redirecting...
+      </p>
+    );
+  }
 
   return (
     <div className="space-y-4 w-full">
