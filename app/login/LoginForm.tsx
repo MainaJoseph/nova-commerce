@@ -11,8 +11,13 @@ import { AiOutlineGooglePlus } from "react-icons/ai";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { SafeUser } from "@/types";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  currentUser: SafeUser | null;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -45,6 +50,10 @@ const LoginForm = () => {
       }
     });
   };
+
+  if (currentUser) {
+    return <p className="text-center">Logged In. Redirecting...</p>;
+  }
 
   return (
     <div className="space-y-4 w-full">
