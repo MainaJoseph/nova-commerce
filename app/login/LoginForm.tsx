@@ -62,7 +62,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
     return (
       <p
         className="text-center shadow-xs
-      shadow-slate-400"
+      shadow-slate-400 font-semibold"
       >
         Logged In. Redirecting...
       </p>

@@ -75,9 +75,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
     return (
       <p
         className="text-center shadow-xs
-      shadow-slate-400"
+      shadow-slate-400 font-semibold"
       >
-        Registered. Redirecting...
+        Logged In. Redirecting...
       </p>
     );
   }
