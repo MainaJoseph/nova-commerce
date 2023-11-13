@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
       router.push("/cart");
       router.refresh();
     }
-  }, []);
+  }, [currentUser, router]);
 
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
