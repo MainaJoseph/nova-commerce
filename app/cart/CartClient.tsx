@@ -17,7 +17,7 @@ const CartClient = () => {
         <div className="border rounded-full bg-slate-200 text-slate-600 p-3">
           <MdRemoveShoppingCart size={90} />
         </div>
-        <div className="text-2xl mt-3 font-semibold">Your Cart is Empty</div>
+        <div className="text-2xl mt-3 font-semibold">Your Cart is Empty!</div>
         <p className="text-slate-400 text-md font-normal mt-4">
           Browse our categories and discover our best deals!
         </p>
