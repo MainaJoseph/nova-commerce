@@ -20,6 +20,8 @@ type cartContextType = {
   handleCartQtyIncrease: (product: CartProductType) => void;
   handleCartQtyDecrease: (product: CartProductType) => void;
   handleClearCart: () => void;
+  paymentIntent: string | null;
+  handleSetPaymentIntent: (val: string | null) => void;
 };
 
 export const CartContext = createContext<cartContextType | null>(null);
@@ -34,17 +36,18 @@ export const CartContextProvider = (props: Props) => {
     null
   );
   const [cartTotalAmount, setCartTotalAmount] = useState(0);
-
-  console.log("qty", cartTotalQty);
-  console.log("amount", cartTotalAmount);
+  const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
   const [isToastVisible, setIsToastVisible] = useState(false);
 
   useEffect(() => {
     const cartItems: any = localStorage.getItem("novaItems");
     const cProducts: CartProductType[] | null = JSON.parse(cartItems);
+    const novaPaymentIntent: any = localStorage.getItem("novaPaymentIntent");
+    const paymentIntent: string | null = JSON.parse(novaPaymentIntent);
 
     setCartProducts(cProducts);
+    setPaymentIntent(paymentIntent);
   }, []);
 
   useEffect(() => {
@@ -156,6 +159,11 @@ export const CartContextProvider = (props: Props) => {
     localStorage.setItem("novaItems", JSON.stringify(null));
   }, []);
 
+  const handleSetPaymentIntent = useCallback((val: string | null) => {
+    setPaymentIntent(val);
+    localStorage.setItem("novaPaymentIntent", JSON.stringify(val));
+  }, []);
+
   const value = {
     cartTotalQty,
     cartTotalAmount,
@@ -165,6 +173,8 @@ export const CartContextProvider = (props: Props) => {
     handleCartQtyIncrease,
     handleCartQtyDecrease,
     handleClearCart,
+    paymentIntent,
+    handleSetPaymentIntent,
   };
   return <CartContext.Provider value={value} {...props} />;
 };
