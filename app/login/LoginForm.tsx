@@ -3,7 +3,7 @@
 import { FcEngineering } from "react-icons/fc";
 import Heading from "../components/Heading";
 import Input from "../components/input/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Button from "../components/Button";
 import Link from "next/link";
@@ -32,6 +32,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/cart");
+      router.refresh();
+    }
+  }, []);
+
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     signIn("credentials", {
@@ -52,7 +59,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
   };
 
   if (currentUser) {
-    return <p className="text-center">Logged In. Redirecting...</p>;
+    return (
+      <p
+        className="text-center shadow-xs
+      shadow-slate-400"
+      >
+        Logged In. Redirecting...
+      </p>
+    );
   }
 
   return (
