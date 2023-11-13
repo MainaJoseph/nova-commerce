@@ -2,7 +2,7 @@
 
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdRemoveShoppingCart } from "react-icons/md";
 import Heading from "../components/Heading";
 import Button from "../components/Button";
 import ItemContent from "./ItemContent";
@@ -14,14 +14,17 @@ const CartClient = () => {
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center">
-        <div className="text-2xl">Your Cart is Empty</div>
-        <div>
-          <Link
-            href={"/"}
-            className="text-orange-500 flex items-center gap-1mt-2"
-          >
-            <MdArrowBack size={40} />
-            <span className="text-slate-500">Start Shopping</span>
+        <div className="border rounded-full bg-slate-200 text-slate-600 p-3">
+          <MdRemoveShoppingCart size={90} />
+        </div>
+        <div className="text-2xl mt-3 font-semibold">Your Cart is Empty</div>
+        <p className="text-slate-400 text-md font-normal mt-4">
+          Browse our categories and discover our best deals!
+        </p>
+        <div className="border bg-orange-500 px-3 py-2 rounded-md hover:bg-orange-300 mt-5">
+          <Link href={"/"} className="text-white flex items-center gap-1mt-2">
+            <MdArrowBack size={30} />
+            <span className="text-white">Start Shopping</span>
           </Link>
         </div>
       </div>
