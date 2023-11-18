@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Heading from "../components/Heading";
 import { FcEngineering } from "react-icons/fc";
+import Button from "../components/Button";
 
 interface CheckoutFormProps {
   clientSecret: string;
@@ -90,9 +91,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           layout: "tabs",
         }}
       />
-      <div className="py-4 text-center text-slate-700 text-3xl font-bold">
+      <div className="py-4 text-center text-slate-700 text-2xl font-bold">
         Total: {formattedPrice}
       </div>
+      <Button
+        label={isLoading ? "Processing" : "Pay Now"}
+        disabled={isLoading || !stripe || !elements}
+        onClick={() => {}}
+      />
     </form>
   );
 };
