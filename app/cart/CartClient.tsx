@@ -77,6 +77,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
             onClick={() => {
               currentUser ? router.push("/checkout") : router.push("/login");
             }}
+            google={currentUser ? false : true}
           />
           <Link
             href={"/"}

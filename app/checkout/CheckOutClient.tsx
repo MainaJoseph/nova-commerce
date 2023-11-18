@@ -85,7 +85,7 @@ const CheckOutClient = () => {
         </Elements>
       )}
       {loading && (
-        <div className="text-center font-semibold">Loadind Chechout...</div>
+        <div className="text-center font-semibold">Loading Chechout...</div>
       )}
 
       {error && (
