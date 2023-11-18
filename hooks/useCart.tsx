@@ -1,6 +1,4 @@
 import { CartProductType } from "@/app/product/[productid]/ProductDetails";
-import { it } from "node:test";
-import { type } from "os";
 import {
   createContext,
   useCallback,
@@ -159,10 +157,13 @@ export const CartContextProvider = (props: Props) => {
     localStorage.setItem("novaItems", JSON.stringify(null));
   }, []);
 
-  const handleSetPaymentIntent = useCallback((val: string | null) => {
-    setPaymentIntent(val);
-    localStorage.setItem("novaPaymentIntent", JSON.stringify(val));
-  }, []);
+  const handleSetPaymentIntent = useCallback(
+    (val: string | null) => {
+      setPaymentIntent(val);
+      localStorage.setItem("novaPaymentIntent", JSON.stringify(val));
+    },
+    [paymentIntent]
+  );
 
   const value = {
     cartTotalQty,

@@ -13,6 +13,9 @@ const CheckOutClient = () => {
 
   const router = useRouter();
 
+  console.log("Client Secret", clientSecret);
+  console.log("Payment Intent", paymentIntent);
+
   useEffect(() => {
     //Create a payment Intent as soon as the Page Loads
 
@@ -22,7 +25,7 @@ const CheckOutClient = () => {
 
       fetch("/api/create-payment-intent", {
         method: "POST",
-        headers: { "Content-Type": "application-json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: cartProducts,
           payment_intent_id: paymentIntent,
@@ -38,7 +41,7 @@ const CheckOutClient = () => {
           return res.json();
         })
         .then((data) => {
-          setClientSecret(data.paymentIntent.clientSecret);
+          setClientSecret(data.paymentIntent.client_secret);
           handleSetPaymentIntent(data.paymentIntent.id);
         })
         .catch((error) => {
