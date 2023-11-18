@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Heading from "../components/Heading";
+import { FcEngineering } from "react-icons/fc";
 
 interface CheckoutFormProps {
   clientSecret: string;
@@ -68,8 +69,11 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} id="payment-form">
-      <div className="mb-6 ">
-        <Heading title="Enter your details to complete Checkout" />
+      <div className="mb-6 flex gap-1">
+        <Heading title="Enter your details to complete Checkout" />{" "}
+        <span className="text-center mt-1 cursor-text">
+          <FcEngineering size={24} />
+        </span>
       </div>
       <h2 className="font-semibold mb-2">Address Information</h2>
       <AddressElement
@@ -86,6 +90,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           layout: "tabs",
         }}
       />
+      <div className="py-4 text-center text-slate-700 text-3xl font-bold">
+        Total: {formattedPrice}
+      </div>
     </form>
   );
 };
