@@ -52,3 +52,5 @@ export default async function handler(
 
   res.json({ received: true });
 }
+
+//use this    stripe listen --forward-to localhost:3000/api/stripe-webhook
