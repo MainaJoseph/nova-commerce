@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Sign In",
+  description: "Sign In to Nova",
+};
+
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../components/Container";
 import FormWrap from "../components/FormWrap";
