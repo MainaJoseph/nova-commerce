@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Cart",
+  description: "Nova Cart",
+};
+
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../components/Container";
 import CartClient from "./CartClient";
