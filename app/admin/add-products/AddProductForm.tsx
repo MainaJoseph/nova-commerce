@@ -6,9 +6,21 @@ import CustomCheckBox from "@/app/components/input/CustomCheckBox";
 import Input from "@/app/components/input/Input";
 import TextArea from "@/app/components/input/TextArea";
 import { Categories } from "@/utils/Categories";
+import { colors } from "@/utils/Colors";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { FcEngineering } from "react-icons/fc";
+
+export type ImageType = {
+  color: string;
+  colorCode: string;
+  image: File | null;
+};
+export type UploadedImageType = {
+  color: string;
+  colorCode: string;
+  image: string;
+};
 
 const AddProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -119,7 +131,11 @@ const AddProductForm = () => {
             your color selection will be ingnored
           </div>
         </div>
-        <div></div>
+        <div className="grid grid-cols-2 gap-3">
+          {colors.map((item, index) => {
+            return <></>;
+          })}
+        </div>
       </div>
     </>
   );
