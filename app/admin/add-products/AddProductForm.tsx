@@ -109,6 +109,18 @@ const AddProductForm = () => {
           })}
         </div>
       </div>
+      <div className="w-full flex flex-col flex-wrap gap-4 mt-3">
+        <div>
+          <div className="font-bold ">
+            Select the available product colors and Upload their images
+          </div>
+          <div className="text-small">
+            You must upload an image for each of the color selected otherwise
+            your color selection will be ingnored
+          </div>
+        </div>
+        <div></div>
+      </div>
     </>
   );
 };
