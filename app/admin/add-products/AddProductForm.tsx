@@ -1,8 +1,11 @@
 "use client";
 
 import Heading from "@/app/components/Heading";
+import CategoryInput from "@/app/components/input/CategoryInput";
+import CustomCheckBox from "@/app/components/input/CustomCheckBox";
 import Input from "@/app/components/input/Input";
 import TextArea from "@/app/components/input/TextArea";
+import { Categories } from "@/utils/Categories";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { FcEngineering } from "react-icons/fc";
@@ -27,6 +30,15 @@ const AddProductForm = () => {
       price: "",
     },
   });
+
+  const category = watch("category");
+  const setConstantValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  };
 
   return (
     <>
@@ -69,6 +81,33 @@ const AddProductForm = () => {
           register={register}
           errors={errors}
         />
+      </div>
+
+      <CustomCheckBox
+        id="inStock"
+        register={register}
+        label="This Product Is In Stock"
+      />
+      <div className="w-full font-medium mt-3">
+        <div className="mb-2 font-semibold mt-1 ">Select a Category</div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[450px] overflow-y-auto">
+          {Categories.map((item) => {
+            if (item.label === "All") {
+              return null;
+            }
+
+            return (
+              <div key={item.label} className="col-span">
+                <CategoryInput
+                  onClick={(category) => setConstantValue("category", category)}
+                  selected={category === item.label}
+                  label={item.label}
+                  icon={item.icon}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -23,6 +23,7 @@ const CustomCheckBox: React.FC<CustomCheckBoxProps> = ({
         disabled={disabled}
         {...register(id)}
         placeholder=""
+        style={{ backgroundColor: "orange" }}
         className="cursor-pointer "
       />
       <label htmlFor={id} className="font-medium cursor-pointer">
