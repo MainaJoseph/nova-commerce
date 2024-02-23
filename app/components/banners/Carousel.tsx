@@ -1,30 +1,76 @@
-"use client"
+"use client";
 
+import React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Image from "next/image";
 
-import React, { useState } from "react";
-import HomeBanner from "./HomeBanner";
-import HomeBanner2 from "./HomeBanner2";
-
-const banners = [HomeBanner, HomeBanner2]; // Store components, not instances
-
-const Carousel = () => {
-  const [currentBanner, setCurrentBanner] = useState(0);
-
-  const nextBanner = () => {
-    setCurrentBanner((currentBanner + 1) % banners.length);
-  };
-
-  const previousBanner = () => {
-    setCurrentBanner((currentBanner - 1 + banners.length) % banners.length);
-  };
-
-  const BannerComponent = banners[currentBanner];
-
+const Slider = () => {
   return (
-    <div className="carousel-container">
-      <BannerComponent onNext={nextBanner} onPrevious={previousBanner} />
+    <div>
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem className="relative bg-gradient-to-r from-amber-500 to-amber-700 mb-8">
+            <div>
+              <div className="mx-auto px-8 py-12 flex flex-col md:flex-row items-center justify-evenly relative">
+                <div className="mb-8 md:mb-0 text-center flex-1">
+                  <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Summer Sale
+                  </h1>
+                  <p className="text-lg md:text-xl text-white mb-2">
+                    Enjoy Discounts on selected items
+                  </p>
+                  <p className="text-2xl md:5xl text-black font-bold">
+                    GET UPTO 50% OFF
+                  </p>
+                </div>
+                <div className="w-1/3 relative aspect-video">
+                  <Image
+                    src="/banner-image.png"
+                    fill
+                    alt="Banner Image"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+          <CarouselItem className="relative bg-gradient-to-r from-sky-400 to-sky-700 mb-8">
+            <div>
+              <div className="mx-auto px-8 py-12 flex flex-col md:flex-row items-center justify-evenly relative">
+                <div className="mb-8 md:mb-0 text-center flex-1">
+                  <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Best Deals
+                  </h1>
+                  <p className="text-lg md:text-xl text-white mb-2">
+                    Shop with us to explore new Possibilities
+                  </p>
+                  <p className="text-2xl md:5xl text-yellow-500 font-bold">
+                    GET UPTO 50% OFF
+                  </p>
+                </div>
+                <div className="w-1/3 relative aspect-video">
+                  <Image
+                    src="/banner-image.png"
+                    fill
+                    alt="Banner Image"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
   );
 };
 
-export default Carousel;
+export default Slider;
