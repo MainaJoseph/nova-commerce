@@ -8,7 +8,7 @@ import { TruncateText } from "@/utils/TruncateText";
 import Image from "next/image";
 import { useCart } from "@/hooks/useCart";
 import { AiOutlineDelete } from "react-icons/ai";
-import SetQuantity from "@/app/components/products/SetQuantity";
+import SetQuantity from "@/app/components/SetQuantity";
 
 interface ItemContentProps {
   item: CartProductType;

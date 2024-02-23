@@ -9,7 +9,7 @@ import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import SetQuantity from "@/app/components/products/SetQuantity";
+import SetQuantity from "@/app/components/SetQuantity";
 
 interface ProductDetailsProps {
   product: any;
