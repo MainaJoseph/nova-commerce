@@ -6,10 +6,9 @@ import { FormatPrice } from "@/utils/FormatPrice";
 import Link from "next/link";
 import { TruncateText } from "@/utils/TruncateText";
 import Image from "next/image";
-import SetQuantity from "../components/products/SetQuantity";
 import { useCart } from "@/hooks/useCart";
 import { AiOutlineDelete } from "react-icons/ai";
-import { it } from "node:test";
+import SetQuantity from "../components/products/SetQuantity";
 
 interface ItemContentProps {
   item: CartProductType;

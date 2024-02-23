@@ -3,13 +3,13 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Rating } from "@mui/material";
 import SetColor from "@/app/components/products/SetColor";
-import SetQuantity from "@/app/components/products/SetQuantity";
 import Button from "@/app/components/Button";
 import ProductImage from "@/app/components/products/ProductImage";
 import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import SetQuantity from "@/app/components/products/SetQuantity";
 
 interface ProductDetailsProps {
   product: any;

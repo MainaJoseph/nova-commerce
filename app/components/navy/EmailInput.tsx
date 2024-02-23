@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { MdEmail } from 'react-icons/md';
+import React, { useState } from "react";
+import { MdEmail } from "react-icons/md";
 
 const EmailInput: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isInputFocused, setInputFocused] = useState(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +24,11 @@ const EmailInput: React.FC = () => {
           onFocus={() => setInputFocused(true)}
           onBlur={() => setInputFocused(false)}
         />
-        <div className={`absolute inset-y-0 left-2 flex items-center pr-3 pointer-events-none ${isInputFocused ? 'text-orange-500' : 'text-slate-800'}`}>
+        <div
+          className={`absolute inset-y-0 left-2 flex items-center pr-3 pointer-events-none ${
+            isInputFocused ? "text-orange-500" : "text-slate-800"
+          }`}
+        >
           <MdEmail size={25} />
         </div>
       </div>
@@ -33,4 +37,3 @@ const EmailInput: React.FC = () => {
 };
 
 export default EmailInput;
-
