@@ -30,12 +30,12 @@ const AddProductForm = () => {
   const [isProductCreated, setIsProductCreated] = useState(false);
 
   const {
+    formState: { errors },
     register,
     handleSubmit,
     setValue,
     watch,
     reset,
-    formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
@@ -48,9 +48,26 @@ const AddProductForm = () => {
     },
   });
 
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log("form Data<<<", data);
+  };
+
+  const category = watch("category");
+
+  const setCustomValue = useCallback(
+    (id: string, value: any) => {
+      setValue(id, value, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    },
+    [setValue]
+  );
+
   useEffect(() => {
     setCustomValue("images", images);
-  }, [images]);
+  }, [images, setCustomValue]);
 
   useEffect(() => {
     if (isProductCreated) {
@@ -59,19 +76,6 @@ const AddProductForm = () => {
       setIsProductCreated(false);
     }
   }, [isProductCreated, reset]);
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("form Data<<<", data);
-  };
-
-  const category = watch("category");
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
-  };
 
   const addImageToState = useCallback((value: ImageType) => {
     setImages((prev) => {
@@ -113,6 +117,7 @@ const AddProductForm = () => {
           disabled={isLoading}
           register={register}
           errors={errors}
+          required
         />
         <Input
           id="price"
@@ -121,6 +126,7 @@ const AddProductForm = () => {
           register={register}
           type="number"
           errors={errors}
+          required
         />
         <Input
           id="brand"
@@ -128,6 +134,7 @@ const AddProductForm = () => {
           disabled={isLoading}
           register={register}
           errors={errors}
+          required
         />
         <TextArea
           id="description"
@@ -135,6 +142,7 @@ const AddProductForm = () => {
           disabled={isLoading}
           register={register}
           errors={errors}
+          required
         />
       </div>
 
@@ -190,7 +198,7 @@ const AddProductForm = () => {
       </div>
       <Button
         label={isLoading ? "Loading.." : "Add Product"}
-        onClick={handleSubmit(onSubmit)}
+        onClick={() => handleSubmit(onSubmit)()}
       />
     </>
   );
