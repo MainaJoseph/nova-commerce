@@ -13,10 +13,11 @@ import {
   MdRemoveRedEye,
 } from "react-icons/md";
 import ActionsBtn from "@/app/components/ActionsBtn";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Spinner from "@/app/components/Spinner";
 
 interface ManageProductsClientProps {
   products: Product[];
@@ -26,6 +27,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   products,
 }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   let rows: any = [];
 
   if (products) {
@@ -104,6 +106,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
 
   const handleToggleStatus = useCallback(
     (id: string, inStock: boolean) => {
+      setIsLoading(true);
       axios
         .put("/api/product", {
           id,
@@ -116,13 +119,20 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
         .catch((err) => {
           toast.error("OPPS!..Something went wrong");
           console.log("err");
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     },
     [router]
   );
 
+  const handleDelete = useCallback(() => {}, []);
+
   return (
     <div className="max-w-[1250px] m-auto text-xl">
+      {/* Add spinner */}
+      {isLoading && <Spinner />}
       <div className="mb-4 mt-4">
         <Heading title="Manage Products" center />
       </div>
