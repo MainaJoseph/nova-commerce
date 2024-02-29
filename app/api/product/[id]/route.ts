@@ -1,11 +1,12 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 
-export default async function Delete(
+export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   const currentUser = await getCurrentUser();
+
   if (!currentUser || currentUser.role !== "ADMIN") {
     return NextResponse.error();
   }

@@ -137,34 +137,35 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
 
   const handleDelete = useCallback(
     async (id: string, images: any[]) => {
-      toast("Deleting a product. Please wait...");
+      try {
+        toast("Deleting a product. Please wait...");
 
-      const handleImageDelete = async () => {
-        try {
-          for (const items of images) {
-            if (items.Image) {
-              const imageRef = ref(storage, items.image);
-              await deleteObject(imageRef);
-              console.log("Image Deleted", items.image);
+        // Function to handle image deletion
+        const handleImageDelete = async () => {
+          try {
+            for (const item of images) {
+              if (item.image) {
+                const imageRef = ref(storage, item.image);
+                await deleteObject(imageRef);
+                console.log("Image Deleted", item.image);
+              }
             }
+          } catch (error) {
+            console.log("Deleting Image error", error);
+            throw error; // Rethrow the error to be caught by the outer try-catch block
           }
-        } catch (error) {
-          console.log("Deleting Image error", error);
-        }
-      };
+        };
 
-      await handleImageDelete();
+        await handleImageDelete();
 
-      axios
-        .delete(`/api/product/${id}`)
-        .then((res) => {
-          toast.success("Product Status Deleted");
-          router.refresh();
-        })
-        .catch((err) => {
-          toast.error("failed to delete");
-          console.log(err);
-        });
+        // Delete product
+        await axios.delete(`/api/product/${id}`);
+        toast.success("Product Status Deleted");
+        router.refresh();
+      } catch (error) {
+        toast.error("Failed to delete product");
+        console.error("Delete Product Error:", error);
+      }
     },
     [storage, router]
   );
