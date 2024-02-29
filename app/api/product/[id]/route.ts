@@ -17,3 +17,4 @@ export async function DELETE(
 
   return NextResponse.json(product);
 }
+//WWWW
