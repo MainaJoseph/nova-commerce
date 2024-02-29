@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import { NextResponse } from "next/server";
 
-export async function Delete(
+export default async function Delete(
   request: Request,
   { params }: { params: { id: string } }
 ) {
