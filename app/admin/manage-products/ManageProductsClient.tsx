@@ -18,6 +18,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Spinner";
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import firebaseApp from "@/libs/firebase";
 
 interface ManageProductsClientProps {
   products: Product[];
@@ -27,6 +29,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   products,
 }) => {
   const router = useRouter();
+  const storage = getStorage(firebaseApp);
   const [isLoading, setIsLoading] = useState(false);
   let rows: any = [];
 
@@ -96,7 +99,12 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
                 handleToggleStatus(params.row.id, params.row.inStock);
               }}
             />
-            <ActionsBtn icon={MdDelete} onClick={() => {}} />
+            <ActionsBtn
+              icon={MdDelete}
+              onClick={() => {
+                handleDelete(params.row.id, params.row.images);
+              }}
+            />
             <ActionsBtn icon={MdRemoveRedEye} onClick={() => {}} />
           </div>
         );
@@ -127,7 +135,39 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
     [router]
   );
 
-  const handleDelete = useCallback(() => {}, []);
+  const handleDelete = useCallback(
+    async (id: string, images: any[]) => {
+      toast("Deleting a product. Please wait...");
+
+      const handleImageDelete = async () => {
+        try {
+          for (const items of images) {
+            if (items.Image) {
+              const imageRef = ref(storage, items.image);
+              await deleteObject(imageRef);
+              console.log("Image Deleted", items.image);
+            }
+          }
+        } catch (error) {
+          console.log("Deleting Image error", error);
+        }
+      };
+
+      await handleImageDelete();
+
+      axios
+        .delete(`/api/product/${id}`)
+        .then((res) => {
+          toast.success("Product Status Deleted");
+          router.refresh();
+        })
+        .catch((err) => {
+          toast.error("failed to delete");
+          console.log(err);
+        });
+    },
+    [storage, router]
+  );
 
   return (
     <div className="max-w-[1250px] m-auto text-xl">
