@@ -10,5 +10,11 @@ export default async function getOrders() {
         createdDate: "desc",
       },
     });
-  } catch (error) {}
+
+    return orders; // Return the orders fetched from the database
+  } catch (error) {
+    // Handle errors if necessary
+    console.error("Error fetching orders:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
 }
