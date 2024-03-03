@@ -28,8 +28,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
             className="w-full h-full object-contain"
             src={data.images[0].image}
             alt={data.name}
-            width={400}
-            height={400}
+            width={200}
+            height={200}
           />
         </div>
         <div className="mt-4">{TruncateText(data.name)}</div>
