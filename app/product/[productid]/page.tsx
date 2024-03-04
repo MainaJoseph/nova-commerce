@@ -6,7 +6,7 @@ import getProductById from "@/actions/getProductById";
 import NullData from "@/app/components/NullData";
 
 interface IParams {
-  productId?: string;
+  productid?: string;
 }
 
 const Product = async ({ params }: { params: IParams }) => {
