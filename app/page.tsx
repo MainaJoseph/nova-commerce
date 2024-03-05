@@ -4,6 +4,8 @@ import ProductCard from "./components/products/ProductCards";
 import Slider from "./components/banners/Carousel";
 import getProducts, { IProductParams } from "@/actions/getProducts";
 import NullData from "./components/NullData";
+import Button from "./components/Button";
+import RemoveFilters from "./components/nav/RemoveFilters";
 
 interface HomeProps {
   searchParams: IProductParams;
@@ -14,7 +16,10 @@ export default async function Home({ searchParams }: HomeProps) {
 
   if (products.length === 0) {
     return (
-      <NullData title="Oops! No product found. Click All to clear all filters" />
+      <div className="flex flex-col items-center justify-center gap-1">
+        <NullData title="Oops! No product found. Click Remove to clear all filters" />
+        <RemoveFilters />
+      </div>
     );
   }
 
