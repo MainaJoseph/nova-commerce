@@ -4,7 +4,6 @@ import ProductCard from "./components/products/ProductCards";
 import Slider from "./components/banners/Carousel";
 import getProducts, { IProductParams } from "@/actions/getProducts";
 import NullData from "./components/NullData";
-import Button from "./components/Button";
 import RemoveFilters from "./components/nav/RemoveFilters";
 
 interface HomeProps {
