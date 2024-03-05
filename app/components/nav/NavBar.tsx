@@ -6,6 +6,8 @@ import CartCount from "./CartCount";
 import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 
+import CategoriesNav from "./CategoriesNav";
+
 const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
 const NavBar = async () => {
@@ -44,6 +46,7 @@ const NavBar = async () => {
           </div>
         </Container>
       </div>
+      <CategoriesNav />
     </div>
   );
 };

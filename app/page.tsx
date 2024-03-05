@@ -1,8 +1,5 @@
 import React from "react";
 import Container from "./components/Container";
-import Carousel from "./components/banners/Carousel";
-import { products } from "@/utils/product";
-import { TruncateText } from "@/utils/TruncateText";
 import ProductCard from "./components/products/ProductCards";
 import Slider from "./components/banners/Carousel";
 import getProducts, { IProductParams } from "@/actions/getProducts";
