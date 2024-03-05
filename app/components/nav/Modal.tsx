@@ -1,50 +1,35 @@
-import { ReactNode, useEffect } from "react";
-import Container from "../Container";
-import { IoIosCloseCircle } from "react-icons/io";
+import { ReactNode } from "react";
 
 interface ModalProps {
+  showModal: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
   children: ReactNode;
-  onClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose]);
-
-  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
-
+const Modal: React.FC<ModalProps> = ({
+  showModal,
+  onMouseEnter,
+  onMouseLeave,
+  children,
+}) => {
   return (
-    <Container>
-      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center z-50">
+    <>
+      {showModal && (
         <div
-          className="bg-white rounded-lg p-4 shadow-md absolute left-4 "
-          onClick={handleClickOutside}
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-center z-50"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
-          {children}
-          <button
-            className="absolute top-0 right-0 mt-2 mr-2 text-gray-500 hover:text-gray-700"
-            onClick={onClose}
+          <div
+            className="bg-white rounded-lg p-4 shadow-md absolute left-4"
+            onMouseLeave={onMouseLeave}
           >
-            <IoIosCloseCircle size={25} className="text-rose-500 font-bold" />
-          </button>
+            {children}
+          </div>
         </div>
-      </div>
-    </Container>
+      )}
+    </>
   );
 };
 
