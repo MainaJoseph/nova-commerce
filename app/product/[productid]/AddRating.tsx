@@ -7,6 +7,7 @@ import { SafeUser } from "@/types";
 import { Rating } from "@mui/material";
 import { Order, Product, Review } from "@prisma/client";
 import axios from "axios";
+import moment from "moment";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -56,14 +57,20 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
       return toast.error("No rating selected");
     }
 
-    const ratingData = { ...data, userId: user?.id, product: product };
+    const currentTime = moment().format("YYYY-MM-DD HH:mm:ss"); // Format to include date and time
+    const ratingData = {
+      ...data,
+      userId: user?.id,
+      product: product,
+      createdAt: currentTime, // Include current time in the data
+    };
 
     axios
       .post("/api/rating", ratingData)
       .then(() => {
         toast.success("Rating Submitted");
         router.refresh();
-        reset;
+        reset();
       })
       .catch((error) => {
         toast.error("Something went wrong");
