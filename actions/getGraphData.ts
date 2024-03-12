@@ -53,12 +53,12 @@ export default async function getGraphData() {
         const amount = entry._sum?.amount || 0;
         aggregatedData[day].totalAmount += amount;
       });
-
-      //convert the aggregatedData object to the array and sort it by date
-      const formattedData = Object.values(aggregatedData).sort((a, b) =>
-        moment(a.date).diff(moment(b.date))
-      );
     }
+
+    //convert the aggregatedData object to the array and sort it by date
+    return Object.values(aggregatedData).sort((a, b) =>
+      moment(a.date).diff(moment(b.date))
+    );
   } catch (error: any) {
     throw new Error(error);
   }

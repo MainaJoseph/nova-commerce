@@ -67,10 +67,10 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
       }, 0);
 
       const paidOrders = orders.filter((order) => {
-        return (order.status = "complete");
+        return order.status === "complete";
       });
       const unpaidOrders = orders.filter((order) => {
-        return (order.status = "pending");
+        return order.status === "pending";
       });
 
       tempData.sale.digit = totalSales;
