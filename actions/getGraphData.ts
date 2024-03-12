@@ -22,7 +22,7 @@ export default async function getGraphData() {
       },
     });
 
-    //intialize object to aggragate the data
+    //initialize object to aggragate the data
 
     const aggregatedData: {
       [day: string]: { day: string; date: string; totalAmount: number };
@@ -35,9 +35,8 @@ export default async function getGraphData() {
     while (currentDate <= endDate) {
       //format the day as a string (eg..Monday)
       const day = currentDate.format("dddd");
-      console.log("<<<<day", day);
 
-      //initialize the aggregated datafor the day with the day, date and total amount
+      //initialize the aggregated data for the day with the day, date and total amount
       aggregatedData[day] = {
         day,
         date: currentDate.format("YYYY-MM-DD"),
@@ -46,14 +45,14 @@ export default async function getGraphData() {
 
       //move to the next day
       currentDate.add(1, "day");
-
-      //calculate the total amount for each day by assuming the orders amount
-      result.forEach((entry) => {
-        const day = moment(entry.createdDate).format("dddd");
-        const amount = entry._sum?.amount || 0;
-        aggregatedData[day].totalAmount += amount;
-      });
     }
+
+    //calculate the total amount for each day by assuming the orders amount
+    result.forEach((entry) => {
+      const day = moment(entry.createdDate).format("dddd");
+      const amount = entry._sum?.amount || 0;
+      aggregatedData[day].totalAmount += amount;
+    });
 
     //convert the aggregatedData object to the array and sort it by date
     return Object.values(aggregatedData).sort((a, b) =>

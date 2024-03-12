@@ -101,7 +101,7 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
                 key={key}
                 className="rounded-xl border-2  p-4 flex flex-col items-center gap-2 transition"
               >
-                <div className="text-xl md:text-4xl font-bold">
+                <div className="text-xl md:text-xl font-semibold">
                   {summaryData[key].label === "Total Sale" ? (
                     <>
                       <FaMoneyBillWave
