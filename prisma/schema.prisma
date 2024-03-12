@@ -31,19 +31,19 @@ model Account {
 
 model User {
   id                 String @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  hashedPassword String?
-  createdAt     DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  role          Role @default(USER)
-  accounts      Account[]
-
-  orders        Order[]
-  reviews       Review[]
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  hashedPassword     String?
+  createdAt          DateTime? @default(now()) // Add default value here
+  updatedAt          DateTime @updatedAt
+  role               Role @default(USER)
+  accounts           Account[]
+  orders             Order[]
+  reviews            Review[]
 }
+
 
 model Product {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
