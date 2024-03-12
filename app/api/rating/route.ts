@@ -2,11 +2,11 @@ import { getCurrentUser } from "@/actions/getCurrentUser";
 import { Review } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<void | Response> {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.error;
+    return NextResponse.error();
   }
 
   const body = await request.json();
