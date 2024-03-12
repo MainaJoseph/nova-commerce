@@ -5,6 +5,15 @@ import { useEffect, useState } from "react";
 import Heading from "../components/Heading";
 import { FormatPrice } from "@/utils/FormatPrice";
 import { FormatNumber } from "@/utils/FormatNumber";
+import {
+  FaBox,
+  FaCheckCircle,
+  FaClipboardList,
+  FaClock,
+  FaMoneyBillWave,
+  FaUsers,
+} from "react-icons/fa";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 
 interface SummaryProps {
   orders: Order[];
@@ -88,15 +97,68 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
             return (
               <div
                 key={key}
-                className="rounded-xl border-2 p-4 flex flex-col items-center gap-2 transition"
+                className="rounded-xl border-2  p-4 flex flex-col items-center gap-2 transition"
               >
                 <div className="text-xl md:text-4xl font-bold">
                   {summaryData[key].label === "Total Sale" ? (
-                    <>{FormatPrice(summaryData[key].digit)}</>
+                    <>
+                      <FaMoneyBillWave
+                        size={30}
+                        className="
+                      mr-2 inline-flex text-green-400"
+                      />
+                      {FormatPrice(summaryData[key].digit)}
+                    </>
+                  ) : summaryData[key].label === "Total Products" ? (
+                    <>
+                      <MdOutlineProductionQuantityLimits
+                        size={30}
+                        className="
+                      mr-2 inline-flex text-orange-300"
+                      />
+                      {FormatNumber(summaryData[key].digit)}
+                    </>
+                  ) : summaryData[key].label === "Total Orders" ? (
+                    <>
+                      <FaClipboardList
+                        size={28}
+                        className="
+                      mr-2 inline-flex text-orange-300"
+                      />
+                      {FormatNumber(summaryData[key].digit)}
+                    </>
+                  ) : summaryData[key].label === "Paid Orders" ? (
+                    <>
+                      <FaCheckCircle
+                        size={20}
+                        className="
+                      mr-2 inline-flex text-green-300"
+                      />
+                      {FormatNumber(summaryData[key].digit)}
+                    </>
+                  ) : summaryData[key].label === "Unpaid Orders" ? (
+                    <>
+                      <FaClock
+                        size={20}
+                        className="
+                      mr-2 inline-flex text-rose-300"
+                      />
+                      {FormatNumber(summaryData[key].digit)}
+                    </>
+                  ) : summaryData[key].label === "Total Users" ? (
+                    <>
+                      <FaUsers
+                        size={23}
+                        className="
+                      mr-2 inline-flex text-orange-300"
+                      />
+                      {FormatNumber(summaryData[key].digit)}
+                    </>
                   ) : (
                     <>{FormatNumber(summaryData[key].digit)}</>
                   )}
                 </div>
+
                 <div>{summaryData[key].label}</div>
               </div>
             );
