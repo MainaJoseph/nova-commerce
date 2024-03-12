@@ -61,7 +61,7 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
       let tempData = { ...prev };
 
       const totalSales = orders.reduce((acc, item) => {
-        if (item.status === "completed") {
+        if (item.status === "complete") {
           return acc + item.amount;
         } else return acc;
       }, 0);
@@ -72,6 +72,8 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
       const unpaidOrders = orders.filter((order) => {
         return order.status === "pending";
       });
+
+      console.log("Total Sales:", totalSales);
 
       tempData.sale.digit = totalSales;
       tempData.orders.digit = orders.length;
