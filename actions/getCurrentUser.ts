@@ -20,15 +20,26 @@ export async function getCurrentUser() {
       },
       include: { orders: true },
     });
+
     if (!currentUser) {
       return null;
     }
 
+    const createdAt = currentUser.createdAt
+      ? currentUser.createdAt.toISOString()
+      : null;
+    const updatedAt = currentUser.updatedAt
+      ? currentUser.updatedAt.toISOString()
+      : null;
+    const emailVerified = currentUser.emailVerified
+      ? currentUser.emailVerified.toISOString()
+      : null;
+
     return {
       ...currentUser,
-      createdAt: currentUser.createdAt.toISOString(),
-      updatedAt: currentUser.updatedAt.toISOString(),
-      emailVerified: currentUser.emailVerified?.toISOString() || null,
+      createdAt,
+      updatedAt,
+      emailVerified,
     };
   } catch (error: any) {
     return null;
