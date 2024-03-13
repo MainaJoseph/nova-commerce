@@ -24,8 +24,12 @@ export async function getCurrentUser() {
       return null;
     }
 
+    // Convert createdAt to string or null
+    const emailVerified = currentUser.emailVerified?.toISOString() || null;
+
     return {
       ...currentUser,
+      emailVerified,
     };
   } catch (error: any) {
     return null;
