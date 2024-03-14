@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
-    return NextResponse.error();
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
   const body = await request.json();
@@ -70,7 +70,7 @@ export async function POST(request: Request) {
         );
       }
 
-      return NextResponse.error();
+      return NextResponse.json({ paymentIntent: updated_intent });
     }
   } else {
     //Create the payment Intent
@@ -88,6 +88,4 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ paymentIntent });
   }
-
-  return NextResponse.error();
 }

@@ -114,9 +114,7 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
               <ButtonMpesa
                 label={currentUser ? "pay" : "Login To Checkout"}
                 onClick={() => {
-                  currentUser
-                    ? router.push("/checkout")
-                    : router.push("/login");
+                  currentUser ? router.push("/payment") : router.push("/login");
                 }}
                 google={currentUser ? false : true}
               />
