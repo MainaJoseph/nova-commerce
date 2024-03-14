@@ -83,7 +83,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
 
     setCartProduct((prev) => {
-      return { ...prev, quantity: prev.quantity++ };
+      return { ...prev, quantity: prev.quantity + 1 };
     });
   }, [cartProduct]);
 
@@ -153,12 +153,18 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
               handleQtyDecrease={handleQtyDecrease}
             />
             <Horizontal />
-            <div className="max-w-[300px]">
-              <Button
-                label="Add To Cart"
-                onClick={() => handleAddProductToCart(cartProduct)}
-              />
-            </div>
+            {product.inStock ? (
+              <div className="max-w-[300px]">
+                <Button
+                  label="Add To Cart"
+                  onClick={() => handleAddProductToCart(cartProduct)}
+                />
+              </div>
+            ) : (
+              <div className="max-w-[300px]">
+                <Button label="Out of Stock" disabled onClick={() => {}} />
+              </div>
+            )}
           </>
         )}
       </div>
