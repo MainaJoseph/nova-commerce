@@ -2,7 +2,8 @@
 
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
-import { MdArrowBack, MdRemoveShoppingCart } from "react-icons/md";
+import { MdArrowBack } from "react-icons/md";
+import { RiSecurePaymentLine } from "react-icons/ri";
 import Heading from "../components/Heading";
 import Button from "../components/Button";
 import ItemContentPay from "./ItemContentPay";
@@ -24,11 +25,14 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
     return (
       <div className="flex flex-col items-center">
         <div className="border rounded-full bg-slate-200 text-slate-600 p-3">
-          <MdRemoveShoppingCart size={90} />
+          <RiSecurePaymentLine size={90} />
         </div>
-        <div className="text-2xl mt-3 font-semibold">Your Cart is Empty!</div>
+        <div className="text-2xl mt-3 font-semibold">
+          No Payments Available!
+        </div>
         <p className="text-slate-400 text-md font-normal mt-4">
-          Browse our categories and discover our best deals!
+          Browse our categories and discover our best deals! Add a product to
+          cart to continue to checkout
         </p>
         <div className="border bg-orange-500 px-3 py-2 rounded-md hover:bg-orange-300 mt-5">
           <Link href={"/"} className="text-white flex items-center gap-1mt-2">
@@ -64,7 +68,7 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
           </div>
 
           {/* Container for the two items */}
-          <div className="flex justify-between items-start mt-16">
+          <div className="flex justify-between items-center mt-16">
             {/* First item */}
             <div className="text-sm flex flex-col gap-1">
               <div className="flex flex-col justify-between font-semibold items-center md:flex-row">
@@ -104,7 +108,7 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
                 <span>Lipa na Mpesa </span>
                 <span>
                   {" "}
-                  <Image src="/mpesa.png" alt="Mpesa" width={100} height={50} />
+                  <Image src="/mpesa.png" alt="Mpesa" width={80} height={50} />
                 </span>
               </div>
               <ButtonMpesa

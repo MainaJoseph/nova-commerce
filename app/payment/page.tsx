@@ -8,9 +8,14 @@ export const metadata = {
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../components/Container";
 import PayClient from "./PayClient";
+import NullData from "../components/NullData";
 
 const CartPay = async () => {
   const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return <NullData title="Payment Not Allowed. Please Login" />;
+  }
 
   return (
     <div className="pt-8">
