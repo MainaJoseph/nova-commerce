@@ -10,18 +10,45 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import { useCart } from "@/hooks/useCart";
 import { FormatPrice } from "@/utils/FormatPrice";
+import { RiSecurePaymentLine } from "react-icons/ri";
+import { MdArrowBack } from "react-icons/md";
+import Link from "next/link";
 
 interface PayFormProps {}
 
 const PayForm: React.FC<PayFormProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { cartTotalAmount } = useCart();
+  const { cartTotalAmount, cartProducts } = useCart();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  //Conditional Rendering of MPesa Form
+  if (!cartProducts || cartProducts.length === 0) {
+    return (
+      <div className="flex flex-col items-center">
+        <div className="border border-green-500 rounded-[15px] bg-white text-slate-600 p-2">
+          <Image src="/mpesa.png" alt="Mpesa" width={200} height={200} />
+        </div>
+        <div className="text-2xl  font-semibold mt-4">
+          No Payments Available!
+        </div>
+        <p className="text-slate-400 text-md font-normal mt-4">
+          Browse our categories and discover our best deals! Add a product to
+          cart to continue to checkout
+        </p>
+        <div className="border bg-green-500 px-3 py-2 rounded-md hover:bg-green-300 mt-5">
+          <Link href={"/"} className="text-white flex items-center gap-1mt-2">
+            <MdArrowBack size={30} />
+            <span className="text-white">Start Shopping</span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const onSubmit = (data: { phone: number; amount: string }) => {
     setIsLoading(true);
