@@ -1,20 +1,25 @@
 "use client";
 
-import { FcEngineering } from "react-icons/fc";
 import Heading from "../components/Heading";
-import Input from "../components/input/Input";
 import ButtonMpesa from "../components/ButtonMpesa";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { useCart } from "@/hooks/useCart";
 import { FormatPrice } from "@/utils/FormatPrice";
-import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdArrowBack } from "react-icons/md";
 import Link from "next/link";
+import axios from "axios";
+import Input_Mpesa from "../components/input/input_mpesa";
 
 interface PayFormProps {}
+
+interface FormData {
+  phone: string;
+  amount: number;
+  // Define other form data fields here as needed.
+}
 
 const PayForm: React.FC<PayFormProps> = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +29,13 @@ const PayForm: React.FC<PayFormProps> = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>({
+    // Using the FormData interface here for type safety
+    defaultValues: {
+      phone: "",
+      amount: cartTotalAmount,
+    },
+  }); // Use the FormData interface here
 
   //Conditional Rendering of MPesa Form
   if (!cartProducts || cartProducts.length === 0) {
@@ -50,16 +61,19 @@ const PayForm: React.FC<PayFormProps> = () => {
     );
   }
 
-  const onSubmit = (data: { phone: number; amount: string }) => {
+  const onsubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
-    console.log(">>>>>>", onSubmit);
-    // Here you can implement your payment processing logic
-    // For example, you can make an API call to process the payment
-    // After payment processing is complete, you can handle success or error accordingly
-    setTimeout(() => {
+    try {
+      const response = await axios.post("/api/lipa/stkpush", {
+        phone: data.phone, // Correctly accessing phone from data
+        amount: data.amount, // Now accessing amount directly from the data parameter
+      });
+      toast.success("Payment successful!");
+    } catch (error) {
+      toast.error("Payment failed. Please try again later.");
+    } finally {
       setIsLoading(false);
-      toast.success("Payment successful!"); // Replace with actual payment success message
-    }, 2000); // Simulating payment processing time
+    }
   };
 
   return (
@@ -70,13 +84,14 @@ const PayForm: React.FC<PayFormProps> = () => {
       </div>
       <hr className="bg-green-300 w-full h-px" />
       <form onSubmit={() => {}} className="space-y-4">
-        <Input
+        <Input_Mpesa
           id="phone"
           label="Enter Your Phone Number"
+          type="text" // Specify the type, e.g., "text" for text input
           disabled={isLoading}
           register={register}
           errors={errors}
-          required
+          required // If the field is required
         />
         <div className="flex items-center gap-4">
           <label className="font-bold text-green-500">Amount:</label>
@@ -85,9 +100,9 @@ const PayForm: React.FC<PayFormProps> = () => {
           </span>
         </div>
         <ButtonMpesa
-          onClick={() => {}}
-          //   onClick={handleSubmit(onSubmit)}
-          label={isLoading ? "Processing..." : "Pay"}
+          // onClick={() => {}}
+          label={isLoading ? "Loading" : "Pay"}
+          onClick={handleSubmit(onsubmit)}
           disabled={isLoading}
         />
       </form>
