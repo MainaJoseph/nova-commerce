@@ -36,28 +36,13 @@ model User {
   emailVerified      DateTime?
   image              String?
   hashedPassword     String?
-  active             Boolean  @default(false)
   createdAt          DateTime? @default(now()) // Add default value here
   updatedAt          DateTime? @updatedAt @default(now())
   role               Role @default(USER)
   accounts           Account[]
   orders             Order[]
   reviews            Review[]
-  activateToken      ActivateToken[]
 }
-
-
-model ActivateToken {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  token       String  @unique
-  activateAt  DateTime?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt @default(now())
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String  @db.ObjectId
-}
-
-
 
 
 model Product {
@@ -130,5 +115,4 @@ type Address {
 enum Role{
     USER
     ADMIN
-    AGENT
 }

@@ -93,10 +93,7 @@ const PayForm: React.FC<PayFormProps> = () => {
     setIsLoading(true);
     console.log("Data>>>>>", data);
     try {
-      const response = await axios.post("/api/lipa/stkpush", {
-        phone: data.phone, // Correctly accessing phone from data
-        amount: data.amount, // Now accessing amount directly from the data parameter
-      });
+      const response = await axios.post("/api/lipa/stkpush", data);
       if (response.status === 200) {
         toast.success("Payment successful!");
       } else {
@@ -104,6 +101,7 @@ const PayForm: React.FC<PayFormProps> = () => {
       }
     } catch (error) {
       toast.error("Payment failed. Please try again later.");
+      console.error("Error submitting form:", error);
     } finally {
       setIsLoading(false);
     }
