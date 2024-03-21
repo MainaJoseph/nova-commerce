@@ -2,7 +2,7 @@
 
 import Heading from "../components/Heading";
 import ButtonMpesa from "../components/ButtonMpesa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Image from "next/image";
@@ -33,9 +33,16 @@ const PayForm: React.FC<PayFormProps> = () => {
     // Using the FormData interface here for type safety
     defaultValues: {
       phone: "",
-      amount: cartTotalAmount,
+      amount: cartTotalAmount, // Set cartTotalAmount as the default value for amount
     },
-  }); // Use the FormData interface here
+  });
+
+  //Use Effect to prevent cartTotalAmount from logging before its fetched
+  useEffect(() => {
+    if (cartTotalAmount) {
+      console.log("Cart Total Amount:", cartTotalAmount);
+    }
+  }, [cartTotalAmount]); // Run effect when cartTotalAmount changes
 
   //Conditional Rendering of MPesa Form
   if (!cartProducts || cartProducts.length === 0) {
@@ -63,12 +70,17 @@ const PayForm: React.FC<PayFormProps> = () => {
 
   const onsubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
+    console.log("Data>>>>>", data);
     try {
       const response = await axios.post("/api/lipa/stkpush", {
         phone: data.phone, // Correctly accessing phone from data
         amount: data.amount, // Now accessing amount directly from the data parameter
       });
-      toast.success("Payment successful!");
+      if (response.status === 200) {
+        toast.success("Payment successful!");
+      } else {
+        toast.error("Payment failed. Please try again later.");
+      }
     } catch (error) {
       toast.error("Payment failed. Please try again later.");
     } finally {
@@ -83,7 +95,7 @@ const PayForm: React.FC<PayFormProps> = () => {
         <Image src="/mpesa.png" alt="Mpesa" width={200} height={200} />
       </div>
       <hr className="bg-green-300 w-full h-px" />
-      <form onSubmit={() => {}} className="space-y-4">
+      <form className="space-y-4">
         <Input_Mpesa
           id="phone"
           label="Enter Your Phone Number"
@@ -100,9 +112,8 @@ const PayForm: React.FC<PayFormProps> = () => {
           </span>
         </div>
         <ButtonMpesa
-          // onClick={() => {}}
           label={isLoading ? "Loading" : "Pay"}
-          onClick={handleSubmit(onsubmit)}
+          onClick={() => handleSubmit(onsubmit)()} // Pass handleSubmit as a callback
           disabled={isLoading}
         />
       </form>
