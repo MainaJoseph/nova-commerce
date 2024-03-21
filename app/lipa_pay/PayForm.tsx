@@ -29,13 +29,34 @@ const PayForm: React.FC<PayFormProps> = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue, // Add setValue from useForm
   } = useForm<FormData>({
     // Using the FormData interface here for type safety
     defaultValues: {
       phone: "",
-      amount: cartTotalAmount, // Set cartTotalAmount as the default value for amount
+      amount: 0, // Initialize amount as 0 initially
     },
   });
+
+  //set amount to cartTotalAmount
+  useEffect(() => {
+    if (cartTotalAmount) {
+      setValue("amount", cartTotalAmount);
+    }
+  }, [cartTotalAmount, setValue]);
+
+  // Retrieve cartTotalAmount from local storage when component mounts
+  useEffect(() => {
+    const savedAmount = localStorage.getItem("cartTotalAmount");
+    if (savedAmount) {
+      setValue("amount", parseFloat(savedAmount)); // Update the form value
+    }
+  }, [setValue, cartTotalAmount]);
+
+  // Update cartTotalAmount in local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartTotalAmount", String(cartTotalAmount));
+  }, [cartTotalAmount]);
 
   //Use Effect to prevent cartTotalAmount from logging before its fetched
   useEffect(() => {
