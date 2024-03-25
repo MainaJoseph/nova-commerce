@@ -1,3 +1,4 @@
+// ButtonMpesa.tsx
 import React from "react";
 import * as Icons from "react-icons/fc";
 
@@ -27,7 +28,7 @@ const ButtonMpesa: React.FC<ButtonMpesaProps> = ({
   return (
     <button
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled} // Use the disabled prop directly
       className={`
     disabled:opacity-70
     disabled:cursor-not-allowed

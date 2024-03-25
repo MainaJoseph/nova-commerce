@@ -6,12 +6,12 @@ import moment from "moment";
 const router = express.Router();
 
 // Sample API route
-router.get("/api/lipa", (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
   res.json({ message: "This is a sample API route." });
   console.log("This is a sample API route.");
 });
 
-router.get("/api/lipa/access_token", (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
   getAccessToken()
     .then((accessToken: string) => {
       res.json({ message: "😀 Your access token is " + accessToken });

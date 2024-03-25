@@ -93,7 +93,10 @@ const PayForm: React.FC<PayFormProps> = () => {
     setIsLoading(true);
     console.log("Data>>>>>", data);
     try {
-      const response = await axios.post("/api/lipa/stkpush", data);
+      const response = await axios.post(
+        "http://localhost:8000/api/lipa/stkpush",
+        data
+      );
       if (response.status === 200) {
         toast.success("Payment successful!");
       } else {
@@ -115,16 +118,18 @@ const PayForm: React.FC<PayFormProps> = () => {
       </div>
       <hr className="bg-green-300 w-full h-px" />
       <form className="space-y-4">
+        <span className="text-slate-500 font-medium">2547XXXX5679</span>
         <Input_Mpesa
           id="phone"
           label="Enter Your Phone Number"
-          type="text" // Specify the type, e.g., "text" for text input
+          type="text"
+          inputMode="numeric" // Pass inputMode prop here
           disabled={isLoading}
           register={register}
           errors={errors}
-          required // If the field is required
+          required
         />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-10">
           <label className="font-bold text-green-500">Amount:</label>
           <span className="font-semibold text-md">
             {FormatPrice(cartTotalAmount)}
@@ -132,8 +137,8 @@ const PayForm: React.FC<PayFormProps> = () => {
         </div>
         <ButtonMpesa
           label={isLoading ? "Loading" : "Pay"}
-          onClick={() => handleSubmit(onsubmit)()} // Pass handleSubmit as a callback
-          disabled={isLoading}
+          onClick={() => handleSubmit(onsubmit)()}
+          disabled={isLoading || Object.keys(errors).length > 0} // Pass disabled prop here
         />
       </form>
     </div>
