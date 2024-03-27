@@ -94,7 +94,8 @@ const PayForm: React.FC<PayFormProps> = () => {
     console.log("Data>>>>>", data);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/lipa/stkpush",
+        "http://lipa-79dhgqoqc-mainajosephs-projects.vercel.app/api/lipa/stkpush",
+        // "/pages/api/lipa/stkpush",
         data
       );
       if (response.status === 200) {

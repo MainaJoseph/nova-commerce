@@ -65,9 +65,11 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
           />
         </div>
         <div className="text-sm flex flex-col gap-1 items-start">
-          <div className="flex justify-between w-full texxt-base font-semibold mt-8">
-            <span>Subtotals</span>
-            <span>{FormatPrice(cartTotalAmount)}</span>
+          <div className="flex justify-between w-full texxt-base mt-8 gap-1">
+            <span>Subtotals:</span>
+            <span className="font-semibold">
+              {FormatPrice(cartTotalAmount)}
+            </span>
           </div>
 
           <Button
