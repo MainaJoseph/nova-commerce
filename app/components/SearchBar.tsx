@@ -58,7 +58,7 @@ const SearchBar = () => {
   }, [handleKeyPress]); // Add any dependencies if needed
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-2">
       <div className="relative">
         <GrSearchAdvanced className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
@@ -72,7 +72,7 @@ const SearchBar = () => {
 
       <button
         onClick={handleSubmit(onSubmit)}
-        className="bg-orange-400 hover:opacity-80 text-white p-2 rounded-r-md"
+        className="bg-orange-400 hover:opacity-80 text-white p-2 rounded-md"
       >
         Search
       </button>

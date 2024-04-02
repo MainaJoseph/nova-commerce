@@ -9,6 +9,7 @@ import {
   MdFormatListBulleted,
   MdLibraryAdd,
 } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
 const AdminNav = () => {
@@ -44,6 +45,13 @@ const AdminNav = () => {
               label="Manage Orders"
               icon={MdFormatListBulleted}
               selected={pathname === "/admin/manage-orders"}
+            />
+          </Link>
+          <Link href="/admin/manage-users">
+            <AdminNavItem
+              label="Manage users"
+              icon={FaUsers}
+              selected={pathname === "/admin/manage-users"}
             />
           </Link>
         </div>
