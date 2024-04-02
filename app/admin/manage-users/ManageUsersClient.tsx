@@ -54,6 +54,34 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
     }
   }, []);
 
+  //function to delete users
+  const deleteUser = async (userId: string) => {
+    try {
+      setIsLoading(true);
+
+      // Check if the user is an admin
+      const isAdmin = rows.find((user) => user.id === userId)?.role === "ADMIN";
+
+      if (isAdmin) {
+        toast.warning("Admin users cannot be deleted.");
+        return;
+      }
+
+      await axios.delete("/api/users/deleteUser", {
+        data: { id: userId },
+      });
+
+      // Remove the deleted user from the rows state
+      setRows((prevRows) => prevRows.filter((user) => user.id !== userId));
+      toast.success("User deleted successfully.");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast.error("Failed to delete user.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     setRows(users); // Update rows when users prop changes
   }, [users]);
@@ -169,7 +197,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
               <Tooltip>
                 <TooltipTrigger>
                   <button
-                    onClick={() => {}}
+                    onClick={() => deleteUser(params.row.id)}
                     disabled={isLoading}
                     className="px-2 py-1 rounded-md border-[1px] border-slate-400  focus:outline-none"
                   >
