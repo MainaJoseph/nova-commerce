@@ -93,11 +93,7 @@ const PayForm: React.FC<PayFormProps> = () => {
     setIsLoading(true);
     console.log("Data>>>>>", data);
     try {
-      const response = await axios.post(
-        "https://lipa-three.vercel.app/api/lipa/stkpush",
-        // "/pages/api/lipa/stkpush",
-        data
-      );
+      const response = await axios.post("/api/lipa/stkpush", data);
       if (response.status === 200) {
         toast.success("Payment successful!");
       } else {

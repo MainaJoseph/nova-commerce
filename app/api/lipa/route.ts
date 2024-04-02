@@ -42,7 +42,7 @@ async function getAccessToken(): Promise<string> {
   }
 }
 
-router.post("/api/lipa/stkpush", (req: Request, res: Response) => {
+router.post("/stkpush", (req: Request, res: Response) => {
   let phoneNumber: string = req.body.phone;
   const accountNumber: string = req.body.accountNumber;
   const amount: number = req.body.amount;
@@ -76,7 +76,7 @@ router.post("/api/lipa/stkpush", (req: Request, res: Response) => {
             PartyB: "600000",
             PhoneNumber: phoneNumber,
             CallBackURL:
-              "https://249e-105-60-226-239.ngrok-free.app/api/callback",
+              " https://41a4-197-248-126-233.ngrok-free.app/callback",
             AccountReference: accountNumber,
             TransactionDesc: "Mpesa Daraja API stk push test",
           },
