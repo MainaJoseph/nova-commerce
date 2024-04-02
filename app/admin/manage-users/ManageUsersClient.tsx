@@ -1,21 +1,27 @@
 "use client";
 
-import { User } from "@prisma/client";
+import React, { useCallback, useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import prisma from "@/libs/prismadb";
-import ActionsBtn from "@/app/components/ActionsBtn";
-import { MdClose, MdDelete, MdDone, MdRemoveRedEye } from "react-icons/md";
+import { MdDelete, MdOutlineRealEstateAgent } from "react-icons/md";
 import { GrUserAdmin } from "react-icons/gr";
+import { FaUserCheck } from "react-icons/fa";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Status from "@/app/components/Status";
+import Spinner from "@/app/components/Spinner";
+
+interface User {
+  id: string;
+  name: string | null;
+  email: string | null;
+  createdAt: Date | null;
+  role: string;
+}
 
 interface ManageUsersClientProps {
   users: User[];
@@ -23,13 +29,9 @@ interface ManageUsersClientProps {
 
 const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [rows, setRows] = useState<any[]>([]);
+  const [rows, setRows] = useState<User[]>(users); // Initialize rows state with users data
 
-  // Define state to handle loading state
-  const [isUpdatingRole, setIsUpdatingRole] = useState(false);
-
-  // Function to handle role update
-  const changeUserRole = useCallback(async (id: string, role: string) => {
+  const updateUserRole = useCallback(async (id: string, role: string) => {
     setIsLoading(true);
     try {
       const response = await axios.put("/api/users/updateUserRole", {
@@ -37,11 +39,14 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
         role,
       });
       const updatedUser = response.data;
-      if (updatedUser.role === "ADMIN") {
-        toast.warning("User is already an admin");
-      } else {
-        toast.success("User role changed successfully");
-      }
+      setRows((prevRows) =>
+        prevRows.map((user) =>
+          user.id === updatedUser.id
+            ? { ...user, role: updatedUser.role }
+            : user
+        )
+      ); // Update the role in the rows state
+      toast.success("User role changed successfully");
     } catch (error) {
       toast.error("Failed to change user role");
     } finally {
@@ -50,45 +55,67 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   }, []);
 
   useEffect(() => {
-    if (users) {
-      const userRows = users.map((user) => ({
-        id: user.id,
-        name: user.name || "-",
-        email: user.email || "-",
-        createdAt: user.createdAt
-          ? new Date(user.createdAt).toLocaleString()
-          : "-",
-        role: user.role || "-",
-      }));
-      setRows(userRows);
-    }
+    setRows(users); // Update rows when users prop changes
   }, [users]);
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 220 },
     { field: "name", headerName: "Name", width: 130 },
     { field: "email", headerName: "Email", width: 230 },
-    { field: "createdAt", headerName: "Created At", width: 150 },
+    { field: "createdAt", headerName: "Created At", width: 170 },
     {
       field: "role",
       headerName: "Role",
       width: 100,
+      renderCell: (params) => {
+        let icon;
+        let bg = "";
+        switch (params.value) {
+          case "ADMIN":
+            icon = GrUserAdmin;
+            bg = "bg-slate-700";
+            break;
+          case "USER":
+            icon = FaUserCheck;
+            bg = "bg-teal-400";
+            break;
+          case "AGENT":
+            icon = MdOutlineRealEstateAgent;
+            bg = "bg-purple-400";
+            break;
+          default:
+            icon = FaUserCheck;
+            bg = "bg-gray-400";
+        }
+        return (
+          <div className={`${bg} text-white text-center rounded-full p-1`}>
+            {params.value}
+          </div>
+        );
+      },
     },
     {
       field: "action",
       headerName: "Actions",
-      width: 170,
+      width: 250,
       renderCell: (params) => {
         return (
           <div className="flex justify-between gap-4 w-full">
+            {isLoading && <Spinner />}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <ActionsBtn
-                    icon={GrUserAdmin}
-                    onClick={() => changeUserRole(params.row.id, "ADMIN")} // Pass user ID to changeUserRole function
-                    disabled={isUpdatingRole} // Disable button while role update is in progress
-                  />
+                  <button
+                    onClick={() => updateUserRole(params.row.id, "ADMIN")}
+                    disabled={isLoading || params.row.role === "ADMIN"}
+                    className={`px-2 py-1  border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      params.row.role === "ADMIN"
+                        ? "bg-none cursor-not-allowed text-slate-700 hover:border-rose-400 hover:text-rose-400"
+                        : "bg-none text-slate-700"
+                    }`}
+                  >
+                    <GrUserAdmin size={21} />
+                  </button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-slate-800 text-white">
                   <p>Make Admin</p>
@@ -96,8 +123,64 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
               </Tooltip>
             </TooltipProvider>
 
-            <ActionsBtn icon={MdDone} onClick={() => {}} />
-            <ActionsBtn icon={MdDelete} onClick={() => {}} />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <button
+                    onClick={() => updateUserRole(params.row.id, "USER")}
+                    disabled={isLoading || params.row.role === "USER"}
+                    className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      params.row.role === "USER"
+                        ? "bg-none cursor-not-allowed text-teal-400"
+                        : "bg-none text-teal-400"
+                    }`}
+                  >
+                    <FaUserCheck size={21} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Make User</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <button
+                    onClick={() => updateUserRole(params.row.id, "AGENT")}
+                    disabled={isLoading || params.row.role === "AGENT"}
+                    className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      params.row.role === "AGENT"
+                        ? "bg-none cursor-not-allowed text-purple-500"
+                        : "bg-none text-purple-500"
+                    }`}
+                  >
+                    <MdOutlineRealEstateAgent size={21} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Make Agent</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <button
+                    onClick={() => {}}
+                    disabled={isLoading}
+                    className="px-2 py-1 rounded-md border-[1px] border-slate-400  focus:outline-none"
+                  >
+                    <MdDelete size={21} />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Delete User</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         );
       },
