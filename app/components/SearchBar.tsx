@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import queryString from "query-string";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useCallback } from "react";
+import { GrSearchAdvanced } from "react-icons/gr";
 
 const SearchBar = () => {
   const router = useRouter();
@@ -58,13 +59,17 @@ const SearchBar = () => {
 
   return (
     <div className="flex items-center">
-      <input
-        {...register("searchTerm")}
-        autoCapitalize="off"
-        type="text"
-        placeholder="Explore Nova"
-        className="p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-80"
-      />
+      <div className="relative">
+        <GrSearchAdvanced className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        <input
+          {...register("searchTerm")}
+          autoCapitalize="off"
+          type="text"
+          placeholder="Search products, brands and categories"
+          className="pl-10 p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-96"
+        />
+      </div>
+
       <button
         onClick={handleSubmit(onSubmit)}
         className="bg-orange-400 hover:opacity-80 text-white p-2 rounded-r-md"

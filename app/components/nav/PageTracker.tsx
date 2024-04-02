@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { TiArrowForward } from "react-icons/ti";
 import { usePathname } from "next/dist/client/components/navigation";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -22,11 +23,18 @@ function PageTracker() {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink className="hover:text-orange-400" href="/">
+          <BreadcrumbLink
+            className="hover:text-orange-400 font-semibold"
+            href="/"
+          >
             Home
           </BreadcrumbLink>
         </BreadcrumbItem>
-        {pathNames.length > 0 && <BreadcrumbSeparator />}
+        {pathNames.length > 0 && (
+          <BreadcrumbSeparator>
+            <TiArrowForward size={20} className="text-orange-400" />
+          </BreadcrumbSeparator>
+        )}
         {pathNames.map((link: string, index: number) => {
           const href: string = `/${pathNames.slice(0, index + 1).join("/")}`;
           const linkName: string =
@@ -36,14 +44,21 @@ function PageTracker() {
             <Fragment key={index}>
               <BreadcrumbItem>
                 {!isLastPath ? (
-                  <BreadcrumbLink className="hover:text-orange-400" asChild>
+                  <BreadcrumbLink
+                    className="hover:text-orange-400 font-semibold"
+                    asChild
+                  >
                     <Link href={href}>{linkName}</Link>
                   </BreadcrumbLink>
                 ) : (
                   <Breadcrumb>{linkName}</Breadcrumb>
                 )}
               </BreadcrumbItem>
-              {pathNames.length !== index + 1 && <BreadcrumbSeparator />}
+              {pathNames.length !== index + 1 && (
+                <BreadcrumbSeparator>
+                  <TiArrowForward size={20} className="text-orange-400" />
+                </BreadcrumbSeparator>
+              )}
             </Fragment>
           );
         })}
