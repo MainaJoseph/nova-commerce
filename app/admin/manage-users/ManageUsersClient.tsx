@@ -55,22 +55,20 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   }, []);
 
   //function to delete users
+
   const deleteUser = async (userId: string) => {
+    // Check if the user is an admin
+    const isAdmin = rows.find((user) => user.id === userId)?.role === "ADMIN";
+
+    if (isAdmin) {
+      toast.warning("Admin users cannot be deleted.");
+      return;
+    }
     try {
       setIsLoading(true);
-
-      // Check if the user is an admin
-      const isAdmin = rows.find((user) => user.id === userId)?.role === "ADMIN";
-
-      if (isAdmin) {
-        toast.warning("Admin users cannot be deleted.");
-        return;
-      }
-
-      await axios.delete("/api/users/deleteUser", {
+      await axios.delete("/api/users/deleteUsers", {
         data: { id: userId },
       });
-
       // Remove the deleted user from the rows state
       setRows((prevRows) => prevRows.filter((user) => user.id !== userId));
       toast.success("User deleted successfully.");
