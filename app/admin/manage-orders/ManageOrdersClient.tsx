@@ -11,6 +11,17 @@ import {
   MdDone,
   MdRemoveRedEye,
 } from "react-icons/md";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import ActionsBtn from "@/app/components/ActionsBtn";
 import { useCallback, useState } from "react";
 import axios from "axios";
@@ -30,6 +41,10 @@ type ExtendedOrder = Order & {
 const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeliveryDialogOpen, setIsDeliveryDialogOpen] = useState(false); // State to manage the open/close state of the AlertDialog for delivery
+  const [isDispatchDialogOpen, setIsDispatchDialogOpen] = useState(false); // State to manage the open/close state of the AlertDialog for dispatch
+  const [orderIdToDeliver, setOrderIdToDeliver] = useState(""); // State to store the ID of the order to be delivered
+  const [orderIdToDispatch, setOrderIdToDispatch] = useState(""); // State to store the ID of the order to be dispatched
   let rows: any = [];
 
   if (orders) {
@@ -135,13 +150,13 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
             <ActionsBtn
               icon={MdDeliveryDining}
               onClick={() => {
-                handleDispatch(params.row.id);
+                handleDispatchConfirmation(params.row.id);
               }}
             />
             <ActionsBtn
               icon={MdDone}
               onClick={() => {
-                handleDeliver(params.row.id);
+                handleDeliveryConfirmation(params.row.id);
               }}
             />
             <ActionsBtn
@@ -193,7 +208,7 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
         })
         .catch((err) => {
           toast.error("OPPS!..Something went wrong");
-          console.log("err");
+          console.log(err);
         })
         .finally(() => {
           setIsLoading(false);
@@ -201,6 +216,51 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
     },
     [router]
   );
+  /////////////////////////////////////////////////////////////////////////////////////
+  // fuction for confirmation dialogue to mark as delivered
+  const handleDeliveryConfirmation = (orderId: string) => {
+    const orderToDeliver = orders.find((order) => order.id === orderId);
+    if (orderToDeliver && orderToDeliver.deliveryStatus === "delivered") {
+      // Show toast indicating the order is already delivered
+      toast.warning("This order is already marked as delivered.");
+    } else {
+      setOrderIdToDeliver(orderId);
+      setIsDeliveryDialogOpen(true);
+    }
+  };
+
+  const handleCloseAlertDialog = () => {
+    setIsDeliveryDialogOpen(false);
+  };
+
+  const handleContinueAction = () => {
+    handleDeliver(orderIdToDeliver); // Call your delivery function with the stored order ID
+    setIsDeliveryDialogOpen(false); // Close the AlertDialog
+  };
+  //////////////////////////////////////////////////////////////////////////
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  // fuction for confirmation dialogue to mark as dispatched
+  const handleDispatchConfirmation = (orderId: string) => {
+    const orderToDispatch = orders.find((order) => order.id === orderId);
+    if (orderToDispatch && orderToDispatch.deliveryStatus === "dispatched") {
+      // Show toast indicating the order is already dispatched
+      toast.warning("This order is already marked as dispatched.");
+    } else {
+      setOrderIdToDispatch(orderId);
+      setIsDispatchDialogOpen(true);
+    }
+  };
+
+  const handleCloseAlertDialogDispatch = () => {
+    setIsDispatchDialogOpen(false);
+  };
+
+  const handleContinueActionDispatch = () => {
+    handleDispatch(orderIdToDispatch); // Call your dispatch function with the stored order ID
+    setIsDispatchDialogOpen(false); // Close the AlertDialog
+  };
+  ////////////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="max-w-[1250px] m-auto text-xl">
@@ -222,6 +282,61 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
           checkboxSelection
           disableRowSelectionOnClick
         />
+      </div>
+      {/* AlertDialog component for Delivery */}
+      <div className="bg-white">
+        <AlertDialog open={isDeliveryDialogOpen}>
+          <AlertDialogContent className="bg-white border-slate-400 border-[1px]">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to mark this order as dispatched?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                onClick={handleCloseAlertDialog}
+                className="border-slate-400"
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleContinueAction}
+                className="bg-orange-400 text-white"
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+
+      {/* AlertDialog component for Dispatch */}
+      <div className="bg-white">
+        <AlertDialog open={isDispatchDialogOpen}>
+          <AlertDialogContent className="bg-white border-slate-400 border-[1px]">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to mark this order as delivered?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                onClick={handleCloseAlertDialogDispatch}
+                className="border-slate-400"
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleContinueActionDispatch}
+                className="bg-orange-400 text-white"
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

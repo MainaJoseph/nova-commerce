@@ -9,7 +9,10 @@ const ManageOrders = async () => {
 
   const currentUser = await getCurrentUser();
 
-  if (!currentUser || currentUser.role !== "ADMIN") {
+  if (
+    !currentUser ||
+    (currentUser.role !== "ADMIN" && currentUser.role !== "AGENT")
+  ) {
     return <NullData title="Opps! Access Denied" />;
   }
 
