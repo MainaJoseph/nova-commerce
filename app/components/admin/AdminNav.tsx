@@ -47,11 +47,11 @@ const AdminNav = () => {
               selected={pathname === "/admin/manage-orders"}
             />
           </Link>
-          <Link href="/admin/manage-orders">
+          <Link href="/admin/manage-users">
             <AdminNavItem
               label="Manage users"
               icon={FaUsers}
-              selected={pathname === "/admin/manage-orders"}
+              selected={pathname === "/admin/manage-users"}
             />
           </Link>
         </div>
