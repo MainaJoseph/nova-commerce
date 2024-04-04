@@ -102,7 +102,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
             <ActionsBtn
               icon={MdDelete}
               onClick={() => {
-                handleDelete(params.row.id);
+                handleDelete(params.row.id, params.row.images);
               }}
             />
             <ActionsBtn
@@ -141,20 +141,38 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
   );
 
   const handleDelete = useCallback(
-    async (id: string) => {
+    async (id: string, images: any[]) => {
       try {
-        toast("Deleting a product. Please wait...");
+        toast.info("Deleting product...");
+
+        // Function to handle image deletion
+        const handleImageDelete = async () => {
+          try {
+            for (const item of images) {
+              if (item.image) {
+                const imageRef = ref(storage, item.image);
+                await deleteObject(imageRef);
+                console.log("Image Deleted", item.image);
+              }
+            }
+          } catch (error) {
+            console.error("Error deleting image:", error);
+            throw error; // Rethrow the error to be caught by the outer try-catch block
+          }
+        };
+
+        await handleImageDelete();
 
         // Delete product
         await axios.delete(`/api/product/${id}`);
-        toast.success("Product Deleted");
+        toast.success("Product deleted successfully");
         router.refresh();
       } catch (error) {
         toast.error("Failed to delete product");
         console.error("Delete Product Error:", error);
       }
     },
-    [router]
+    [storage, router]
   );
 
   return (
