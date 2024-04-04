@@ -1,11 +1,9 @@
-"use client";
-
+import React from "react";
+import Image from "next/image";
 import {
   CartProductType,
   SelectedImgType,
 } from "@/app/product/[productid]/ProductDetails";
-import Image from "next/image";
-import { Key } from "react";
 
 interface ProductImageProps {
   cartProduct: CartProductType;
@@ -20,7 +18,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-6 gap-2 h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]">
-      <div className="flex flex-col items-center justify-center gap-4 cursor-pointer border h-ful max-h-[500px] min-h-[300px] sm:min-h-[400px]">
+      <div className="flex flex-col items-center justify-center gap-4 cursor-pointer border h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]">
         {product.images.map((image: SelectedImgType) => {
           return (
             <div
@@ -37,7 +35,8 @@ const ProductImage: React.FC<ProductImageProps> = ({
               <Image
                 src={image.image}
                 alt={image.color}
-                fill
+                width={1000} // Set a fixed width for all images
+                height={1000} // Set a fixed height for all images
                 className="object-contain"
               />
             </div>
@@ -46,10 +45,11 @@ const ProductImage: React.FC<ProductImageProps> = ({
       </div>
       <div className="col-span-5 relative aspect-square">
         <Image
-          fill
           src={cartProduct.selectedImg.image}
           alt={cartProduct.name}
-          className="w-full h-full object-contain max-h-[500px] min-h-[300px] sm:min-h-[400px]"
+          width={500} // Set a fixed width for the main image
+          height={500} // Set a fixed height for the main image
+          className="w-full h-full object-contain"
         />
       </div>
     </div>

@@ -66,7 +66,7 @@ const SearchBar = () => {
           autoCapitalize="off"
           type="text"
           placeholder="Search products, brands and categories"
-          className="pl-10 p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-96"
+          className="pl-10 p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-64 md:w-96"
         />
       </div>
 

@@ -50,7 +50,7 @@ const NavBar = async () => {
             <div className="hidden md:block">
               <SearchBar />
             </div>
-            <div className="flex items-center gap-6 md:gap-10">
+            <div className="flex items-center gap-6 md:gap-6">
               <CartCount />
               {currentUser && (
                 <div className="font-normal text-slate-800">

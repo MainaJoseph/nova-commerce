@@ -12,6 +12,7 @@ import { TiArrowForward } from "react-icons/ti";
 import { usePathname } from "next/dist/client/components/navigation";
 import Link from "next/link";
 import { Fragment } from "react";
+import { TruncateTextOne } from "../../../utils/TruncateTextOne";
 
 function PageTracker() {
   const path: string | null = usePathname();
@@ -51,7 +52,7 @@ function PageTracker() {
                     <Link href={href}>{linkName}</Link>
                   </BreadcrumbLink>
                 ) : (
-                  <Breadcrumb>{linkName}</Breadcrumb>
+                  <Breadcrumb>{TruncateTextOne(linkName)}</Breadcrumb>
                 )}
               </BreadcrumbItem>
               {pathNames.length !== index + 1 && (
