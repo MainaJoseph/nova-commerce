@@ -188,12 +188,18 @@ const ViewOrdersClient: React.FC<ViewOrdersClientProps> = ({ orders }) => {
 
   const handleDeliveryConfirmation = (orderId: string) => {
     const orderToDeliver = orders.find((order) => order.id === orderId);
-    if (orderToDeliver && orderToDeliver.deliveryStatus === "delivered") {
-      // Show toast indicating the order is already delivered
-      toast.warning("This order is already marked as delivered.");
-    } else {
-      setOrderIdToDeliver(orderId);
-      setIsAlertDialogOpen(true);
+    if (orderToDeliver) {
+      if (orderToDeliver.deliveryStatus === "dispatched") {
+        // Proceed with delivery confirmation
+        setOrderIdToDeliver(orderId);
+        setIsAlertDialogOpen(true);
+      } else if (orderToDeliver.deliveryStatus === "pending") {
+        // Show toast indicating dispatched status is pending
+        toast.info("The dispatched status is still pending.");
+      } else {
+        // Show toast indicating the order is already delivered
+        toast.warning("This order is already marked as delivered.");
+      }
     }
   };
 
