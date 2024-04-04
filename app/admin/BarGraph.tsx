@@ -27,7 +27,7 @@ const BarGraph: React.FC<BarGraphsProps> = ({ data }) => {
   const amounts = data.map((item) => item.totalAmount);
 
   const chartData = {
-    labels: labels, // Fixed typo here
+    labels: labels,
     datasets: [
       {
         label: "Sale Amount",
