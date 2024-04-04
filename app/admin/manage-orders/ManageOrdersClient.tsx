@@ -22,6 +22,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import ActionsBtn from "@/app/components/ActionsBtn";
 import { useCallback, useState } from "react";
 import axios from "axios";
@@ -147,24 +154,54 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       renderCell: (params) => {
         return (
           <div className="flex justify-between gap-4 w-full">
-            <ActionsBtn
-              icon={MdDeliveryDining}
-              onClick={() => {
-                handleDispatchConfirmation(params.row.id);
-              }}
-            />
-            <ActionsBtn
-              icon={MdDone}
-              onClick={() => {
-                handleDeliveryConfirmation(params.row.id);
-              }}
-            />
-            <ActionsBtn
-              icon={MdRemoveRedEye}
-              onClick={() => {
-                router.push(`/order/${params.row.id}`);
-              }}
-            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ActionsBtn
+                    icon={MdDeliveryDining}
+                    onClick={() => {
+                      handleDispatchConfirmation(params.row.id);
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Marked Dispatched</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ActionsBtn
+                    icon={MdDone}
+                    onClick={() => {
+                      handleDeliveryConfirmation(params.row.id);
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Mark Delivered</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  {" "}
+                  <ActionsBtn
+                    icon={MdRemoveRedEye}
+                    onClick={() => {
+                      router.push(`/order/${params.row.id}`);
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>View Order</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         );
       },
