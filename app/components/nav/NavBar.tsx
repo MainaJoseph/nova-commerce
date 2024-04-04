@@ -16,6 +16,14 @@ const NavBar = async () => {
 
   console.log("User>>>", currentUser);
 
+  const getFirstName = (name: string | null) => {
+    // Explicitly define name type as string | null
+    if (!name) return ""; // Return empty string if name is null
+    // Split the name string and take the first part as the first name
+    const firstName = name.split(" ")[0];
+    return firstName;
+  };
+
   return (
     <div
       className="
@@ -42,8 +50,14 @@ const NavBar = async () => {
             <div className="hidden md:block">
               <SearchBar />
             </div>
-            <div className="flex items-center gap-8 md:gap-12">
+            <div className="flex items-center gap-6 md:gap-10">
               <CartCount />
+              {currentUser && (
+                <div className="font-normal text-slate-800">
+                  Hi, {getFirstName(currentUser.name)}{" "}
+                  {/* Displaying the greeting with user's first name */}
+                </div>
+              )}
               <UserMenu currentUser={currentUser} />
             </div>
           </div>
