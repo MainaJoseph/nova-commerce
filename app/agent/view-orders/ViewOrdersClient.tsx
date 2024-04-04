@@ -29,6 +29,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ViewOrdersClientProps {
   orders: ExtendedOrder[];
@@ -59,7 +65,7 @@ const ViewOrdersClient: React.FC<ViewOrdersClientProps> = ({ orders }) => {
   }
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 220 },
+    { field: "id", headerName: "ID", width: 200 },
     { field: "customer", headerName: "Customer Name", width: 190 },
     {
       field: "amount",
@@ -141,22 +147,41 @@ const ViewOrdersClient: React.FC<ViewOrdersClientProps> = ({ orders }) => {
     {
       field: "action",
       headerName: "Actions",
-      width: 100,
+      width: 110,
       renderCell: (params) => {
         return (
           <div className="flex justify-between gap-4 w-full">
-            <ActionsBtn
-              icon={MdDone}
-              onClick={() => {
-                handleDeliveryConfirmation(params.row.id);
-              }}
-            />
-            <ActionsBtn
-              icon={MdRemoveRedEye}
-              onClick={() => {
-                router.push(`/order/${params.row.id}`);
-              }}
-            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ActionsBtn
+                    icon={MdDone}
+                    onClick={() => {
+                      handleDeliveryConfirmation(params.row.id);
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>Mark Delivered</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ActionsBtn
+                    icon={MdRemoveRedEye}
+                    onClick={() => {
+                      router.push(`/order/${params.row.id}`);
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-800 text-white">
+                  <p>View Product</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         );
       },
