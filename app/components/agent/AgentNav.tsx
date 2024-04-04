@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Container from "../Container";
-import AdminNavItem from "./AdminNavItem";
+import AgentNavItem from "./AgentNavItem";
 import {
   MdDashboard,
   MdDns,
@@ -12,46 +12,46 @@ import {
 import { FaUsers } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
-const AdminNav = () => {
+const AgentNav = () => {
   const pathname = usePathname();
 
   return (
     <div className="w-full shadow-sm top-20 border-b-[1px] pt-4 ">
       <Container>
         <div className="flex flex-row items-center justify-between md:justify-center gap-8 md:gap-12 overflow-x-auto flex-nowrap">
-          <Link href="/admin">
-            <AdminNavItem
+          <Link href="/agent">
+            <AgentNavItem
               label="Summary"
               icon={MdDashboard}
-              selected={pathname === "/admin"}
+              selected={pathname === "/agent"}
             />
           </Link>
-          <Link href="/admin/add-products">
-            <AdminNavItem
+          <Link href="/agent/add-products">
+            <AgentNavItem
               label="Add Products"
               icon={MdLibraryAdd}
-              selected={pathname === "/admin/add-products"}
+              selected={pathname === "/agent/add-products"}
             />
           </Link>
-          <Link href="/admin/manage-products">
-            <AdminNavItem
+          {/* <Link href="/agent/manage-products">
+            <AgentNavItem
               label="Manage Products"
               icon={MdDns}
-              selected={pathname === "/admin/manage-products"}
+              selected={pathname === "/agent/manage-products"}
             />
-          </Link>
-          <Link href="/admin/manage-orders">
-            <AdminNavItem
-              label="Manage Orders"
+          </Link> */}
+          <Link href="/agent/view-orders">
+            <AgentNavItem
+              label="View Orders"
               icon={MdFormatListBulleted}
-              selected={pathname === "/admin/manage-orders"}
+              selected={pathname === "/agent/view-orders"}
             />
           </Link>
-          <Link href="/admin/manage-orders">
-            <AdminNavItem
-              label="Manage users"
+          <Link href="/agent/view-users">
+            <AgentNavItem
+              label="View users"
               icon={FaUsers}
-              selected={pathname === "/admin/manage-orders"}
+              selected={pathname === "/agent/view-users"}
             />
           </Link>
         </div>
@@ -60,4 +60,4 @@ const AdminNav = () => {
   );
 };
 
-export default AdminNav;
+export default AgentNav;

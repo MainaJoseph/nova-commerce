@@ -203,7 +203,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
                       <MdDelete size={21} />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent className="bg-slate-800 text-white">
+                  <TooltipContent className="bg-rose-400 text-white">
                     <p>Delete User</p>
                   </TooltipContent>
                 </Tooltip>
