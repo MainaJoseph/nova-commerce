@@ -62,6 +62,18 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
       label: "Total Users",
       digit: 0,
     },
+    admins: {
+      label: "Admins",
+      digit: 0,
+    },
+    agents: {
+      label: "Agents",
+      digit: 0,
+    },
+    regularUsers: {
+      label: "Regular Users",
+      digit: 0,
+    },
   });
 
   useEffect(() => {
@@ -86,6 +98,12 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
         return order.status === "complete";
       });
 
+      const adminCount = users.filter((user) => user.role === "ADMIN").length;
+      const agentCount = users.filter((user) => user.role === "AGENT").length;
+      const regularUserCount = users.filter(
+        (user) => user.role === "USER"
+      ).length;
+
       tempData.sale.digit = totalSales;
       tempData.orders.digit = orders.length;
       tempData.paidOrders.digit = paidOrders.length;
@@ -94,6 +112,9 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
       tempData.unpaidOrders.digit = orders.length - paidOrders.length;
       tempData.products.digit = products.length;
       tempData.users.digit = users.length;
+      tempData.admins.digit = adminCount;
+      tempData.agents.digit = agentCount;
+      tempData.regularUsers.digit = regularUserCount;
 
       return tempData;
     });
@@ -108,6 +129,9 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
     "unpaidOrders",
     "products",
     "users",
+    "admins",
+    "agents",
+    "regularUsers",
   ];
 
   return (
@@ -200,6 +224,33 @@ const Summary: React.FC<SummaryProps> = ({ orders, products, users }) => {
                   mr-2 inline-flex text-green-300"
                   />
                   {FormatPrice(summaryData[key].digit)}
+                </>
+              ) : summaryData[key].label === "Admins" ? (
+                <>
+                  <FaUsers
+                    size={23}
+                    className="
+                  mr-2 inline-flex text-slate-00"
+                  />
+                  {FormatNumber(summaryData[key].digit)}
+                </>
+              ) : summaryData[key].label === "Agents" ? (
+                <>
+                  <FaUsers
+                    size={23}
+                    className="
+                  mr-2 inline-flex text-purple-500"
+                  />
+                  {FormatNumber(summaryData[key].digit)}
+                </>
+              ) : summaryData[key].label === "Regular Users" ? (
+                <>
+                  <FaUsers
+                    size={23}
+                    className="
+                  mr-2 inline-flex text-teal-400"
+                  />
+                  {FormatNumber(summaryData[key].digit)}
                 </>
               ) : (
                 <>{FormatNumber(summaryData[key].digit)}</>
