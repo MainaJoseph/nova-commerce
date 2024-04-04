@@ -26,20 +26,20 @@ const AgentNav = () => {
               selected={pathname === "/agent"}
             />
           </Link>
-          <Link href="/agent/add-products">
+          {/* <Link href="/agent/add-products">
             <AgentNavItem
               label="Add Products"
               icon={MdLibraryAdd}
               selected={pathname === "/agent/add-products"}
             />
-          </Link>
-          {/* <Link href="/agent/manage-products">
-            <AgentNavItem
-              label="Manage Products"
-              icon={MdDns}
-              selected={pathname === "/agent/manage-products"}
-            />
           </Link> */}
+          <Link href="/agent/view-products">
+            <AgentNavItem
+              label="View Products"
+              icon={MdDns}
+              selected={pathname === "/agent/view-products"}
+            />
+          </Link>
           <Link href="/agent/view-orders">
             <AgentNavItem
               label="View Orders"
