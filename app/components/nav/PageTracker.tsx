@@ -22,10 +22,10 @@ function PageTracker() {
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="text-xs !important gap-0">
         <BreadcrumbItem>
           <BreadcrumbLink
-            className="hover:text-orange-400 font-semibold"
+            className="hover:text-orange-400 font-semibold "
             href="/"
           >
             Home
@@ -33,7 +33,7 @@ function PageTracker() {
         </BreadcrumbItem>
         {pathNames.length > 0 && (
           <BreadcrumbSeparator>
-            <TiArrowForward size={20} className="text-orange-400" />
+            <TiArrowForward size={20} className="text-orange-400 text-sm" />
           </BreadcrumbSeparator>
         )}
         {pathNames.map((link: string, index: number) => {
@@ -46,7 +46,7 @@ function PageTracker() {
               <BreadcrumbItem>
                 {!isLastPath ? (
                   <BreadcrumbLink
-                    className="hover:text-orange-400 font-semibold"
+                    className="hover:text-orange-400 font-semibold text-sm"
                     asChild
                   >
                     <Link href={href}>{linkName}</Link>
@@ -57,7 +57,10 @@ function PageTracker() {
               </BreadcrumbItem>
               {pathNames.length !== index + 1 && (
                 <BreadcrumbSeparator>
-                  <TiArrowForward size={20} className="text-orange-400" />
+                  <TiArrowForward
+                    size={20}
+                    className="text-orange-400 text-sm"
+                  />
                 </BreadcrumbSeparator>
               )}
             </Fragment>

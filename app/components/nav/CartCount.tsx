@@ -24,7 +24,7 @@ const CartCount = () => {
           {cartTotalQty}
         </span>
       </div>
-      <span className="cursor-pointer hover:text-orange-500">Cart</span>
+      <span className="cursor-pointer hover:text-orange-500 text-sm">Cart</span>
     </div>
   );
 };

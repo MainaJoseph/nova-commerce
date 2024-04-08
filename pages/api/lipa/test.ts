@@ -31,7 +31,7 @@ async function stkPush(
       PartyA: "600998",
       PartyB: "600000",
       PhoneNumber: phoneNumber,
-      CallBackURL: "https://75db-197-248-126-233.ngrok-free.app/callback",
+      CallBackURL: "https://41a4-197-248-126-233.ngrok-free.app/callback",
       AccountReference: accountNumber,
       TransactionDesc: transactionDesc,
     },
@@ -98,9 +98,6 @@ export default async function handler(
 
         // Handle callback and send response
         res.status(200).send("Callback received successfully");
-      } else {
-        // If URL is not recognized, send 404
-        res.status(404).json({ msg: "Not found" });
       }
     }
   } catch (error) {

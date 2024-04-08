@@ -50,10 +50,10 @@ const NavBar = async () => {
             <div className="hidden md:block">
               <SearchBar />
             </div>
-            <div className="flex items-center gap-6 md:gap-6">
+            <div className="flex items-center gap-6 md:gap-8">
               <CartCount />
               {currentUser && (
-                <div className="font-normal text-slate-800">
+                <div className="font-normal text-slate-800 text-sm">
                   Hi, {getFirstName(currentUser.name)}{" "}
                   {/* Displaying the greeting with user's first name */}
                 </div>

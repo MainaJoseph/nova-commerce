@@ -66,13 +66,13 @@ const SearchBar = () => {
           autoCapitalize="off"
           type="text"
           placeholder="Search products, brands and categories"
-          className="pl-10 p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-64 md:w-96"
+          className="pl-10 p-2 border border-slate-400 rounded-md focus:outline-none focus:border-[0.5px] focus:border-orange-300 w-64 md:w-96 text-sm"
         />
       </div>
 
       <button
         onClick={handleSubmit(onSubmit)}
-        className="bg-orange-400 hover:opacity-80 text-white p-2 rounded-md"
+        className="bg-orange-400 hover:opacity-80 text-white p-2 rounded-md text-sm"
       >
         Search
       </button>
