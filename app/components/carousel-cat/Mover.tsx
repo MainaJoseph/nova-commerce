@@ -49,7 +49,9 @@ export function Mover() {
                     </CardContent>
                   </Card>
                 </div>
-                <div className="text-center py-2">{cardTexts[index]}</div>
+                <div className="text-center py-2 text-sm">
+                  {cardTexts[index]}
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>
