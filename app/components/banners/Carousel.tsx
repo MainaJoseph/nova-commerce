@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import { Mover } from "../carousel-cat/Mover";
 
 const Slider = () => {
   return (
@@ -70,6 +71,9 @@ const Slider = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <div className="flex justify-center">
+        <Mover />
+      </div>
     </div>
   );
 };
