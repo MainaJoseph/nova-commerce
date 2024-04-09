@@ -20,9 +20,9 @@ export function Mover() {
     "/fashion.jpg",
     "/computing.jpg",
     "/super.jpg",
-    "/Computing.png",
-    "/Computing.png",
-    "/Computing.png",
+    "/sporting.jpg",
+    "/auto.jpeg",
+    "/others.jpg",
   ];
 
   const cardTexts = [
@@ -47,9 +47,9 @@ export function Mover() {
     "bg-gray-200",
     "bg-orange-400",
     "bg-gray-200",
-    "bg-teal-200",
-    "bg-indigo-200",
-    "bg-cyan-200",
+    "bg-slate-500",
+    "bg-red-200",
+    "bg-yellow-200",
   ];
 
   return (
