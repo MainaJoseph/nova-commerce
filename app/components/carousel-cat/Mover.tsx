@@ -58,7 +58,7 @@ export function Mover() {
       <Container>
         <Carousel
           opts={{ align: "start" }}
-          className="w-11/12 md:w-4/5 lg:w-3/4 relative z-20"
+          className="w-11/12 md:w-4/5 lg:w-5/6 xl:w-3/4 relative z-20"
         >
           <CarouselContent>
             {Array.from({ length: 10 }).map((_, index) => (
