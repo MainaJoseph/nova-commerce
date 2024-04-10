@@ -71,7 +71,7 @@ const Slider = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <div className="flex justify-center">
+      <div className="flex justify-center pl-5 lg:p-0">
         <Mover />
       </div>
     </div>

@@ -67,9 +67,21 @@ export function Mover() {
                 className="basis-1/3 md:basis-1/4 lg:basis-1/6"
               >
                 <div className="p-1">
-                  <Card className={`cursor-pointer ${cardColors[index]}`}>
+                  <Card
+                    className={`cursor-pointer ${cardColors[index]}`}
+                    style={{
+                      transition: "transform 0.3s",
+                      transform: "scale(1)",
+                    }} // Add transition for smooth effect
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.1)")
+                    } // Scale up on hover
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    } // Reset on hover out
+                  >
                     <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <div className="w-full h-full relative overflow-hidden transform scale-y-[1]">
+                      <div className="w-full h-full relative overflow-hidden">
                         <Image
                           src={cardImages[index]}
                           alt={cardTexts[index]}
@@ -86,12 +98,9 @@ export function Mover() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="bg-slate-400 hover:bg-slate-200">
-            <AiFillCaretLeft />
-          </CarouselPrevious>
-          <CarouselNext className="bg-slate-400 hover:bg-slate-200">
-            <AiFillCaretRight />
-          </CarouselNext>
+
+          <CarouselPrevious className="bg-slate-400 hover:bg-slate-200" />
+          <CarouselNext className="bg-slate-400 hover:bg-slate-200" />
         </Carousel>
       </Container>
     </div>
