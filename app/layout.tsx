@@ -8,6 +8,10 @@ import CartProvider from "@/providers/CartProvider";
 //import toast, { Toaster } from "react-hot-toast";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SignUpNav from "./components/nav/SignUpNav";
+
+import { getCurrentUser } from "@/actions/getCurrentUser";
+
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
@@ -20,6 +24,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={`${poppins.className} text-slate-700`}>
@@ -33,6 +39,7 @@ export default async function RootLayout({
 
         <CartProvider>
           <div className="flex flex-col min-h-screen">
+            {!currentUser && <SignUpNav />}
             <NavBar />
             <main className="flex-grow">{children}</main>
             <Navy />
