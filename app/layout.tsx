@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SignUpNav from "./components/nav/SignUpNav";
 
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import Frequents from "./components/faqs/Frequents";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -42,6 +43,7 @@ export default async function RootLayout({
             {!currentUser && <SignUpNav />}
             <NavBar />
             <main className="flex-grow">{children}</main>
+            <Frequents />
             <Navy />
             <Footer />
           </div>

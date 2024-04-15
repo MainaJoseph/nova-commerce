@@ -2,8 +2,6 @@ import Link from "next/link";
 import Container from "../Container";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 
-import CategoriesNav from "./CategoriesNav";
-
 const SignUpNav = async () => {
   const currentUser = await getCurrentUser();
 
