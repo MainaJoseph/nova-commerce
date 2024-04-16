@@ -11,7 +11,7 @@ const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
 const Navy = () => {
   return (
-    <div className="bg-gray-600 text-white mt-16">
+    <div className="bg-gray-600 text-white mt-0">
       <Container>
         <div className="flex flex-row sm:justify-betweem md:justify-evenly pt-4 pb-0 ">
           <div className="hidden md:block">
