@@ -31,9 +31,36 @@ const Playstore = () => {
               <ButtonGoogle />
               <ButtonApple />
             </div>
-            <div className="mt-6 md:mt-20 lg:mt-28">
+            <div className="mt-6 md:mt-20 lg:mt-28 flex flex-col gap-y-4 lg:gap-y-8">
               <div className="text-white text-xl sm:text-md md:text-3xl font-semibold">
                 Why Download Our App
+              </div>
+              <div className="flex flex-row gap-6 text-white text-md md:text-xl items-center">
+                <div className="py-1 px-3 bg-white text-slate-800 font-semibold rounded-md hover:bg-orange-400 hover:text-slate-800">
+                  1
+                </div>
+                <div>Effortless Shopping with just a few Taps</div>
+              </div>
+              {/* //////////////////////////////////////////////////////////////// */}
+              <div className="flex flex-row gap-6 text-white text-md md:text-xl items-center">
+                <div className="py-1 px-3 bg-white text-slate-800 font-semibold rounded-md hover:bg-orange-400 hover:text-slate-800">
+                  2
+                </div>
+                <div>Real Time updates with instant notifications</div>
+              </div>
+              {/* /////////////////////////////////////////////////////////////////// */}
+              <div className="flex flex-row gap-6 text-white text-md md:text-xl items-center">
+                <div className="py-1 px-3 bg-white text-slate-800 font-semibold rounded-md hover:bg-orange-400 hover:text-slate-800">
+                  3
+                </div>
+                <div>Anywhere anytime access to our services</div>
+              </div>
+              {/* /////////////////////////////////////////////////////////////////// */}
+              <div className="flex flex-row gap-6 text-white text-md md:text-xl items-center">
+                <div className="py-1 px-3 bg-white text-slate-800 font-semibold rounded-md hover:bg-orange-400 hover:text-slate-800">
+                  4
+                </div>
+                <div>Exclusive App offers only to our app users</div>
               </div>
             </div>
           </div>
