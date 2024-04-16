@@ -1,3 +1,5 @@
+"use client";
+
 import Container from "../Container";
 import NavyList from "./NavyList";
 import { FcEngineering } from "react-icons/fc";
@@ -6,12 +8,24 @@ import { AiOutlineApple } from "react-icons/ai";
 import Link from "next/link";
 import { Redressed } from "next/font/google";
 import EmailInput from "./EmailInput";
+import { usePathname } from "next/navigation";
+import ButtonGoogle from "../playstore/ButtonGoogle";
+import ButtonApple from "../playstore/ButtonApple";
 
 const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
 const Navy = () => {
+  const pathname = usePathname();
+
+  // Check if the current route is  homepage
+  const isHomePage = pathname === "/";
+
+  // Render the component only if on NOT on the homepage
+  if (isHomePage) {
+    return null;
+  }
   return (
-    <div className="bg-gray-600 text-white mt-0">
+    <div className="bg-gradient-to-r from-gray-400 to-gray-600 text-white mt-10">
       <Container>
         <div className="flex flex-row sm:justify-betweem md:justify-evenly pt-4 pb-0 ">
           <div className="hidden md:block">
@@ -62,57 +76,14 @@ const Navy = () => {
                 <p style={{ fontSize: "11px" }} className="mt-2">
                   Get access to exclusive offers!
                 </p>
+                <div className="hidden md:block">
+                  <div className="flex flex-col gap-3 mt-3">
+                    {/* Google Play Button*/}
+                    <ButtonGoogle />
 
-                <div className="flex flex-row gap-3 mt-3">
-                  {/* Google Play Button*/}
-                  <button
-                    style={{
-                      fontSize: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                    className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 w-25 h-9"
-                  >
-                    <div style={{ marginRight: "5px" }}>
-                      <FaGooglePlay size={12} />
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-                      <span>Get it on</span>
-                      <span className="whitespace-nowrap">GOOGLE PLAY</span>
-                    </div>
-                  </button>
-
-                  {/* Apple Store Button*/}
-                  <button
-                    style={{
-                      fontSize: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      textAlign: "center",
-                    }}
-                    className="border border-white p-2 rounded hover:border-orange-400 hover:text-orange-400 w-22 h-9"
-                  >
-                    <div style={{ marginRight: "5px" }}>
-                      <AiOutlineApple size={20} />
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-                      <span className="whitespace-nowrap">Download on</span>
-                      <span className="whitespace-nowrap">APP STORE</span>
-                    </div>
-                  </button>
+                    {/* Apple Store Button*/}
+                    <ButtonApple />
+                  </div>
                 </div>
               </div>
             </div>

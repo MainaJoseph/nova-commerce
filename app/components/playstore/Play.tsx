@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Template from "./Template";
 import ButtonGoogle from "./ButtonGoogle";
 import ButtonApple from "./ButtonApple";
+import { useEffect } from "react";
 
 const Playstore = () => {
   const pathname = usePathname();
@@ -13,13 +14,32 @@ const Playstore = () => {
   // Check if the current route is the homepage
   const isHomePage = pathname === "/";
 
+  // Effect to add event listener for text highlighting
+  //   useEffect(() => {
+  //     const handleHighlight = () => {
+  //       const selection = window.getSelection();
+  //       if (selection && selection.toString()) {
+  //         const anchorNode = selection.anchorNode;
+  //         if (anchorNode && anchorNode.parentElement) {
+  //           anchorNode.parentElement.classList.add("highlighted");
+  //         }
+  //       }
+  //     };
+
+  //     document.addEventListener("mouseup", handleHighlight);
+
+  //     return () => {
+  //       document.removeEventListener("mouseup", handleHighlight);
+  //     };
+  //   }, []);
+
   // Render the component only if on the homepage
   if (!isHomePage) {
     return null;
   }
 
   return (
-    <div className="bg-gradient-to-r from-gray-600 to-gray-400">
+    <div className="bg-gradient-to-r from-gray-600 to-gray-400 ">
       <Container>
         <div className="flex flex-row md:flex-row justify-between mt-6">
           <div className="flex flex-col gap-3 md:flex md:justify-start md:w-1/2">
