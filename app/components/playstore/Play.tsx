@@ -14,25 +14,6 @@ const Playstore = () => {
   // Check if the current route is the homepage
   const isHomePage = pathname === "/";
 
-  // Effect to add event listener for text highlighting
-  //   useEffect(() => {
-  //     const handleHighlight = () => {
-  //       const selection = window.getSelection();
-  //       if (selection && selection.toString()) {
-  //         const anchorNode = selection.anchorNode;
-  //         if (anchorNode && anchorNode.parentElement) {
-  //           anchorNode.parentElement.classList.add("highlighted");
-  //         }
-  //       }
-  //     };
-
-  //     document.addEventListener("mouseup", handleHighlight);
-
-  //     return () => {
-  //       document.removeEventListener("mouseup", handleHighlight);
-  //     };
-  //   }, []);
-
   // Render the component only if on the homepage
   if (!isHomePage) {
     return null;
