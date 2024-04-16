@@ -1,8 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import Container from "../Container";
 import Temp from "./Temp";
+import { usePathname } from "next/navigation";
 
 const Frequents = () => {
+  const pathname = usePathname();
+
+  // Check if the current route is the homepage
+  const isHomePage = pathname === "/";
+
+  // Render the component only if on the homepage
+  if (!isHomePage) {
+    return null;
+  }
+
   return (
     <div>
       <Container>
