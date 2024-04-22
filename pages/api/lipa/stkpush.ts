@@ -31,7 +31,7 @@ async function stkPush(
       PartyA: "600998",
       PartyB: "600000",
       PhoneNumber: phoneNumber,
-      CallBackURL: "https://75db-197-248-126-233.ngrok-free.app/callback",
+      CallBackURL: "https://nova-commerce.vercel.app/callback",
       AccountReference: accountNumber,
       TransactionDesc: transactionDesc,
     },
