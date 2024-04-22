@@ -1,138 +1,50 @@
+// Import necessary modules
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import moment from "moment";
-
-async function stkPush(
-  phoneNumber: string,
-  amount: number,
-  accountNumber: string,
-  transactionDesc: string,
-  remark: string
-) {
-  const accessToken: string = await getAccessToken();
-  const url: string =
-    "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
-  const auth: string = "Bearer " + accessToken;
-  const timestamp: string = moment().format("YYYYMMDDHHmmss");
-  const password: string = Buffer.from(
-    "174379" +
-      "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919" +
-      timestamp
-  ).toString("base64");
-
-  const response = await axios.post(
-    url,
-    {
-      BusinessShortCode: "174379",
-      Password: password,
-      Timestamp: timestamp,
-      TransactionType: "CustomerPayBillOnline",
-      Amount: amount,
-      PartyA: "600998",
-      PartyB: "600000",
-      PhoneNumber: phoneNumber,
-      CallBackURL: "https://nova-commerce.vercel.app/callback",
-      AccountReference: accountNumber,
-      TransactionDesc: transactionDesc,
-    },
-    {
-      headers: {
-        Authorization: auth,
-      },
-    }
-  );
-
-  return response.data;
-}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    if (req.method === "GET") {
-      res.json({ message: "This is a sample API route." });
-      console.log("This is a sample API route.");
-    } else if (req.method === "POST") {
-      const { body } = req;
-      if (req.url === "/stkpush") {
-        try {
-          // Handle STK push request
-          let phoneNumber: string = body.phone;
-          const accountNumber: string = body.accountNumber;
-          const amount: number = body.amount;
+    // Retrieve PartyA (phone) and Amount from the request body
+    const { PartyA, Amount } = req.body;
 
-          if (phoneNumber.startsWith("0")) {
-            phoneNumber = "254" + phoneNumber.slice(1);
-          }
-
-          const response = await stkPush(
-            phoneNumber,
-            amount,
-            accountNumber,
-            "Mpesa Daraja API stk push test",
-            "Remark"
-          );
-
-          console.log(response);
-          res.status(200).json({
-            msg: "Request is successful done ✔✔. Please enter mpesa pin to complete the transaction",
-            status: true,
-          });
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({
-            msg: "Request failed",
-            status: false,
-          });
-        }
-      } else if (req.url === "/api/lipa/callback") {
-        // Handle Lipa Na M-Pesa callback
-        console.log("STK PUSH CALLBACK");
-        const stkCallback = body?.Body?.stkCallback;
-
-        if (!stkCallback) {
-          res.status(400).json({ msg: "Invalid request body" });
-          return;
-        }
-
-        // Handle callback and send response
-        res.status(200).send("Callback received successfully");
-      } else {
-        // If URL is not recognized, send 404
-        res.status(404).json({ msg: "Not found" });
+    // Make API call to Safaricom MPesa API
+    const response = await axios.post(
+      "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+      {
+        BusinessShortCode: 174379,
+        Password:
+          "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNDIyMTQyMzAx",
+        Timestamp: "20240422142301",
+        TransactionType: "CustomerPayBillOnline",
+        Amount: Amount, // Use Amount from the request body
+        PartyA: PartyA, // Use PartyA (phone) from the request body
+        PartyB: PartyA,
+        PhoneNumber: PartyA, // Use PartyA (phone) from the request body
+        CallBackURL: "https://nova-commerce.vercel.app/callbackurl",
+        AccountReference: "CompanyXLTD",
+        TransactionDesc: "Payment of X",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer jdAQSvaQq8xF2zvgAJikAWGHHCZm",
+        },
       }
+    );
+
+    // Check response status and send appropriate response
+    if (response.status === 200) {
+      res.status(200).json({ message: "Payment successful!" });
+    } else {
+      res
+        .status(400)
+        .json({ error: "Payment failed. Please try again later." });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      msg: "Internal Server Error",
-      status: false,
-    });
-  }
-}
-
-//replace ngrok with local tunnel
-
-async function getAccessToken(): Promise<string> {
-  const consumer_key = process.env.CONSUMER_KEY as string;
-  const consumer_secret = process.env.CONSUMER_SECRET as string;
-  const url: string =
-    "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-
-  const auth: string =
-    "Basic " +
-    Buffer.from(consumer_key + ":" + consumer_secret).toString("base64");
-
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: auth,
-      },
-    });
-    const accessToken: string = response.data.access_token;
-    return accessToken;
-  } catch (error) {
-    throw error;
+    console.error("Error processing payment:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }
