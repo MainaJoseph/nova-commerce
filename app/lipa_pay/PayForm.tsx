@@ -93,10 +93,16 @@ const PayForm: React.FC<PayFormProps> = () => {
     setIsLoading(true);
     console.log("Data>>>>>", data);
     try {
-      const response = await axios.post("/api/lipa/stkpush", {
-        PartyA: data.phone, // Use phone value from the form
-        Amount: cartTotalAmount, // Use cartTotalAmount as the amount
-      });
+      const response = await axios.post(
+        "/api/lipa/stkpush",
+        {
+          PartyA: data.phone, // Use phone value from the form
+          Amount: cartTotalAmount, // Use cartTotalAmount as the amount
+        },
+        {
+          timeout: 10000, // Specify the timeout duration in milliseconds (e.g., 10 seconds)
+        }
+      );
       if (response.status === 200) {
         toast.success("Payment successful!");
       } else {
