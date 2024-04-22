@@ -1,4 +1,3 @@
-// Import necessary modules
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
@@ -7,11 +6,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    // Retrieve PartyA (phone) and Amount from the request body
     const { PartyA, Amount } = req.body;
     const accessToken: string = await getAccessToken();
 
-    // Make API call to Safaricom MPesa API
+    console.log("Access Token:", accessToken); // Debugging log
+
     const response = await axios.post(
       "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
       {
@@ -20,10 +19,10 @@ export default async function handler(
           "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNDIyMTQyMzAx",
         Timestamp: "20240422142301",
         TransactionType: "CustomerPayBillOnline",
-        Amount: Amount, // Use Amount from the request body
-        PartyA: PartyA, // Use PartyA (phone) from the request body
+        Amount: Amount,
+        PartyA: PartyA,
         PartyB: PartyA,
-        PhoneNumber: PartyA, // Use PartyA (phone) from the request body
+        PhoneNumber: PartyA,
         CallBackURL: "https://nova-commerce.vercel.app/callbackurl",
         AccountReference: "CompanyXLTD",
         TransactionDesc: "Payment of X",
@@ -31,12 +30,11 @@ export default async function handler(
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, // Include the access token
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
 
-    // Check response status and send appropriate response
     if (response.status === 200) {
       res.status(200).json({ message: "Payment successful!" });
     } else {
@@ -44,8 +42,11 @@ export default async function handler(
         .status(400)
         .json({ error: "Payment failed. Please try again later." });
     }
-  } catch (error) {
-    console.error("Error processing payment:", error);
+  } catch (error: any) {
+    console.error(
+      "Error processing payment:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ error: "Internal server error" });
   }
 }
@@ -55,7 +56,6 @@ async function getAccessToken(): Promise<string> {
   const consumer_secret = process.env.CONSUMER_SECRET as string;
   const url: string =
     "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-
   const auth: string =
     "Basic " +
     Buffer.from(consumer_key + ":" + consumer_secret).toString("base64");
