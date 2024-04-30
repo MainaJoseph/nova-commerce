@@ -91,20 +91,19 @@ const PayForm: React.FC<PayFormProps> = () => {
 
   const onsubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
-    console.log("Data>>>>>", data);
     try {
-      const response = await axios.post("/api/lipa/stkpush", {
-        PartyA: data.phone, // Use phone value from the form
-        Amount: cartTotalAmount, // Use cartTotalAmount as the amount
+      const response = await axios.post("http://localhost:3001/api/stkpush", {
+        phone: data.phone, // Ensure phone number is taken from form data
+        amount: data.amount, // Ensure amount is taken from form data
       });
-      if (response.status === 200) {
+      if (response.data.status) {
         toast.success("Payment successful!");
       } else {
-        toast.error("Payment failed. Please try again later.");
+        toast.error(`Payment failed: ${response.data.msg}`);
       }
     } catch (error) {
-      toast.error("Payment failed. Please try again later.");
       console.error("Error submitting form:", error);
+      toast.error("Payment failed. Please check the console for more details.");
     } finally {
       setIsLoading(false);
     }
@@ -123,22 +122,23 @@ const PayForm: React.FC<PayFormProps> = () => {
           id="phone"
           label="Enter Your Phone Number"
           type="text"
-          inputMode="numeric" // Pass inputMode prop here
+          inputMode="numeric"
           disabled={isLoading}
           register={register}
-          errors={errors}
-          required
+          errors={errors} // Pass the entire errors object
         />
+
         <div className="flex items-center gap-4 mt-10">
           <label className="font-bold text-green-500">Amount:</label>
           <span className="font-semibold text-md">
             {FormatPrice(cartTotalAmount)}
           </span>
         </div>
+        {/* // In your form, update the ButtonMpesa component usage: */}
         <ButtonMpesa
-          label={isLoading ? "Loading" : "Pay"}
-          onClick={() => handleSubmit(onsubmit)()}
-          disabled={isLoading || Object.keys(errors).length > 0} // Pass disabled prop here
+          label={isLoading ? "Loading..." : "Pay"}
+          onClick={handleSubmit(onsubmit)} // Ensure that onClick is setup like this
+          disabled={isLoading || Object.keys(errors).length > 0}
         />
       </form>
     </div>

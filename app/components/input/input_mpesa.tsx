@@ -24,7 +24,7 @@ interface Input_MpesaProps<TFieldValues extends FieldValues> {
   disabled?: boolean;
   required?: boolean;
   register: UseFormRegister<TFieldValues>;
-  errors: FieldErrors;
+  errors: FieldErrors<TFieldValues>; // Using FieldErrors for the specific form values
 }
 
 const Input_Mpesa = <TFieldValues extends FieldValues>({
@@ -72,13 +72,11 @@ const Input_Mpesa = <TFieldValues extends FieldValues>({
             | "decimal"
         }
         className={`peer w-full p-4 pt-6 outline-none bg-white font-light border-2 rounded-md 
-          transition disabled:opacity-70 disabled:cursor-not-allowed 
-          ${errors[id as string] ? "border-rose-400" : "border-slate-300"}
-          ${
-            errors[id as string]
-              ? "focus:border-rose-400"
-              : "focus:border-orange-200"
-          }`}
+  transition disabled:opacity-70 disabled:cursor-not-allowed 
+  ${errors && errors[id] ? "border-rose-400" : "border-slate-300"}
+  ${
+    errors && errors[id] ? "focus:border-rose-400" : "focus:border-orange-200"
+  }`}
         onChange={handleInputChange} // Attach the event handler
       />
       <label
