@@ -3,6 +3,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -43,6 +44,13 @@ const Support = ({ currentUser }: Props) => {
               </div>
             </div>
           )}
+          <SheetFooter className="mt-8 flex-grow items-center justify-center">
+            {" "}
+            {/* Updated class */}
+            <p className="mt-4 hover:text-orange-500 text-center">
+              &copy; {new Date().getFullYear()} Nova. All rights reserved
+            </p>
+          </SheetFooter>
         </SheetContent>
       </Sheet>
     </div>
