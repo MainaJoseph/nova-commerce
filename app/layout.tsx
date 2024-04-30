@@ -13,7 +13,7 @@ import SignUpNav from "./components/nav/SignUpNav";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Frequents from "./components/faqs/Frequents";
 import Playstore from "./components/playstore/Play";
-import Support from "./components/support/page";
+import SupportClient from "./components/support/page";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -49,7 +49,7 @@ export default async function RootLayout({
             <Playstore />
             <Navy />
             <Footer />
-            <Support />
+            <SupportClient currentUser={currentUser} />
           </div>
         </CartProvider>
       </body>

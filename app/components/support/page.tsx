@@ -1,14 +1,16 @@
-import { getCurrentUser } from "@/actions/getCurrentUser";
-import SupportWidget from "./SupportWidget";
+import { SafeUser } from "@/types";
+import Support from "./Support";
 
-const Support = async () => {
-  const currentUser = await getCurrentUser();
+interface UserMenuProps {
+  currentUser: SafeUser | null;
+}
 
+const SupportClient: React.FC<UserMenuProps> = ({ currentUser }) => {
   return (
     <div>
-      <SupportWidget />
+      <Support currentUser={currentUser} />
     </div>
   );
 };
 
-export default Support;
+export default SupportClient;
