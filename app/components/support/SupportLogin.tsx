@@ -14,6 +14,15 @@ import { SafeUser } from "@/types";
 import Heading from "../Heading";
 import Button from "../Button";
 import Input from "../input/Input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import SupportSignUp from "./SupportSignUp";
 
 interface SupportLoginProps {
   currentUser: SafeUser | null;
@@ -113,8 +122,15 @@ const SupportLogin: React.FC<SupportLoginProps> = ({ currentUser }) => {
       />
       <p className="text-sm">
         Do Not Have an Acccount?{" "}
-        <Link className="underline text-orange-500" href="">
-          Sign Up
+        <Link href="">
+          <Dialog>
+            <DialogTrigger className="underline text-orange-500">
+              Sign Up
+            </DialogTrigger>
+            <DialogContent className="bg-white">
+              <SupportSignUp currentUser={currentUser} />
+            </DialogContent>
+          </Dialog>
         </Link>
       </p>
     </div>

@@ -131,12 +131,6 @@ const SupportSignUp: React.FC<SupportSignUpProps> = ({ currentUser }) => {
         label={isLoading ? "Loading" : "SignUp"}
         onClick={handleSubmit(onsubmit)}
       />
-      <p className="text-sm">
-        Already Have an Acccount?{" "}
-        <Link className="underline text-orange-500" href="">
-          Login
-        </Link>
-      </p>
     </div>
   );
 };
