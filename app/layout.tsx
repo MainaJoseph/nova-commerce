@@ -48,8 +48,8 @@ export default async function RootLayout({
             <Frequents />
             <Playstore />
             <Navy />
-            <SupportClient currentUser={currentUser} />
             <Footer />
+            <SupportClient currentUser={currentUser} />
           </div>
         </CartProvider>
       </body>

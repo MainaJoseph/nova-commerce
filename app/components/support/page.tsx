@@ -7,7 +7,7 @@ interface UserMenuProps {
 
 const SupportClient: React.FC<UserMenuProps> = ({ currentUser }) => {
   return (
-    <div className="bg-gradient-to-r from-gray-600 to-gray-400">
+    <div className="bg-slate-700">
       <Support currentUser={currentUser} />
     </div>
   );
