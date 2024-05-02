@@ -13,6 +13,7 @@ import { SafeUser } from "@/types";
 import Login from "@/app/login/page";
 import SupportLogin from "./SupportLogin";
 import Heading from "../Heading";
+import Chat from "./Chat";
 
 interface Props {
   currentUser: SafeUser | null; // Update this type definition as per your user data structure
@@ -31,6 +32,7 @@ const Support = ({ currentUser }: Props) => {
               <SheetTitle>Chat with Nova</SheetTitle>
               <SheetDescription className="mt-3">
                 Welcome to our support! How can we assist you today?
+                <Chat />
               </SheetDescription>
             </SheetHeader>
           ) : (
