@@ -76,7 +76,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           </div>
         )}
       </div>
-      {isOpen ? <BackDrop onClick={toggleOpen} /> : null}
+      {/* {isOpen ? <BackDrop onClick={toggleOpen} /> : null} */}
     </>
   );
 };

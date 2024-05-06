@@ -5,43 +5,10 @@ import { FcEngineering } from "react-icons/fc";
 import CartCount from "./CartCount";
 import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
-
 import CategoriesNav from "./CategoriesNav";
 import SearchBar from "../SearchBar";
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import LogoutDropMenu from "./LogoutDropMenu";
-import ProfileDropDownMenu from "./ProfileDropDownMenu";
+import ProfileDropDownMenuClient from "./ProfileDropDownMenuClient";
 
 const redressed = Redressed({ subsets: ["latin"], weight: ["400"] });
 
@@ -86,7 +53,7 @@ const NavBar = async () => {
             </div>
             <div className="flex items-center gap-6 md:gap-8">
               <CartCount />
-              <ProfileDropDownMenu />
+              <ProfileDropDownMenuClient />
               <UserMenu currentUser={currentUser} />
             </div>
           </div>
