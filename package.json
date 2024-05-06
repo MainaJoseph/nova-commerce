@@ -28,6 +28,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@stripe/react-stripe-js": "^2.3.2",
     "@stripe/stripe-js": "^2.1.11",
+    "@talkjs/react": "^0.1.7",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "20.8.8",
     "@types/react": "18.2.31",
@@ -74,6 +75,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
+    "talkjs": "^0.18.0",
     "typescript": "5.2.2",
     "unirest": "^0.6.0"
   },
