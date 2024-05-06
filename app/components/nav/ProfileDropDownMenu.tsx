@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import LogoutDropMenu from "./LogoutDropMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import Link from "next/link";
 
 const ProfileDropDownMenu = async () => {
   const currentUser = await getCurrentUser();
@@ -53,26 +54,26 @@ const ProfileDropDownMenu = async () => {
             </div>
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 bg-slate-800 text-white">
+        <DropdownMenuContent className="w-56 bg-slate-800 text-white ">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <CreditCard className="mr-2 h-4 w-4" />
-              <span>Billing</span>
+              <Link href="/orders">Orders</Link>
               <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <Keyboard className="mr-2 h-4 w-4" />
               <span>Keyboard shortcuts</span>
               <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
@@ -80,48 +81,48 @@ const ProfileDropDownMenu = async () => {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <Users className="mr-2 h-4 w-4" />
               <span>Team</span>
             </DropdownMenuItem>
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
+              <DropdownMenuSubTrigger className="hover:bg-slate-600 cursor-pointer">
                 <UserPlus className="mr-2 h-4 w-4" />
                 <span>Invite users</span>
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
+                <DropdownMenuSubContent className="bg-slate-800 text-white">
+                  <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
                     <Mail className="mr-2 h-4 w-4" />
                     <span>Email</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
                     <MessageSquare className="mr-2 h-4 w-4" />
                     <span>Message</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
                     <PlusCircle className="mr-2 h-4 w-4" />
                     <span>More...</span>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
-            <DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
               <Plus className="mr-2 h-4 w-4" />
               <span>New Team</span>
               <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
             <LifeBuoy className="mr-2 h-4 w-4" />
             <span>Support</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
             <LogOut className="mr-2 h-4 w-4" />
-            <span className=" cursor-pointer">
+            <span>
               <LogoutDropMenu />
             </span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
