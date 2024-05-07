@@ -23,7 +23,7 @@ const SupportWidget = async () => {
         <HoverCardTrigger>
           <BiSupport
             size={45}
-            className="bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-300 focus:outline-none rounded-bl-sm transition"
+            className=" text-orange-600 rounded-full shadow-lg hover:text-orange-400 transition"
           />
         </HoverCardTrigger>
         <HoverCardContent className="bg-slate-700 bg-opacity-70 backdrop-blur-md text-white rounded-bl-md rounded-tr-md">
