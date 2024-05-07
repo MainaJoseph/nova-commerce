@@ -27,7 +27,7 @@ export default function Notfound() {
             <div className="mt-4 md:mt-10 items-center">
               <button
                 onClick={handleGoHome}
-                className="bg-orange-500 text-white py-2 md:py-3 px-4 md:w-full rounded-tl-xl rounded-br-xl hover:opacity-80 transition shadow-xl"
+                className="bg-orange-500 text-white py-2 md:py-3 px-4 md:w-full rounded-tl-xl rounded-br-xl hover:opacity-80 transition  shadow-xl"
               >
                 Go Back Home
               </button>
@@ -36,7 +36,7 @@ export default function Notfound() {
           {/* ////////////////////////////////// */}
           <div className="w-full mb-3 md:mt-4 md:mb-[-50px] md:z-10">
             <Image
-              className="mx-auto max-w-full h-auto"
+              className="mx-auto max-w-full h-auto animate-pulse"
               src="/astro.png"
               alt="Nova app"
               width={400}
