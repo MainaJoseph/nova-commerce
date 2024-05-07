@@ -2,25 +2,21 @@
 
 import Image from "next/image";
 import Container from "./components/Container";
-import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Notfound() {
+  const router = useRouter(); // Initialize the useRouter hook
+
+  const handleGoHome = () => {
+    router.push("/"); // Navigate to the homepage when the button is clicked
+  };
   return (
     <div className="">
       <Container>
         <div className="flex flex-row md:flex-row justify-between mt-3">
-          <div className="flex flex-col gap-4 md:flex md:justify-start md:w-1/2">
+          <div className="flex flex-col gap-4 md:flex md:justify-start md:w-1/2 ">
             <div className="font-bold text-3xl md:text-7xl mt-7 md:mt-14">
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  duration: 0.25,
-                  delay: 0.5,
-                }}
-              >
-                404-error
-              </motion.span>
+              404-error
             </div>
             <div className="md:ml-10 font-semibold text-md md:text-3xl">
               PAGE NOT FOUND
@@ -29,7 +25,10 @@ export default function Notfound() {
               Your search has ventures beyound the known universe
             </div>
             <div className="mt-4 md:mt-10 items-center">
-              <button className="bg-orange-500 text-white py-2 md:py-3 px-4 md:w-full rounded-tl-xl rounded-br-xl hover:opacity-80 transition">
+              <button
+                onClick={handleGoHome}
+                className="bg-orange-500 text-white py-2 md:py-3 px-4 md:w-full rounded-tl-xl rounded-br-xl hover:opacity-80 transition shadow-xl"
+              >
                 Go Back Home
               </button>
             </div>
