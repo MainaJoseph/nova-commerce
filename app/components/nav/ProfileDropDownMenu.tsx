@@ -62,7 +62,7 @@ const ProfileDropDownMenu = async () => {
             <DropdownMenuGroup>
               <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
+                <Link href="/account">Profile</Link>
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-slate-600 cursor-pointer">
