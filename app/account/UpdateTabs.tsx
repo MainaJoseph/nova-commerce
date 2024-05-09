@@ -24,16 +24,27 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   const [activeTab, setActiveTab] = useState("account");
   const [name, setName] = useState(currentUser?.name || "");
   const [loading, setLoading] = useState(false); // Loading state
+  const [nameError, setNameError] = useState(false); // Name error state
 
-  //Fuction to update username
+  // Function to update username
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+    const newName = event.target.value;
+    setName(newName);
+
+    // Validate name
+    setNameError(newName.length < 3 || !/^[a-zA-Z\s]+$/.test(newName));
   };
 
   const handleSaveChanges = async () => {
     if (name === currentUser?.name) {
       // If the updated name is the same as the existing one, toast a warning message
       toast.warning("Username is the same");
+      return;
+    }
+
+    if (nameError) {
+      // If there's a validation error, display a toast message
+      toast.error("Please fix the input errors before saving.");
       return;
     }
 
@@ -106,7 +117,14 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                 placeholder="Updated UserName"
                 value={name}
                 onChange={handleNameChange}
+                className={nameError ? "border-red-500" : ""}
               />
+              {nameError && (
+                <div className="text-red-500">
+                  Name should be at least 3 letters long and contain only
+                  letters.
+                </div>
+              )}
             </div>
             <div className="space-y-1">
               <div>Email</div>
@@ -121,7 +139,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             <Button
               className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
               onClick={handleSaveChanges}
-              disabled={loading} // Disable button when loading is true
+              disabled={loading || nameError} // Disable button when loading is true or there's a name error
             >
               {loading ? "Loading..." : "Save changes"}{" "}
               {/* Change button text based on loading state */}
