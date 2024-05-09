@@ -13,6 +13,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import LogoutDropMenu from "../components/nav/LogoutDropMenu";
 import AccountHover from "./AccountHover";
+import UpdatedTabs from "./UpdateTabs";
 
 interface AccountProfileProps {
   currentUser: SafeUser | null;
@@ -57,7 +58,7 @@ const AccountProfile: React.FC<AccountProfileProps> = ({ currentUser }) => {
           </div>
           {/* ////////////////////////////////// */}
           <div className="w-full mb-3  md:mb-[-50px] md:z-10">
-            The other side
+            <UpdatedTabs currentUser={currentUser} />
           </div>
         </div>
       </Container>
