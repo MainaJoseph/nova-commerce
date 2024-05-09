@@ -12,6 +12,7 @@ import { IoMdWallet } from "react-icons/io";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import LogoutDropMenu from "../components/nav/LogoutDropMenu";
+import AccountHover from "./AccountHover";
 
 interface AccountProfileProps {
   currentUser: SafeUser | null;
@@ -25,19 +26,7 @@ const AccountProfile: React.FC<AccountProfileProps> = ({ currentUser }) => {
           <div className="flex flex-col gap-4 md:flex md:justify-start md:w-1/2 ">
             <div className="font-bold text-2xl">My Profile</div>
             <div className="flex flex-col gap-8 shadow-md">
-              <div className="flex flex-row ml-3 gap-2">
-                <div className="mt-2">
-                  <Avatar src={currentUser?.image} />
-                </div>
-                <div className="flex flex-col gap-0 text-sm mt-2">
-                  <div className="font-bold">
-                    <AccountName />
-                  </div>
-                  <div>
-                    <AccountEmail />
-                  </div>
-                </div>
-              </div>{" "}
+              <AccountHover currentUser={currentUser} />
               {/*//first div in the shadow */}
               <div className="hidden md:flex ml-5 flex-row gap-1 items-center cursor-pointer  text-slate-700 hover:text-orange-400">
                 <MdManageAccounts size={30} />
