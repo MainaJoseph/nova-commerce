@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SafeUser } from "@/types";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface UpdatedTabProps {
   currentUser: SafeUser | null;
@@ -21,6 +22,48 @@ interface UpdatedTabProps {
 
 const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   const [activeTab, setActiveTab] = useState("account");
+  const [name, setName] = useState(currentUser?.name || "");
+  const [loading, setLoading] = useState(false); // Loading state
+
+  //Fuction to update username
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  const handleSaveChanges = async () => {
+    if (name === currentUser?.name) {
+      // If the updated name is the same as the existing one, toast a warning message
+      toast.warning("Username is the same");
+      return;
+    }
+
+    setLoading(true); // Set loading state to true when API call starts
+    try {
+      const updatedUser = await fetch("/api/users/updateName", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: currentUser?.id,
+          name: name,
+        }),
+      });
+
+      // Handle response from API as per your requirement
+      console.log("User updated successfully", updatedUser);
+      toast.success("User updated successfully");
+
+      // Reload the page after successful update
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      toast.error("Error updating user");
+    } finally {
+      setLoading(false); // Set loading state to false when API call ends
+    }
+  };
+
   return (
     <Tabs defaultValue="account" className="w-full">
       <TabsList className="grid w-full grid-cols-2 gap-16">
@@ -58,7 +101,12 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Updated UserName" />
+              <Input
+                id="name"
+                placeholder="Updated UserName"
+                value={name}
+                onChange={handleNameChange}
+              />
             </div>
             <div className="space-y-1">
               <div>Email</div>
@@ -70,8 +118,13 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1">
-              Save changes
+            <Button
+              className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+              onClick={handleSaveChanges}
+              disabled={loading} // Disable button when loading is true
+            >
+              {loading ? "Loading..." : "Save changes"}{" "}
+              {/* Change button text based on loading state */}
             </Button>
           </CardFooter>
         </Card>
