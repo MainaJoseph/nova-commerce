@@ -33,6 +33,7 @@ import LogoutDropMenu from "./LogoutDropMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Link from "next/link";
 import BackDrop from "./BackDrop";
+import { FaAngleDown } from "react-icons/fa";
 
 const ProfileDropDownMenu = async () => {
   const currentUser = await getCurrentUser();
@@ -50,8 +51,8 @@ const ProfileDropDownMenu = async () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             {currentUser && (
-              <div className="font-normal text-slate-800 text-sm cursor-pointer">
-                Hi, {getFirstName(currentUser.name)}{" "}
+              <div className=" flex flex-row items-center gap-1 font-normal text-slate-800 text-sm cursor-pointer">
+                Hi, {getFirstName(currentUser.name)} <FaAngleDown />
                 {/* Displaying the greeting with user's first name */}
               </div>
             )}
