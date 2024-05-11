@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SafeUser } from "@/types";
-import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   AlertDialog,
@@ -34,32 +34,54 @@ interface UpdatedTabProps {
 const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   const [activeTab, setActiveTab] = useState("account");
   const [name, setName] = useState(currentUser?.name || "");
-  const [loading, setLoading] = useState(false); // Loading state
-  const [nameError, setNameError] = useState(false); // Name error state
+  const [loading, setLoading] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  // Function to update username
+  // Handle name change event
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newName = event.target.value;
     setName(newName);
-
-    // Validate name
     setNameError(newName.length < 3 || !/^[a-zA-Z\s]+$/.test(newName));
   };
 
+  // Handle new password change event
+  const handleNewPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newPassword = event.target.value;
+    setNewPassword(newPassword);
+    setPasswordError(
+      newPassword !== confirmPassword ? "Passwords entered don't match" : ""
+    );
+  };
+
+  // Handle confirm password change event
+  const handleConfirmPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const confirmPassword = event.target.value;
+    setConfirmPassword(confirmPassword);
+    setPasswordError(
+      newPassword !== confirmPassword ? "Passwords entered don't match" : ""
+    );
+  };
+
+  // Handle saving changes
   const handleSaveChanges = async () => {
     if (name === currentUser?.name) {
-      // If the updated name is the same as the existing one, toast a warning message
       toast.warning("Username is the same");
       return;
     }
 
-    if (nameError) {
-      // If there's a validation error, display a toast message
+    if (nameError || passwordError) {
       toast.error("Please fix the input errors before saving.");
       return;
     }
 
-    setLoading(true); // Set loading state to true when API call starts
+    setLoading(true);
     try {
       // Check if the last username change was within the last 14 days
       const lastChangeDate = new Date(currentUser?.updatedAt || 0);
@@ -69,7 +91,6 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
       );
 
       if (daysSinceLastChange < 7) {
-        // If less than 14 days, prevent the change and display a toast
         const remainingDays = 7 - daysSinceLastChange;
         toast.warning(
           `You can change your username again in ${remainingDays} days.`
@@ -89,7 +110,6 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
         }),
       });
 
-      // Handle response from API as per your requirement
       console.log("User updated successfully", updatedUser);
       toast.success("User updated successfully");
 
@@ -99,13 +119,14 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
       console.error("Error updating user:", error);
       toast.error("Error updating user");
     } finally {
-      setLoading(false); // Set loading state to false when API call ends
+      setLoading(false);
     }
   };
 
   return (
     <Tabs defaultValue="account" className="w-full">
       <TabsList className="grid w-full grid-cols-2 gap-16">
+        {/* Account Tab */}
         <TabsTrigger
           value="account"
           className={`py-2 ${
@@ -113,10 +134,11 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
               ? "bg-orange-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
-          onClick={() => setActiveTab("account")} // Set active tab on click
+          onClick={() => setActiveTab("account")}
         >
           Account
         </TabsTrigger>
+        {/* Password Tab */}
         <TabsTrigger
           value="password"
           className={`py-2 ${
@@ -124,17 +146,18 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
               ? "bg-orange-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
-          onClick={() => setActiveTab("password")} // Set active tab on click
+          onClick={() => setActiveTab("password")}
         >
           Password
         </TabsTrigger>
       </TabsList>
+      {/* Account Tab Content */}
       <TabsContent value="account">
         <Card>
           <CardHeader>
             <CardTitle>Account</CardTitle>
             <CardDescription>
-              Make changes to your account here. Click save when youre done.
+              Make changes to your account here. Click save when you are done.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -154,6 +177,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                 </div>
               )}
             </div>
+            {/* Email Section */}
             <div className="space-y-1">
               <div>Email</div>
               <div className=" border-[1px] border-slate-400 py-2 rounded-md cursor-not-allowed hover:border-spacing-1 hover:border-sky-300">
@@ -163,23 +187,24 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
               </div>
             </div>
           </CardContent>
+          {/* Save Changes Button */}
           <CardFooter>
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button
                   className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
-                  disabled={loading || nameError} // Disable button when loading is true or there's a name error
+                  disabled={loading || nameError}
                 >
-                  {loading ? "Loading..." : "Save changes"}{" "}
-                  {/* Change button text based on loading state */}
+                  {loading ? "Loading..." : "Save changes"}
                 </Button>
               </AlertDialogTrigger>
+              {/* Confirmation Dialog */}
               <AlertDialogContent className="bg-white text-slate-800">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. You will not be able to change
-                    your username for the next 1 week
+                    your username for the next 1 week.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -198,6 +223,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           </CardFooter>
         </Card>
       </TabsContent>
+      {/* Password Tab Content */}
       <TabsContent value="password">
         <Card>
           <CardHeader>
@@ -208,14 +234,31 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
+              <Label htmlFor="current">New password</Label>
+              <Input
+                id="current"
+                type="password"
+                value={newPassword}
+                onChange={handleNewPasswordChange}
+                className={passwordError ? "border-red-500" : ""}
+              />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
+              <Label htmlFor="new">Confirm password</Label>
+              <Input
+                id="new"
+                type="password"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                className={passwordError ? "border-red-500" : ""}
+              />
+              {/* Password Error Message */}
+              {passwordError && (
+                <div className="text-red-500 text-sm">{passwordError}</div>
+              )}
             </div>
           </CardContent>
+          {/* Save Password Button */}
           <CardFooter>
             <Button className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1">
               Save password
