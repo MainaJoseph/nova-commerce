@@ -14,6 +14,17 @@ import { signOut } from "next-auth/react";
 import LogoutDropMenu from "../components/nav/LogoutDropMenu";
 import AccountHover from "./AccountHover";
 import UpdatedTabs from "./UpdateTabs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface AccountProfileProps {
   currentUser: SafeUser | null;
@@ -47,13 +58,36 @@ const AccountProfile: React.FC<AccountProfileProps> = ({ currentUser }) => {
                   <Link href="/orders">Orders</Link>
                 </div>
               </div>
-              <div className="flex ml-5 flex-row gap-1 items-center cursor-pointer  text-slate-700 hover:text-orange-400 mb-7">
-                <MdLogout size={27} />
-                <div className="text-sm text-center font-semibold">
-                  <LogoutDropMenu />
-                </div>
-              </div>
-              {/*//last div in the shadow */}
+              <AlertDialog>
+                <AlertDialogTrigger>
+                  <div className="flex ml-5 flex-row gap-1 items-center cursor-pointer  text-slate-700 hover:text-orange-400 mb-7">
+                    <MdLogout size={27} />
+                    <div className="text-sm text-center font-semibold">
+                      Logout
+                    </div>
+                  </div>
+                </AlertDialogTrigger>
+                {/* Confirmation Dialog */}
+                <AlertDialogContent className="bg-white text-slate-800">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      You will be logout from Nova. But do not worry you can
+                      Login again😊.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="bg-slate-700 hover:bg-slate-500 text-white transition translate-y-1">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction className="bg-rose-500 hover:bg-rose-300-orange-300 text-white transition translate-y-1">
+                      <LogoutDropMenu />
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </div>
           {/* ////////////////////////////////// */}
