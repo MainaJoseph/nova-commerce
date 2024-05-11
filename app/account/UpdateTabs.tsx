@@ -61,6 +61,23 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
 
     setLoading(true); // Set loading state to true when API call starts
     try {
+      // Check if the last username change was within the last 14 days
+      const lastChangeDate = new Date(currentUser?.updatedAt || 0);
+      const currentDate = new Date();
+      const daysSinceLastChange = Math.ceil(
+        (currentDate.getTime() - lastChangeDate.getTime()) / (1000 * 3600 * 24)
+      );
+
+      if (daysSinceLastChange < 7) {
+        // If less than 14 days, prevent the change and display a toast
+        const remainingDays = 7 - daysSinceLastChange;
+        toast.warning(
+          `You can change your username again in ${remainingDays} days.`
+        );
+        return;
+      }
+
+      // Proceed with username change
       const updatedUser = await fetch("/api/users/updateName", {
         method: "PUT",
         headers: {
@@ -162,7 +179,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. You will not be able to change
-                    your username for the next 2 weeks
+                    your username for the next 1 week
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
