@@ -47,7 +47,7 @@ const AccountProfile: React.FC<AccountProfileProps> = ({ currentUser }) => {
                   <Link href="/orders">Orders</Link>
                 </div>
               </div>
-              <div className="hidden  md:flex ml-5 flex-row gap-1 items-center cursor-pointer  text-slate-700 hover:text-orange-400 mb-7">
+              <div className="flex ml-5 flex-row gap-1 items-center cursor-pointer  text-slate-700 hover:text-orange-400 mb-7">
                 <MdLogout size={27} />
                 <div className="text-sm text-center font-semibold">
                   <LogoutDropMenu />

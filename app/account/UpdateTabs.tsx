@@ -15,6 +15,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SafeUser } from "@/types";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface UpdatedTabProps {
   currentUser: SafeUser | null;
@@ -120,7 +131,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                 className={nameError ? "border-red-500" : ""}
               />
               {nameError && (
-                <div className="text-red-500">
+                <div className="text-red-500 text-sm">
                   Name should be at least 3 letters long and contain only
                   letters.
                 </div>
@@ -136,14 +147,37 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button
-              className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
-              onClick={handleSaveChanges}
-              disabled={loading || nameError} // Disable button when loading is true or there's a name error
-            >
-              {loading ? "Loading..." : "Save changes"}{" "}
-              {/* Change button text based on loading state */}
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button
+                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                  disabled={loading || nameError} // Disable button when loading is true or there's a name error
+                >
+                  {loading ? "Loading..." : "Save changes"}{" "}
+                  {/* Change button text based on loading state */}
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="bg-white text-slate-800">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. You will not be able to change
+                    your username for the next 2 weeks
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-rose-500 hover:bg-rose-300 text-white transition translate-y-1">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                    onClick={handleSaveChanges}
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardFooter>
         </Card>
       </TabsContent>
