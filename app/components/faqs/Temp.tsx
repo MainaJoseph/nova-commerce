@@ -28,9 +28,9 @@ const Temp = () => {
             </span>
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-1" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -50,9 +50,9 @@ const Temp = () => {
             </span>
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400 font-normal">
               {openItem === "item-2" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -74,9 +74,9 @@ const Temp = () => {
 
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-3" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -100,9 +100,9 @@ const Temp = () => {
 
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-4" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -124,9 +124,9 @@ const Temp = () => {
 
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-5" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -148,9 +148,9 @@ const Temp = () => {
 
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-6" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
@@ -171,9 +171,9 @@ const Temp = () => {
             </span>
             <span className="absolute right-0 top-1/2 transform -translate-y-1/2 text-orange-400">
               {openItem === "item-7" ? (
-                <FaMinus size={23} />
+                <FaMinus size={18} />
               ) : (
-                <FaPlus size={23} />
+                <FaPlus size={18} />
               )}
             </span>
           </AccordionTrigger>
