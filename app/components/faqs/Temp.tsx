@@ -7,8 +7,8 @@ import {
 
 const Temp = () => {
   return (
-    <div className="text-md md:mt-20">
-      <Accordion type="single">
+    <div className="text-md md:mt-20 w-full">
+      <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger className="font-semibold">
             How can I contact Nova Customer Support?
