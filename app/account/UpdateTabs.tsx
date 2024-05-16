@@ -27,6 +27,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 interface UpdatedTabProps {
   currentUser: SafeUser | null;
 }
@@ -39,6 +41,8 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Handle name change event
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +71,16 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
     setPasswordError(
       newPassword !== confirmPassword ? "Passwords entered don't match" : ""
     );
+  };
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  //Toggle Confirm Password Visibility
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   // Handle saving changes
@@ -235,23 +249,40 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="current">New password</Label>
-              <Input
-                id="current"
-                type="password"
-                value={newPassword}
-                onChange={handleNewPasswordChange}
-                className={passwordError ? "border-red-500" : ""}
-              />
+              <div className="relative">
+                <Input
+                  id="current"
+                  type={showPassword ? "text" : "password"}
+                  value={newPassword}
+                  onChange={handleNewPasswordChange}
+                  className={passwordError ? "border-red-500" : ""}
+                />
+                <button
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
             </div>
             <div className="space-y-1">
               <Label htmlFor="new">Confirm password</Label>
-              <Input
-                id="new"
-                type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                className={passwordError ? "border-red-500" : ""}
-              />
+              <div className="relative">
+                <Input
+                  id="new"
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  className={passwordError ? "border-red-500" : ""}
+                />
+                <button
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+
               {/* Password Error Message */}
               {passwordError && (
                 <div className="text-red-500 text-sm">{passwordError}</div>
