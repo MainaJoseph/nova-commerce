@@ -6,16 +6,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { userId, sessionId, sender, text, type } = req.body;
+    const { userId, sessionId, sender, text, type, timestamp } = req.body;
 
     try {
       const message = await prisma.chatMessage.create({
         data: {
-          user: { connect: { id: userId } },
-          session: { connect: { id: sessionId } },
+          userId,
+          sessionId,
           sender,
           text,
           type,
+          timestamp, // Include timestamp
         },
       });
       res.status(201).json(message);

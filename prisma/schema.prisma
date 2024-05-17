@@ -96,16 +96,19 @@ model Order {
 }
 
 model ChatMessage {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
   sender     String
   text       String
   type       String
+  timestamp  String   // Add this field
   createdAt  DateTime @default(now())
-  user       User @relation(fields: [userId], references: [id])
-  sessionId  String @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  sessionId  String   @db.ObjectId
   session    ChatSession @relation(fields: [sessionId], references: [id])
 }
+
+
 
 model ChatSession {
   id         String     @id @default(auto()) @map("_id") @db.ObjectId

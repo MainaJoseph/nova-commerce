@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
 import Avatar from "../Avatar";
 import { SafeUser } from "@/types";
 import ChatHeader from "./ChatHeader";
-import axios, { AxiosResponse } from "axios";
 
 interface ChatComponentProps {
   currentUser: SafeUser | null;
@@ -14,6 +14,7 @@ interface Message {
   sender: string;
   text: string;
   type: "sent" | "received";
+  timestamp: string;
 }
 
 interface ChatSession {
@@ -28,7 +29,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
-      // Fetch user's chat sessions
       axios
         .get(`/api/chat/chats?userId=${currentUser.id}`)
         .then((response: AxiosResponse<ChatSession[]>) => {
@@ -41,6 +41,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
                 sender: "Admin",
                 text: "Hi, how can I help you today?",
                 type: "received",
+                timestamp: new Date().toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }), // Add timestamp
               },
               ...lastSession.messages,
             ]);
@@ -66,6 +70,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
               sender: "Admin",
               text: "Hi, how can I help you today?",
               type: "received",
+              timestamp: new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              }), // Add timestamp
             },
           ]);
         })
@@ -81,6 +89,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
         sender: "User",
         text: inputValue,
         type: "sent",
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }), // Add timestamp
       };
 
       axios
@@ -90,9 +102,13 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
           sender: newMessage.sender,
           text: newMessage.text,
           type: newMessage.type,
+          timestamp: newMessage.timestamp, // Include timestamp in the request
         })
         .then((response: AxiosResponse<Message>) => {
-          setMessages((prevMessages) => [...prevMessages, response.data]);
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { ...response.data, timestamp: newMessage.timestamp },
+          ]);
           setInputValue("");
         })
         .catch((error) => {
@@ -123,6 +139,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
               } text-white p-2 rounded-lg`}
             >
               <p className="whitespace-pre-line">{message.text}</p>
+              <p className="text-xs text-white text-right mt-1">
+                {message.timestamp}
+              </p>{" "}
+              {/* Display timestamp */}
             </div>
           </div>
         ))}
