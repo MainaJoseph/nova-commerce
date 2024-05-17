@@ -26,6 +26,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     if (currentUser) {
@@ -50,6 +51,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
         })
         .catch((error) => {
           console.error("Error fetching chat sessions:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Set loading to false after fetching messages
         });
     }
   }, [currentUser]);
@@ -71,6 +75,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
         })
         .catch((error) => {
           console.error("Error creating new session:", error);
+        })
+        .finally(() => {
+          setLoading(false); // Set loading to false after creating a new session
         });
     }
   };
@@ -151,7 +158,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
         />
         <button
           onClick={handleSendMessage}
-          className="ml-2 p-2 bg-orange-500 text-white rounded"
+          className={`ml-2 p-2 bg-orange-500 text-white rounded ${
+            loading ? "cursor-not-allowed bg-orange-300" : "cursor-pointer"
+          }`}
+          disabled={loading} // Disable button when loading is true
         >
           Send
         </button>
