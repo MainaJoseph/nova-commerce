@@ -1,42 +1,89 @@
 "use client";
 
-// components/ChatComponent.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "../Avatar";
 import { SafeUser } from "@/types";
 import ChatHeader from "./ChatHeader";
+import axios, { AxiosResponse } from "axios";
 
 interface ChatComponentProps {
   currentUser: SafeUser | null;
 }
 
+interface Message {
+  sender: string;
+  text: string;
+  type: "sent" | "received";
+}
+
+interface ChatSession {
+  id: string;
+  messages: Message[];
+}
+
 const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
-  const [messages, setMessages] = useState([
-    {
-      sender: "Admin",
-      text: "Hi, how can I help you today?",
-      type: "received",
-    },
-    {
-      sender: "User",
-      text: "Hey, I'm having \trouble with my account.",
-      type: "sent",
-    },
-    {
-      sender: "Sofia Davis",
-      text: "What seems to be the problem?",
-      type: "received",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (currentUser) {
+      // Fetch user's chat sessions
+      axios
+        .get(`/api/chat/chats?userId=${currentUser.id}`)
+        .then((response: AxiosResponse<ChatSession[]>) => {
+          const sessions = response.data;
+          if (sessions.length > 0) {
+            const lastSession = sessions[sessions.length - 1];
+            setSessionId(lastSession.id);
+            setMessages(lastSession.messages);
+          } else {
+            createNewSession();
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching chat sessions:", error);
+        });
+    }
+  }, [currentUser]);
+
+  const createNewSession = () => {
+    if (currentUser) {
+      axios
+        .post("/api/chat/chats", { userId: currentUser.id })
+        .then((response: AxiosResponse<ChatSession>) => {
+          const newSession = response.data;
+          setSessionId(newSession.id);
+        })
+        .catch((error) => {
+          console.error("Error creating new session:", error);
+        });
+    }
+  };
 
   const handleSendMessage = () => {
-    if (inputValue.trim()) {
-      setMessages([
-        ...messages,
-        { sender: "User", text: inputValue, type: "sent" },
-      ]);
-      setInputValue("");
+    if (inputValue.trim() && sessionId && currentUser) {
+      const newMessage: Message = {
+        sender: "User",
+        text: inputValue,
+        type: "sent",
+      };
+
+      axios
+        .post("/api/chat/messages", {
+          userId: currentUser.id,
+          sessionId,
+          sender: newMessage.sender,
+          text: newMessage.text,
+          type: newMessage.type,
+        })
+        .then((response: AxiosResponse<Message>) => {
+          setMessages((prevMessages) => [...prevMessages, response.data]);
+          setInputValue("");
+        })
+        .catch((error) => {
+          console.error("Error sending message:", error);
+        });
     }
   };
 

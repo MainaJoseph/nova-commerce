@@ -1,7 +1,6 @@
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
-
 }
 
 generator client {
@@ -14,12 +13,12 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String?  @db.String
-  access_token       String?  @db.String
+  refresh_token      String? @db.String
+  access_token       String? @db.String
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?  @db.String
+  id_token           String? @db.String
   session_state      String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -27,17 +26,15 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-
-
 model User {
   id                 String @id @default(auto()) @map("_id") @db.ObjectId
   name               String?
-  email              String?   @unique
+  email              String? @unique
   emailVerified      DateTime?
   image              String?
   hashedPassword     String?
-  active             Boolean  @default(false)
-  createdAt          DateTime? @default(now()) // Add default value here
+  active             Boolean @default(false)
+  createdAt          DateTime? @default(now())
   updatedAt          DateTime? @updatedAt @default(now())
   role               Role @default(USER)
   lastUsernameChange DateTime? @default(now())
@@ -45,21 +42,19 @@ model User {
   orders             Order[]
   reviews            Review[]
   activateToken      ActivateToken[]
+  chatMessages       ChatMessage[]
+  chatSessions       ChatSession[]
 }
 
-
 model ActivateToken {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  token       String  @unique
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  token       String @unique
   activateAt  DateTime?
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @updatedAt @default(now())
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String  @db.ObjectId
+  user        User @relation(fields: [userId], references: [id])
+  userId      String @db.ObjectId
 }
-
-
-
 
 model Product {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
@@ -80,14 +75,13 @@ model Review {
   rating       Int
   comment      String
   createdDate  DateTime @default(now())
-  pinned       Boolean @default(false) // New field to indicate whether the review is pinned or not
+  pinned       Boolean @default(false)
   product      Product @relation(fields: [productId], references: [id])
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
 model Order {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId    
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   userId   String @db.ObjectId
   amount   Float
   currency String
@@ -98,9 +92,28 @@ model Order {
   products         CartProductType[]
   address          Address?
 
-   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model ChatMessage {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String @db.ObjectId
+  sender     String
+  text       String
+  type       String
+  createdAt  DateTime @default(now())
+  user       User @relation(fields: [userId], references: [id])
+  sessionId  String @db.ObjectId
+  session    ChatSession @relation(fields: [sessionId], references: [id])
+}
+
+model ChatSession {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String     @db.ObjectId
+  createdAt  DateTime   @default(now())
+  messages   ChatMessage[]
+  user       User       @relation(fields: [userId], references: [id])
+}
 
 type CartProductType {
   id String
@@ -128,8 +141,8 @@ type Address {
   state String
 }
 
-enum Role{
-    USER
-    ADMIN
-    AGENT
+enum Role {
+  USER
+  ADMIN
+  AGENT
 }
