@@ -36,7 +36,14 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
           if (sessions.length > 0) {
             const lastSession = sessions[sessions.length - 1];
             setSessionId(lastSession.id);
-            setMessages(lastSession.messages);
+            setMessages([
+              {
+                sender: "Admin",
+                text: "Hi, how can I help you today?",
+                type: "received",
+              },
+              ...lastSession.messages,
+            ]);
           } else {
             createNewSession();
           }
@@ -54,6 +61,13 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
         .then((response: AxiosResponse<ChatSession>) => {
           const newSession = response.data;
           setSessionId(newSession.id);
+          setMessages([
+            {
+              sender: "Admin",
+              text: "Hi, how can I help you today?",
+              type: "received",
+            },
+          ]);
         })
         .catch((error) => {
           console.error("Error creating new session:", error);
@@ -94,7 +108,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+    <div className="w-full bg-gray-900 rounded-lg overflow-hidden shadow-lg">
       <div className="p-4 bg-gray-700 h-64 overflow-y-scroll">
         {messages.map((message, index) => (
           <div
@@ -105,7 +119,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
           >
             <div
               className={`${
-                message.type === "sent" ? "bg-orange-500" : "bg-gray-800"
+                message.type === "sent" ? "bg-orange-500" : "bg-slate-800"
               } text-white p-2 rounded-lg`}
             >
               <p className="whitespace-pre-line">{message.text}</p>
