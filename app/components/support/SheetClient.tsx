@@ -13,25 +13,33 @@ import SupportLogin from "./SupportLogin";
 import Heading from "../Heading";
 import { SafeUser } from "@/types";
 import { getCurrentUser } from "@/actions/getCurrentUser";
+import ChatHeader from "./ChatHeader";
 
 interface Props {
   currentUser: SafeUser | null; // Update this type definition as per your user data structure
 }
 
 const SheetClient = ({ currentUser }: Props) => {
+  const sheetContentClasses = currentUser
+    ? "text-white bg-slate-600"
+    : "text-slate-800 bg-white";
+
   return (
     <div>
       <Sheet>
         <SheetTrigger>
           <SupportWidget />
         </SheetTrigger>
-        <SheetContent className="bg-white border-slate-800">
+        <SheetContent className={sheetContentClasses}>
           {currentUser ? (
             <SheetHeader>
               <SheetTitle>Chat with Nova</SheetTitle>
               <SheetDescription className="mt-3">
                 Welcome to our support! How can we assist you today?
-                <Chat />
+                <div className=" mt-16 flex flex-col gap-0">
+                  <ChatHeader currentUser={currentUser} />
+                  <Chat currentUser={currentUser} />
+                </div>
               </SheetDescription>
             </SheetHeader>
           ) : (

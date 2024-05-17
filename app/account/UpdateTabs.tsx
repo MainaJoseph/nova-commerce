@@ -196,7 +196,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
               <div>Email</div>
               <div className=" border-[1px] border-slate-400 py-2 rounded-md cursor-not-allowed hover:border-spacing-1 hover:border-sky-300">
                 <span className="ml-3 text-slate-500 text-sm">
-                  Youremail@gmail.com
+                  youremail@domain.com
                 </span>
               </div>
             </div>
@@ -248,10 +248,10 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="current">New password</Label>
+              <Label htmlFor="new">New password</Label>
               <div className="relative">
                 <Input
-                  id="current"
+                  id="new"
                   type={showPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={handleNewPasswordChange}
@@ -266,10 +266,10 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
               </div>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="new">Confirm password</Label>
+              <Label htmlFor="confirm">Confirm password</Label>
               <div className="relative">
                 <Input
-                  id="new"
+                  id="confirm"
                   type={showConfirmPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
