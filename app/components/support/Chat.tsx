@@ -14,7 +14,7 @@ interface Message {
   sender: string;
   text: string;
   type: "sent" | "received";
-  timestamp: string;
+  timestamp?: string; // Make timestamp optional
 }
 
 interface ChatSession {
@@ -41,10 +41,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
                 sender: "Admin",
                 text: "Hi, how can I help you today?",
                 type: "received",
-                timestamp: new Date().toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }), // Add timestamp
               },
               ...lastSession.messages,
             ]);
@@ -70,10 +66,6 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
               sender: "Admin",
               text: "Hi, how can I help you today?",
               type: "received",
-              timestamp: new Date().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              }), // Add timestamp
             },
           ]);
         })
@@ -139,10 +131,11 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
               } text-white p-2 rounded-lg`}
             >
               <p className="whitespace-pre-line">{message.text}</p>
-              <p className="text-xs text-white text-right mt-1">
-                {message.timestamp}
-              </p>{" "}
-              {/* Display timestamp */}
+              {message.timestamp && ( // Conditionally render timestamp
+                <p className="text-xs text-white text-right mt-1">
+                  {message.timestamp}
+                </p>
+              )}
             </div>
           </div>
         ))}
