@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import ButtonDelivery from "../components/ButtonDelivery";
 
 interface PayClientProps {
   currentUser: SafeUser | null;
@@ -76,7 +77,9 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
           {/* Accordion for Payment Options */}
           <Accordion type="single" collapsible className="w-full mt-4">
             <AccordionItem value="item-1">
-              <AccordionTrigger>Pay with Card</AccordionTrigger>
+              <AccordionTrigger className=" hover:text-orange-500 text-orange-500 font-semibold">
+                Pay with Card
+              </AccordionTrigger>
               <AccordionContent>
                 <div className="text-sm flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                   <div className="flex flex-col justify-between font-semibold items-center md:flex-row">
@@ -112,7 +115,9 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
             </AccordionItem>
 
             <AccordionItem value="item-2">
-              <AccordionTrigger>Lipa na Mpesa</AccordionTrigger>
+              <AccordionTrigger className=" hover:text-green-600 text-green-600 font-semibold">
+                Lipa na Mpesa
+              </AccordionTrigger>
               <AccordionContent>
                 <div className="text-sm flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                   <div className="flex flex-col justify-between font-semibold items-center md:flex-row">
@@ -126,6 +131,31 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
                   </div>
                   <div className="mt-1 md:mt-0 w-full md:w-auto">
                     <ButtonMpesa
+                      label={currentUser ? "Pay" : "Login To Checkout"}
+                      onClick={() => {
+                        currentUser
+                          ? router.push("/lipa_pay")
+                          : router.push("/login");
+                      }}
+                      google={currentUser ? false : true}
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="font-semibold text-sky-600 hover:text-sky-600">
+                Pay After Delivery
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                  <div className="flex flex-col justify-between font-semibold items-center md:flex-row gap-2">
+                    <span>Cash</span>
+                    <Image src="/pd.png" alt="Cash" width={80} height={40} />
+                  </div>
+                  <div className="mt-1 md:mt-0 w-full md:w-auto">
+                    <ButtonDelivery
                       label={currentUser ? "Pay" : "Login To Checkout"}
                       onClick={() => {
                         currentUser
