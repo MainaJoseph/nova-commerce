@@ -146,7 +146,7 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
 
             <AccordionItem value="item-3">
               <AccordionTrigger className="font-semibold text-sky-600 hover:text-sky-600">
-                Pay After Delivery
+                Pay On Delivery
               </AccordionTrigger>
               <AccordionContent>
                 <div className="text-sm flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
