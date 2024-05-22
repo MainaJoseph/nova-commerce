@@ -64,7 +64,7 @@ const Footer = () => {
             </Link>
             <Link href="#" className="hover:underline">
               {" "}
-              Jumia Payment Information Guidelines
+              Nova Payment Information Guidelines
             </Link>
           </FooterList>
           <FooterList>
