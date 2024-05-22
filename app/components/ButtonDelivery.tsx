@@ -46,7 +46,7 @@ const ButtonDelivery: React.FC<ButtonDeliveryProps> = ({
     ${google ? "bg-slate-100 border-slate-300" : "bg-sky-600 border-sky-600 "}
     ${google ? "text-black" : "text-white "}
     ${outline ? "border-slate-500" : "border-sky-600"}
-    ${outline ? "text-white" : "text-black"}
+    ${outline ? "text-white" : "text-white"}
     ${small ? "text-sm font-light" : "text-md font-semibold"}
     ${small ? "py-1 px-2 border-1[px]" : "py-3 px-4 border-2"}
     ${custom ? custom : ""}

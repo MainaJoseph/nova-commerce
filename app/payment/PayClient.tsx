@@ -159,7 +159,7 @@ const PayClient: React.FC<PayClientProps> = ({ currentUser }) => {
                       label={currentUser ? "Pay" : "Login To Checkout"}
                       onClick={() => {
                         currentUser
-                          ? router.push("/lipa_pay")
+                          ? router.push("/payment/on_delivery")
                           : router.push("/login");
                       }}
                       google={currentUser ? false : true}
