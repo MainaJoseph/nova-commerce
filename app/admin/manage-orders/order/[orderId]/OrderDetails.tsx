@@ -5,15 +5,11 @@ import Status from "@/app/components/Status";
 import { FormatPrice } from "@/utils/FormatPrice";
 import { Order } from "@prisma/client";
 import moment from "moment";
-import {
-  MdAccessTimeFilled,
-  MdArrowBack,
-  MdDeliveryDining,
-  MdDone,
-} from "react-icons/md";
+import { MdAccessTimeFilled, MdDeliveryDining, MdDone } from "react-icons/md";
 import OrderItem from "./OrderItem";
-import Link from "next/link";
-import Button from "@/app/components/Button";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,16 +27,51 @@ interface OrderDetailsProps {
 }
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
+  const [currentOrder, setCurrentOrder] = useState(order);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleMarkAsPaid = async () => {
+    if (currentOrder.status === "complete") {
+      toast.warning("Order is already marked as paid");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(`/api/orders/${order.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const updatedOrder = await response.json();
+        toast.success("Order marked as paid");
+        setCurrentOrder(updatedOrder);
+        router.refresh(); // Refresh the page
+      } else {
+        console.error("Failed to update order status");
+        toast.error("Failed to mark as paid");
+      }
+    } catch (error) {
+      console.error("An error occurred while updating order status:", error);
+      toast.error("An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-[1150px] m-auto flex flex-col gap-2">
       <div className="mt-8">
         <Heading title="Order Details" />
       </div>
       <div>Order ID: {order.id}</div>
-
       <div>Ref NO: {order.paymentIntentId}</div>
       <div>
-        Total Amaount:{" "}
+        Total Amount:{" "}
         <span className="font-bold">{FormatPrice(order.amount)}</span>
       </div>
       <div className="flex gap-2 items-center">
@@ -117,10 +148,12 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
         <AlertDialog>
           <AlertDialogTrigger>
             <button
-              onClick={() => {}}
-              className="py-2 px-3 rounded-md hover:translate-y-1 transition hover:font-semibold text-white shadow-md border bg-sky-600 hover:bg-sky-500"
+              className={`py-2 px-3 rounded-md hover:translate-y-1 transition hover:font-semibold text-white shadow-md border bg-sky-600 hover:bg-sky-500 ${
+                isLoading ? "cursor-not-allowed opacity-50" : ""
+              }`}
+              disabled={isLoading}
             >
-              Mark as paid
+              {isLoading ? "Loading..." : "Mark as Paid"}
             </button>
           </AlertDialogTrigger>
           <AlertDialogContent className="bg-white text-slate-800">
@@ -134,8 +167,14 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
               <AlertDialogCancel className="bg-rose-500 hover:bg-rose-400 text-white">
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction className="bg-sky-600 hover:bg-sky-500 text-white">
-                Continue
+              <AlertDialogAction
+                className={`bg-sky-600 hover:bg-sky-500 text-white ${
+                  isLoading ? "cursor-not-allowed opacity-50" : ""
+                }`}
+                onClick={handleMarkAsPaid}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Continue"}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
