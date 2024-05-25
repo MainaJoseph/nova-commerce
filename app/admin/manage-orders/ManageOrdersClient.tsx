@@ -59,7 +59,8 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
       return {
         id: order.id,
         customer: order.user.name,
-        amount: FormatPrice(order.amount / 100),
+        email: order.user.email,
+        amount: FormatPrice(order.amount),
         paymentStatus: order.status,
         date: moment(order.createdDate).fromNow(),
         deliveryStatus: order.deliveryStatus,
@@ -68,8 +69,9 @@ const ManageOrdersClient: React.FC<ManageOrdersClientProps> = ({ orders }) => {
   }
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 220 },
+    { field: "id", headerName: "ID", width: 120 },
     { field: "customer", headerName: "Customer Name", width: 130 },
+    { field: "email", headerName: "Customer Email", width: 180 },
     {
       field: "amount",
       headerName: "Amaount (Kes)",
