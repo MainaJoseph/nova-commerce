@@ -5,8 +5,14 @@ import Status from "@/app/components/Status";
 import { FormatPrice } from "@/utils/FormatPrice";
 import { Order } from "@prisma/client";
 import moment from "moment";
-import { MdAccessTimeFilled, MdDeliveryDining, MdDone } from "react-icons/md";
+import {
+  MdAccessTimeFilled,
+  MdArrowBack,
+  MdDeliveryDining,
+  MdDone,
+} from "react-icons/md";
 import OrderItem from "./OrderItem";
+import Link from "next/link";
 
 interface OrderDetailsProps {
   order: Order;
@@ -94,6 +100,18 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
           order.products.map((item) => {
             return <OrderItem key={item.id} item={item}></OrderItem>;
           })}
+      </div>
+      <div className="mt-5 md:px-2 md:py-1 w-1/4 hover:translate-y-1 transition hover:font-semibold">
+        <Link
+          href={"/orders"}
+          className="text-white flex items-center gap-1 mt-2"
+        >
+          <MdArrowBack size={30} className="text-orange-500" />
+          <span className="text-slate-800 relative ">
+            See My Orders
+            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-orange-500 scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+          </span>
+        </Link>
       </div>
     </div>
   );
