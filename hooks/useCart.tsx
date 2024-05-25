@@ -18,6 +18,7 @@ type cartContextType = {
   handleCartQtyIncrease: (product: CartProductType) => void;
   handleCartQtyDecrease: (product: CartProductType) => void;
   handleClearCart: () => void;
+  handleClearCartAfter: () => void;
   paymentIntent: string | null;
   handleSetPaymentIntent: (val: string | null) => void;
 };
@@ -157,6 +158,12 @@ export const CartContextProvider = (props: Props) => {
     localStorage.setItem("novaItems", JSON.stringify(null));
   }, []);
 
+  const handleClearCartAfter = useCallback(() => {
+    setCartProducts(null);
+    setCartTotalQty(0);
+    localStorage.setItem("novaItems", JSON.stringify(null));
+  }, []);
+
   const handleSetPaymentIntent = useCallback(
     (val: string | null) => {
       setPaymentIntent(val);
@@ -174,6 +181,7 @@ export const CartContextProvider = (props: Props) => {
     handleCartQtyIncrease,
     handleCartQtyDecrease,
     handleClearCart,
+    handleClearCartAfter,
     paymentIntent,
     handleSetPaymentIntent,
   };
