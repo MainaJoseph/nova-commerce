@@ -5,7 +5,6 @@ import NavBar from "./components/nav/NavBar";
 import Footer from "./components/footer/Footer";
 import Navy from "./components/navy/Navy";
 import CartProvider from "@/providers/CartProvider";
-//import toast, { Toaster } from "react-hot-toast";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUpNav from "./components/nav/SignUpNav";

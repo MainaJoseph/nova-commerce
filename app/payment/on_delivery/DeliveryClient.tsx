@@ -11,6 +11,7 @@ import Image from "next/image";
 import ItemContentPay from "../ItemContentPay";
 import Heading from "@/app/components/Heading";
 import ButtonDelivery from "@/app/components/ButtonDelivery";
+import { toast } from "react-toastify";
 
 interface DeliveryClientProps {
   currentUser: SafeUser | null;
@@ -19,6 +20,40 @@ interface DeliveryClientProps {
 const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
   const { cartProducts, cartTotalAmount } = useCart();
   const router = useRouter();
+
+  const handleCheckout = async () => {
+    if (!currentUser) {
+      toast.warning("Please login to continue");
+      return;
+    }
+
+    const orderData = {
+      userId: currentUser.id,
+      amount: cartTotalAmount,
+      products: cartProducts,
+    };
+
+    try {
+      const response = await fetch("/api/ondelivery/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        toast.success("Order Created");
+        router.push("/orders");
+      } else {
+        const data = await response.json();
+        console.error("Error saving order:", data.error);
+        toast.warning("Order not saved");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -69,7 +104,7 @@ const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
       </div>
       <div className="text-sm">
         <div className="w-full md:w-2/4">
-          <ButtonDelivery label="CheckOut" onClick={() => {}} />
+          <ButtonDelivery label="CheckOut" onClick={handleCheckout} />
         </div>
 
         <Link

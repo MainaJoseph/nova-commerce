@@ -1,10 +1,3 @@
-// @ts-nocheck
-
-export const metadata = {
-  title: "On Delivery",
-  description: "Pay On delivery",
-};
-
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../../components/Container";
 import NullData from "../../components/NullData";
@@ -20,7 +13,7 @@ const OnDelivery = async () => {
   return (
     <div className="pt-8">
       <Container>
-        <DeliveryClient />
+        <DeliveryClient currentUser={currentUser} />
       </Container>
     </div>
   );
