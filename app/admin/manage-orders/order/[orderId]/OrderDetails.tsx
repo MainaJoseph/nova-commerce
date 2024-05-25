@@ -8,7 +8,7 @@ import moment from "moment";
 import { MdAccessTimeFilled, MdDeliveryDining, MdDone } from "react-icons/md";
 import OrderItem from "./OrderItem";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import {
   AlertDialog,
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface OrderDetailsProps {
-  order: Order & { user: { name: string; email: string } }; // Include user details in props
+  order: Order;
 }
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
@@ -131,15 +131,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
           {moment(order.createdDate).fromNow()}
         </span>
       </div>
-      <div>User Name: {order.user?.name || "N/A"}</div>
-      <div>User Email: {order.user?.email || "N/A"}</div>
       <div>
         <h2 className="font-semibold mt-4 mb-2">Products Ordered</h2>
         <div className="grid grid-cols-5 text-xs gap-4 pb-2 items-center">
           <div className="col-span-2 justify-self-start">Product</div>
-          <div className="justify-self-center">Price</div>
-          <div className="justify-self-center">QTY</div>
-          <div className="justify-self-end">Total</div>
+          <div className=" justify-self-center">Price</div>
+          <div className=" justify-self-center">QTY</div>
+          <div className=" justify-self-end">Total</div>
         </div>
         {order.products &&
           order.products.map((item) => {
