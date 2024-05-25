@@ -25,7 +25,7 @@ export default async function handler(
           status: "pending",
           paymentIntentId,
           products,
-          deliveryStatus: "not delivered",
+          deliveryStatus: "pending",
         },
       });
 
