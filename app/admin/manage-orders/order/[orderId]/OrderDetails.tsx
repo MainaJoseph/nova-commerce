@@ -13,6 +13,18 @@ import {
 } from "react-icons/md";
 import OrderItem from "./OrderItem";
 import Link from "next/link";
+import Button from "@/app/components/Button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface OrderDetailsProps {
   order: Order;
@@ -102,16 +114,32 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
           })}
       </div>
       <div className="mt-5 md:px-2 md:py-1 w-1/4 hover:translate-y-1 transition hover:font-semibold">
-        <Link
-          href={"/orders"}
-          className="text-white flex items-center gap-1 mt-2"
-        >
-          <MdArrowBack size={30} className="text-orange-500" />
-          <span className="text-slate-800 relative ">
-            See My Orders
-            <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-orange-500 scale-x-0 hover:scale-x-100 transition-transform duration-300 origin-left"></span>
-          </span>
-        </Link>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <button
+              onClick={() => {}}
+              className="py-2 px-3 rounded-md hover:translate-y-1 transition hover:font-semibold text-white shadow-md border bg-sky-600 hover:bg-sky-500"
+            >
+              Mark as paid
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="bg-white text-slate-800">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to mark this order as paid?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-rose-500 hover:bg-rose-400 text-white">
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction className="bg-sky-600 hover:bg-sky-500 text-white">
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
