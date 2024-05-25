@@ -18,7 +18,7 @@ interface DeliveryClientProps {
 }
 
 const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
-  const { cartProducts, cartTotalAmount, handleClearCart } = useCart();
+  const { cartProducts, cartTotalAmount, handleClearCartAfter } = useCart();
   const router = useRouter();
 
   const handleCheckout = async () => {
@@ -44,7 +44,7 @@ const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
 
       if (response.ok) {
         toast.success("Order Created");
-        handleClearCart(); // Clear the cart after successful order creation
+        handleClearCartAfter(); // Clear the cart after successful order creation
         router.push("/orders");
       } else {
         const data = await response.json();
