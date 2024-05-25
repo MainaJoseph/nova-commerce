@@ -43,9 +43,15 @@ const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
       });
 
       if (response.ok) {
+        const data = await response.json(); // Extract the response data
         toast.success("Order Created");
         handleClearCartAfter(); // Clear the cart after successful order creation
-        router.push("/orders");
+        if (data.order && data.order.id) {
+          router.push(`/order/${data.order.id}`); // Redirect to the order details page
+        } else {
+          console.error("No order ID returned");
+          toast.error("An error occurred: No order ID returned");
+        }
       } else {
         const data = await response.json();
         console.error("Error saving order:", data.error);
@@ -53,6 +59,7 @@ const DeliveryClient: React.FC<DeliveryClientProps> = ({ currentUser }) => {
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("An error occurred while processing your order");
     }
   };
 
