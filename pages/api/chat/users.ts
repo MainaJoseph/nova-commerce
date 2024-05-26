@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/libs/prismadb";
+import prisma from "@/libs/prismadb"; // Adjust the import path according to your project structure
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +23,8 @@ export default async function handler(
         userName: user.name,
         sessionId:
           user.chatSessions.length > 0 ? user.chatSessions[0].id : null,
+        userEmail: user.email, // Add email
+        userImage: user.image, // Add image
       }));
 
       res.status(200).json(userChatSessions);

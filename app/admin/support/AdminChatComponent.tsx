@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import { SafeUser } from "@/types"; // Assuming SafeUser type is defined
+import { PartialSafeUser } from "@/types/types"; // Import PartialSafeUser
 import Avatar from "@/app/components/Avatar"; // Assuming you have an Avatar component
+import ChatHeader from "./ChatHeader";
 
 interface AdminChatComponentProps {
   currentUser: SafeUser | null;
@@ -25,6 +27,8 @@ interface UserChatSession {
   userId: string;
   userName: string;
   sessionId: string;
+  userEmail: string; // Make sure to include userEmail and userImage in your data fetching
+  userImage: string;
 }
 
 const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
@@ -33,6 +37,9 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
   const [users, setUsers] = useState<UserChatSession[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<PartialSafeUser | null>(
+    null
+  ); // Use PartialSafeUser type
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -66,9 +73,15 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
       });
   };
 
-  const handleUserSelect = (userId: string, sessionId: string) => {
-    setSelectedUserId(userId);
-    fetchMessages(sessionId);
+  const handleUserSelect = (user: UserChatSession) => {
+    setSelectedUserId(user.userId);
+    setSelectedUser({
+      id: user.userId,
+      name: user.userName,
+      email: user.userEmail,
+      image: user.userImage,
+    });
+    fetchMessages(user.sessionId);
   };
 
   const handleSendMessage = () => {
@@ -113,66 +126,71 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
   };
 
   return (
-    <div className="w-full bg-gray-900 rounded-lg overflow-hidden shadow-lg flex">
-      <div className="w-1/4 bg-gray-800 p-4 overflow-y-scroll">
-        {users.map((user) => (
-          <div
-            key={user.userId}
-            className={`flex items-center mb-2 cursor-pointer p-2 rounded-lg ${
-              selectedUserId === user.userId ? "border border-orange-500" : ""
-            }`}
-            onClick={() => handleUserSelect(user.userId, user.sessionId)}
-          >
-            <Avatar />
-            <span className="ml-2 text-white">{user.userName}</span>
-          </div>
-        ))}
-      </div>
-      <div className="w-3/4">
-        <div className="p-4 bg-gray-700 h-64 overflow-y-scroll">
-          {messages.map((message, index) => (
+    <div className="w-full bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col">
+      {selectedUser && <ChatHeader user={selectedUser} />}
+      <div className="flex flex-1">
+        <div className="w-1/4 bg-gray-800 p-4 overflow-y-scroll">
+          {users.map((user) => (
             <div
-              key={index}
-              className={`flex ${
-                message.sender === "Admin" ? "justify-end" : "justify-start"
-              } mb-2`}
+              key={user.userId}
+              className={`flex items-center mb-2 cursor-pointer p-2 rounded-lg ${
+                selectedUserId === user.userId ? "border border-orange-500" : ""
+              }`}
+              onClick={() => handleUserSelect(user)}
             >
-              <div
-                className={`${
-                  message.sender === "Admin" ? "bg-orange-500" : "bg-slate-500"
-                } text-white p-2 rounded-lg`}
-              >
-                <p className="whitespace-pre-line">{message.text}</p>
-                {message.timestamp && (
-                  <p className="text-xs text-white text-right mt-1">
-                    {message.timestamp}
-                  </p>
-                )}
-              </div>
+              <Avatar src={user.userImage} />
+              <span className="ml-2 text-white">{user.userName}</span>
             </div>
           ))}
         </div>
-        <div className="p-4 bg-gray-800 flex items-center">
-          <input
-            type="text"
-            placeholder="Type your message..."
-            className="w-full p-2 rounded bg-gray-700 text-white"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleInputKeyDown}
-            disabled={!selectedUserId} // Disable input if no user is selected
-          />
-          <button
-            onClick={handleSendMessage}
-            className={`ml-2 p-2 bg-orange-500 text-white rounded ${
-              !selectedUserId || loading
-                ? "cursor-not-allowed bg-orange-300"
-                : "cursor-pointer"
-            }`}
-            disabled={!selectedUserId || loading} // Disable button if no user is selected or if loading
-          >
-            Send
-          </button>
+        <div className="w-3/4">
+          <div className="p-4 bg-gray-700 h-64 overflow-y-scroll">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${
+                  message.sender === "Admin" ? "justify-end" : "justify-start"
+                } mb-2`}
+              >
+                <div
+                  className={`${
+                    message.sender === "Admin"
+                      ? "bg-orange-500"
+                      : "bg-slate-500"
+                  } text-white p-2 rounded-lg`}
+                >
+                  <p className="whitespace-pre-line">{message.text}</p>
+                  {message.timestamp && (
+                    <p className="text-xs text-white text-right mt-1">
+                      {message.timestamp}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-4 bg-gray-800 flex items-center">
+            <input
+              type="text"
+              placeholder="Type your message..."
+              className="w-full p-2 rounded bg-gray-700 text-white"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleInputKeyDown}
+              disabled={!selectedUserId} // Disable input if no user is selected
+            />
+            <button
+              onClick={handleSendMessage}
+              className={`ml-2 p-2 bg-orange-500 text-white rounded ${
+                !selectedUserId || loading
+                  ? "cursor-not-allowed bg-orange-300"
+                  : "cursor-pointer"
+              }`}
+              disabled={!selectedUserId || loading} // Disable button if no user is selected or if loading
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>
