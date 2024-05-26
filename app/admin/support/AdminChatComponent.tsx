@@ -118,7 +118,9 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
         {users.map((user) => (
           <div
             key={user.userId}
-            className="flex items-center mb-2 cursor-pointer"
+            className={`flex items-center mb-2 cursor-pointer p-2 rounded-lg ${
+              selectedUserId === user.userId ? "border border-orange-500" : ""
+            }`}
             onClick={() => handleUserSelect(user.userId, user.sessionId)}
           >
             <Avatar />

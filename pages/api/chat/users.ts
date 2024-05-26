@@ -8,6 +8,11 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       const users = await prisma.user.findMany({
+        where: {
+          chatSessions: {
+            some: {}, // This ensures we only get users with at least one chat session
+          },
+        },
         include: {
           chatSessions: true,
         },
