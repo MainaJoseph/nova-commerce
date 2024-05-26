@@ -107,7 +107,7 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && selectedUserId) {
       handleSendMessage();
     }
   };
@@ -160,13 +160,16 @@ const AdminChatComponent: React.FC<AdminChatComponentProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleInputKeyDown}
+            disabled={!selectedUserId} // Disable input if no user is selected
           />
           <button
             onClick={handleSendMessage}
             className={`ml-2 p-2 bg-orange-500 text-white rounded ${
-              loading ? "cursor-not-allowed bg-orange-300" : "cursor-pointer"
+              !selectedUserId || loading
+                ? "cursor-not-allowed bg-orange-300"
+                : "cursor-pointer"
             }`}
-            disabled={loading}
+            disabled={!selectedUserId || loading} // Disable button if no user is selected or if loading
           >
             Send
           </button>
