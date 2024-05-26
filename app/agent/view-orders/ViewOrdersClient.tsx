@@ -56,7 +56,7 @@ const ViewOrdersClient: React.FC<ViewOrdersClientProps> = ({ orders }) => {
       return {
         id: order.id,
         customer: order.user.name,
-        amount: FormatPrice(order.amount / 100),
+        amount: FormatPrice(order.amount),
         paymentStatus: order.status,
         date: moment(order.createdDate).fromNow(),
         deliveryStatus: order.deliveryStatus,
@@ -173,7 +173,7 @@ const ViewOrdersClient: React.FC<ViewOrdersClientProps> = ({ orders }) => {
                   <ActionsBtn
                     icon={MdRemoveRedEye}
                     onClick={() => {
-                      router.push(`/order/${params.row.id}`);
+                      router.push(`view-orders/order/${params.row.id}`);
                     }}
                   />
                 </TooltipTrigger>
