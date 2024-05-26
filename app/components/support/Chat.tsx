@@ -129,12 +129,12 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ currentUser }) => {
           <div
             key={index}
             className={`flex ${
-              message.type === "sent" ? "justify-end" : "justify-start"
+              message.sender === "User" ? "justify-end" : "justify-start"
             } mb-2`}
           >
             <div
               className={`${
-                message.type === "sent" ? "bg-orange-500" : "bg-slate-800"
+                message.sender === "User" ? "bg-orange-500" : "bg-slate-500"
               } text-white p-2 rounded-lg`}
             >
               <p className="whitespace-pre-line">{message.text}</p>
