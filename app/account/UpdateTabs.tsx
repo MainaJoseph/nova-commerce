@@ -1,5 +1,3 @@
-// components/UpdatedTabs.tsx
-
 "use client";
 
 import { useState } from "react";
@@ -47,6 +45,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordsEntered, setPasswordsEntered] = useState(false);
 
   // Handle name change event
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +60,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   ) => {
     const newPassword = event.target.value;
     setNewPassword(newPassword);
+    setPasswordsEntered(newPassword.length > 0 && confirmPassword.length > 0);
     setPasswordError(
       newPassword !== confirmPassword ? "Passwords entered don't match" : ""
     );
@@ -72,6 +72,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
   ) => {
     const confirmPassword = event.target.value;
     setConfirmPassword(confirmPassword);
+    setPasswordsEntered(newPassword.length > 0 && confirmPassword.length > 0);
     setPasswordError(
       newPassword !== confirmPassword ? "Passwords entered don't match" : ""
     );
@@ -131,7 +132,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
     }
 
     if (nameError) {
-      toast.error("Please fix the input errors before saving.");
+      toast.error("Please Ensure you put a correct Username.");
       return;
     }
 
@@ -250,7 +251,9 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button
-                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                  className={`bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1 ${
+                    loading || nameError ? "disabled-button" : ""
+                  }`}
                   disabled={loading || nameError}
                 >
                   {loading ? "Loading..." : "Save changes"}
@@ -287,7 +290,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           <CardHeader>
             <CardTitle>Password</CardTitle>
             <CardDescription>
-              Change your password here. After saving, youll be logged out.
+              Change your password here. After saving, you will be logged out.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -338,8 +341,20 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button
-                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
-                  disabled={loading || passwordError !== ""}
+                  className={`bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1 ${
+                    loading ||
+                    passwordError !== "" ||
+                    !passwordsEntered ||
+                    newPassword !== confirmPassword
+                      ? "disabled-button"
+                      : ""
+                  }`}
+                  disabled={
+                    loading ||
+                    passwordError !== "" ||
+                    !passwordsEntered ||
+                    newPassword !== confirmPassword
+                  }
                 >
                   {loading ? "Loading..." : "Save password"}
                 </Button>
@@ -374,3 +389,11 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
 };
 
 export default UpdatedTabs;
+
+// CSS for disabled button
+<style jsx>{`
+  .disabled-button {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+`}</style>;
