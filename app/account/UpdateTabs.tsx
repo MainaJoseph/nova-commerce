@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import UserEmail from "./UserEmail";
 
 interface UpdatedTabProps {
   currentUser: SafeUser | null;
@@ -145,7 +146,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           value="account"
           className={`py-2 ${
             activeTab === "account"
-              ? "bg-orange-400 text-white"
+              ? "bg-pink-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
           onClick={() => setActiveTab("account")}
@@ -157,7 +158,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           value="password"
           className={`py-2 ${
             activeTab === "password"
-              ? "bg-orange-400 text-white"
+              ? "bg-pink-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
           onClick={() => setActiveTab("password")}
@@ -194,9 +195,9 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             {/* Email Section */}
             <div className="space-y-1">
               <div>Email</div>
-              <div className=" border-[1px] border-slate-400 py-2 rounded-md cursor-not-allowed hover:border-spacing-1 hover:border-sky-300">
-                <span className="ml-3 text-slate-500 text-sm">
-                  youremail@domain.com
+              <div className=" border-[1px] border-slate-400 py-1 rounded-md cursor-not-allowed hover:border-spacing-1 hover:border-sky-300">
+                <span>
+                  <UserEmail />
                 </span>
               </div>
             </div>
@@ -206,7 +207,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button
-                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                  className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1"
                   disabled={loading || nameError}
                 >
                   {loading ? "Loading..." : "Save changes"}
@@ -226,7 +227,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                     Cancel
                   </AlertDialogCancel>
                   <AlertDialogAction
-                    className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                    className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1"
                     onClick={handleSaveChanges}
                   >
                     Continue
@@ -291,7 +292,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           </CardContent>
           {/* Save Password Button */}
           <CardFooter>
-            <Button className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1">
+            <Button className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1">
               Save password
             </Button>
           </CardFooter>
