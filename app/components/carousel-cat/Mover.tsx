@@ -46,21 +46,21 @@ export function Mover() {
 
   const cardCategories = React.useMemo(
     () => [
-      "phones",
-      "tv",
-      "appliances",
-      "beauty",
-      "fashion",
-      "computing",
-      "supermarket",
-      "sporting",
-      "automobile",
-      "others",
+      "Phone & Tablets",
+      "TVs & Audio",
+      "Appliances",
+      "Health and Beauty",
+      "Home and Office",
+      "Fashion",
+      "Computing",
+      "Supermarket",
+      "Sporting",
+      "Automobile",
+      "Others",
     ],
     []
   );
 
-  // Define an array of background colors
   const cardColors = [
     "bg-slate-100",
     "bg-blue-400",
@@ -90,7 +90,7 @@ export function Mover() {
 
         const updatedQuery = {
           ...currentQuery,
-          category: encodeURIComponent(categoryText), // Encode the category name
+          category: encodeURIComponent(categoryText),
         };
 
         const url = queryString.stringifyUrl(
@@ -109,54 +109,123 @@ export function Mover() {
     [router, params, cardCategories, cardTexts]
   );
 
+  const isLargeScreenCarousel = cardTexts.length > 6;
+
   return (
     <div className="w-full max-w-screen-xl mx-auto relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-white to-transparent opacity-50 z-10"></div>
       <Container>
-        <Carousel
-          opts={{ align: "start" }}
-          className="w-11/12 md:w-4/5 lg:w-5/6 xl:w-3/4 relative z-20"
-        >
-          <CarouselContent>
-            {cardTexts.map((text, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-1/3 md:basis-1/4 lg:basis-1/6"
-              >
-                <div className="p-1">
+        {isLargeScreenCarousel ? (
+          <Carousel
+            opts={{ align: "start" }}
+            className="hidden lg:block w-full relative"
+          >
+            <CarouselContent>
+              {cardTexts.map((text, index) => (
+                <CarouselItem key={index} className="basis-1/6 p-1">
                   <div
                     className={`cursor-pointer ${cardColors[index]}`}
                     style={{
                       transition: "transform 0.3s",
                       transform: "scale(1)",
-                    }} // Add transition for smooth effect
+                    }}
                     onClick={() => handleClick(text)}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.transform = "scale(1.1)")
-                    } // Scale up on hover
+                    }
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.transform = "scale(1)")
-                    } // Reset on hover out
+                    }
                   >
                     <CardContent className="flex aspect-square items-center justify-center p-6">
                       <div className="w-full h-full relative overflow-hidden">
                         <Image
                           src={cardImages[index]}
-                          alt={text} // Use `text` instead of `cardTexts[index]`
+                          alt={text}
                           layout="fill"
                           objectFit="cover"
                         />
                       </div>
                     </CardContent>
                   </div>
+                  <div className="text-center py-2 text-sm">{text}</div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-slate-400 hover:bg-slate-200" />
+            <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-slate-400 hover:bg-slate-200" />
+          </Carousel>
+        ) : (
+          <div className="hidden lg:grid grid-cols-6 gap-4">
+            {cardTexts.map((text, index) => (
+              <div
+                key={index}
+                className={`cursor-pointer ${cardColors[index]} p-1`}
+                style={{
+                  transition: "transform 0.3s",
+                  transform: "scale(1)",
+                }}
+                onClick={() => handleClick(text)}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.1)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              >
+                <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <div className="w-full h-full relative overflow-hidden">
+                    <Image
+                      src={cardImages[index]}
+                      alt={text}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                </CardContent>
+                <div className="text-center py-2 text-sm">{text}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <Carousel
+          opts={{ align: "start" }}
+          className="block lg:hidden w-full relative"
+        >
+          <CarouselContent>
+            {cardTexts.map((text, index) => (
+              <CarouselItem key={index} className="basis-1/3 p-1">
+                <div
+                  className={`cursor-pointer ${cardColors[index]}`}
+                  style={{
+                    transition: "transform 0.3s",
+                    transform: "scale(1)",
+                  }}
+                  onClick={() => handleClick(text)}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.1)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
+                >
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <div className="w-full h-full relative overflow-hidden">
+                      <Image
+                        src={cardImages[index]}
+                        alt={text}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </div>
+                  </CardContent>
                 </div>
                 <div className="text-center py-2 text-sm">{text}</div>
               </CarouselItem>
             ))}
           </CarouselContent>
-
-          <CarouselPrevious className="bg-slate-400 hover:bg-slate-200" />
-          <CarouselNext className="bg-slate-400 hover:bg-slate-200" />
+          <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-slate-400 hover:bg-slate-200" />
+          <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-slate-400 hover:bg-slate-200" />
         </Carousel>
       </Container>
     </div>
