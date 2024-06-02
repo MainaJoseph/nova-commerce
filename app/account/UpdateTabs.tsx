@@ -1,3 +1,5 @@
+// components/UpdatedTabs.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -29,6 +31,7 @@ import {
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import UserEmail from "./UserEmail";
+import { signOut } from "next-auth/react";
 
 interface UpdatedTabProps {
   currentUser: SafeUser | null;
@@ -79,19 +82,55 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
     setShowPassword(!showPassword);
   };
 
-  //Toggle Confirm Password Visibility
+  // Toggle confirm password visibility
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  // Handle saving changes
+  // Handle saving password
+  const handleSavePassword = async () => {
+    if (passwordError) {
+      toast.error("Please fix the input errors before saving.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch("/api/users/updatePassword", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: currentUser?.id,
+          newPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update password");
+      }
+
+      toast.success("Password updated successfully");
+
+      // Sign out the user and redirect to the login page
+      await signOut({ callbackUrl: "/login" });
+    } catch (error) {
+      console.error("Error updating password:", error);
+      toast.error("Error updating password");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle saving changes (for username)
   const handleSaveChanges = async () => {
     if (name === currentUser?.name) {
       toast.warning("Username is the same");
       return;
     }
 
-    if (nameError || passwordError) {
+    if (nameError) {
       toast.error("Please fix the input errors before saving.");
       return;
     }
@@ -121,9 +160,13 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
         },
         body: JSON.stringify({
           id: currentUser?.id,
-          name: name,
+          name,
         }),
       });
+
+      if (!updatedUser.ok) {
+        throw new Error("Failed to update username");
+      }
 
       console.log("User updated successfully", updatedUser);
       toast.success("User updated successfully");
@@ -146,7 +189,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           value="account"
           className={`py-2 ${
             activeTab === "account"
-              ? "bg-pink-400 text-white"
+              ? "bg-orange-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
           onClick={() => setActiveTab("account")}
@@ -158,7 +201,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           value="password"
           className={`py-2 ${
             activeTab === "password"
-              ? "bg-pink-400 text-white"
+              ? "bg-orange-400 text-white"
               : "bg-none border-[1px] border-slate-800 text-slate-800"
           } rounded-md`}
           onClick={() => setActiveTab("password")}
@@ -207,7 +250,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
             <AlertDialog>
               <AlertDialogTrigger>
                 <Button
-                  className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1"
+                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
                   disabled={loading || nameError}
                 >
                   {loading ? "Loading..." : "Save changes"}
@@ -227,7 +270,7 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
                     Cancel
                   </AlertDialogCancel>
                   <AlertDialogAction
-                    className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1"
+                    className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
                     onClick={handleSaveChanges}
                   >
                     Continue
@@ -292,9 +335,37 @@ const UpdatedTabs: React.FC<UpdatedTabProps> = ({ currentUser }) => {
           </CardContent>
           {/* Save Password Button */}
           <CardFooter>
-            <Button className="bg-pink-500 hover:bg-pink-300 text-white transition translate-y-1">
-              Save password
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <Button
+                  className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                  disabled={loading || passwordError !== ""}
+                >
+                  {loading ? "Loading..." : "Save password"}
+                </Button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent className="bg-white text-slate-800">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action will reset and save the new password and you be
+                    logged out to the login page.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-rose-500 hover:bg-rose-300 text-white transition translate-y-1">
+                    Cancel
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleSavePassword}
+                    className="bg-orange-500 hover:bg-orange-300 text-white transition translate-y-1"
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardFooter>
         </Card>
       </TabsContent>
