@@ -119,7 +119,7 @@ export function Mover() {
             opts={{ align: "start" }}
             className="hidden lg:block w-full relative"
           >
-            <CarouselContent>
+            <CarouselContent style={{ borderRadius: "5px" }}>
               {cardTexts.map((text, index) => (
                 <CarouselItem key={index} className="basis-1/6 p-1">
                   <div
@@ -136,8 +136,14 @@ export function Mover() {
                       (e.currentTarget.style.transform = "scale(1)")
                     }
                   >
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <div className="w-full h-full relative overflow-hidden">
+                    <CardContent
+                      className="flex aspect-square items-center justify-center p-6"
+                      style={{ borderRadius: "5px" }}
+                    >
+                      <div
+                        className="w-full h-full relative overflow-hidden"
+                        style={{ borderRadius: "5px" }}
+                      >
                         <Image
                           src={cardImages[index]}
                           alt={text}
@@ -173,7 +179,10 @@ export function Mover() {
                 }
               >
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <div className="w-full h-full relative overflow-hidden">
+                  <div
+                    className="w-full h-full relative overflow-hidden"
+                    style={{ borderRadius: "5px" }}
+                  >
                     <Image
                       src={cardImages[index]}
                       alt={text}
@@ -210,7 +219,10 @@ export function Mover() {
                   }
                 >
                   <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <div className="w-full h-full relative overflow-hidden">
+                    <div
+                      className="w-full h-full relative overflow-hidden"
+                      style={{ borderRadius: "5px" }}
+                    >
                       <Image
                         src={cardImages[index]}
                         alt={text}

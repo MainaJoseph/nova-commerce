@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Spinner";
 import moment from "moment";
 
-interface OrdersClientProps {
+interface DeliveredOrdersClientProps {
   orders: ExtendedOrder[];
 }
 
@@ -25,7 +25,9 @@ type ExtendedOrder = Order & {
   user: User;
 };
 
-const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
+const DeliveredOrdersClient: React.FC<DeliveredOrdersClientProps> = ({
+  orders,
+}) => {
   const router = useRouter();
   let rows: any = [];
 
@@ -33,9 +35,7 @@ const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
     rows = orders
       .filter(
         (order) =>
-          (order.status === "pending" || order.status === "complete") &&
-          (order.deliveryStatus === "pending" ||
-            order.deliveryStatus === "dispatched")
+          order.status === "complete" && order.deliveryStatus === "delivered"
       )
       .map((order) => {
         return {
@@ -109,6 +109,13 @@ const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
                 bg="bg-purple-200"
                 color="text-purple-700"
               />
+            ) : params.row.deliveryStatus === "delivered" ? (
+              <Status
+                text="delivered"
+                icon={MdDone}
+                bg="bg-green-200"
+                color="text-green-700"
+              />
             ) : (
               <></>
             )}
@@ -144,7 +151,7 @@ const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
   return (
     <div className="max-w-[1250px] m-auto text-xl mt-10">
       <div className="mb-4 mt-4">
-        <Heading title="My Orders" center />
+        <Heading title="Completed Orders" center />
       </div>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
@@ -164,4 +171,4 @@ const OrdersClient: React.FC<OrdersClientProps> = ({ orders }) => {
   );
 };
 
-export default OrdersClient;
+export default DeliveredOrdersClient;

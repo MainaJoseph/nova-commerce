@@ -24,18 +24,18 @@ interface User {
   role: string;
 }
 
-interface ManageUsersClientProps {
+interface ManageCustomersClientProps {
   users: User[];
 }
 
-const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
+const ManageCustomersClient: React.FC<ManageCustomersClientProps> = ({
+  users,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState<User[]>([]);
 
   useEffect(() => {
-    const filteredUsers = users.filter(
-      (user) => user.role === "ADMIN" || user.role === "AGENT"
-    );
+    const filteredUsers = users.filter((user) => user.role === "USER");
     setRows(filteredUsers);
   }, [users]);
 
@@ -85,7 +85,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
     { field: "id", headerName: "ID", width: 220 },
     { field: "name", headerName: "Name", width: 130 },
     { field: "email", headerName: "Email", width: 230 },
-    { field: "createdAt", headerName: "Created At", width: 170 },
+    { field: "createdAt", headerName: "Created At", width: 230 },
     {
       field: "role",
       headerName: "Role",
@@ -125,27 +125,6 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
         return (
           <div>
             <div className="flex justify-between gap-4 w-full">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <button
-                      onClick={() => updateUserRole(params.row.id, "ADMIN")}
-                      disabled={isLoading || params.row.role === "ADMIN"}
-                      className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
-                        params.row.role === "ADMIN"
-                          ? "bg-none cursor-not-allowed text-slate-700 hover:border-rose-400 hover:text-rose-400"
-                          : "bg-none text-slate-700"
-                      }`}
-                    >
-                      <GrUserAdmin size={21} />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-slate-800 text-white">
-                    <p>Make Admin</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -215,7 +194,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
     <div className="max-w-[1250px] m-auto text-xl">
       {isLoading && <Spinner />}
       <div className="mb-4 mt-4">
-        <Heading title="Manage Users" center />
+        <Heading title="Manage Customers" center />
       </div>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
@@ -235,4 +214,4 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   );
 };
 
-export default ManageUsersClient;
+export default ManageCustomersClient;
