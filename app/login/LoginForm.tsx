@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
-      router.push("/cart");
+      router.push("/");
       router.refresh();
     }
   }, [currentUser, router]);
@@ -60,20 +60,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   if (currentUser) {
     return (
-      <p
-        className="text-center shadow-xs
-      shadow-slate-400 font-semibold"
-      >
+      <p className="shadow-xs text-center font-semibold shadow-slate-400">
         Logged In. Redirecting...
       </p>
     );
   }
 
   return (
-    <div className="space-y-4 w-full">
+    <div className="w-full space-y-4">
       {" "}
       {/* Add a container with spacing */}
-      <div className="flex gap-4 items-center justify-center">
+      <div className="flex items-center justify-center gap-4">
         {" "}
         {/* Add spacing to the heading and icon */}
         <Heading title="Sign In to Nova" />
@@ -87,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
           signIn("google");
         }}
       />
-      <hr className="bg-orange-300 w-full h-px" />
+      <hr className="h-px w-full bg-orange-300" />
       <Input
         id="email"
         label="Email"
@@ -111,7 +108,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
       />
       <p className="text-sm">
         Do Not Have an Acccount?{" "}
-        <Link className="underline text-orange-500" href="/register">
+        <Link className="text-orange-500 underline" href="/register">
           Sign Up
         </Link>
       </p>

@@ -36,11 +36,10 @@ const CartUserCart: React.FC<CartUserCartProps> = ({ currentUser }) => {
     >
       <DialogContent className="md:w-3/2 h-4/5 w-full max-w-3xl overflow-scroll bg-white text-slate-900">
         <DialogHeader>
-          <DialogTitle>Cart</DialogTitle>
+          <DialogTitle>Check the content of your Basket😊</DialogTitle>
           <div>
-            <p>Content of your Basket</p>
             <Button
-              className="mt-2 bg-orange-500 py-3 text-white shadow-md hover:bg-orange-400"
+              className="mt-2 rounded-br-sm bg-sky-600 py-3 text-white shadow-md hover:bg-sky-300"
               onClick={handleCheckCart}
             >
               Check Cart

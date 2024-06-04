@@ -35,6 +35,13 @@ const CartUserClient: React.FC<CartUserClientProps> = ({
     }, 300); // Add a slight delay to ensure modal closes before navigating
   };
 
+  const handleEmpty = () => {
+    onClose();
+    setTimeout(() => {
+      router.push("/");
+    }, 300);
+  };
+
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center">
@@ -45,11 +52,8 @@ const CartUserClient: React.FC<CartUserClientProps> = ({
         <p className="text-md mt-4 font-normal text-slate-400">
           Browse our categories and discover our best deals!
         </p>
-        <div className="mt-5 rounded-md border bg-orange-500 px-3 py-2 hover:bg-orange-300">
-          <Link href={"/"} className="gap-1mt-2 flex items-center text-white">
-            <MdArrowBack size={30} />
-            <span className="text-white">Start Shopping</span>
-          </Link>
+        <div className="mt-5 rounded-md">
+          <Button label="Start Shopping" onClick={handleEmpty} />
         </div>
       </div>
     );
