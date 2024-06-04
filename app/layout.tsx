@@ -23,8 +23,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  shop,
 }: {
   children: React.ReactNode;
+  shop: React.ReactNode,
 }) {
   const currentUser = await getCurrentUser();
 
@@ -43,7 +45,7 @@ export default async function RootLayout({
           <div className="flex flex-col min-h-screen">
             {!currentUser && <SignUpNav />}
             <NavBar />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow">{children} {shop}</main>
             <Frequents />
             <Playstore />
             <Navy />
