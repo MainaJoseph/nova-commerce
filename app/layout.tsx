@@ -26,7 +26,7 @@ export default async function RootLayout({
   shop,
 }: {
   children: React.ReactNode;
-  shop: React.ReactNode,
+  shop: React.ReactNode;
 }) {
   const currentUser = await getCurrentUser();
 
@@ -42,10 +42,13 @@ export default async function RootLayout({
         />
 
         <CartProvider>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex min-h-screen flex-col">
             {!currentUser && <SignUpNav />}
             <NavBar />
-            <main className="flex-grow">{children} {shop}</main>
+            <main className="flex-grow">
+              {shop}
+              {children}
+            </main>
             <Frequents />
             <Playstore />
             <Navy />
