@@ -25,7 +25,6 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
-
 model User {
   id                 String @id @default(auto()) @map("_id") @db.ObjectId
   name               String?
@@ -95,15 +94,18 @@ model Order {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+
+
 model ChatMessage {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String @db.ObjectId
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
   sender     String
   text       String
   type       String
+  timestamp  String
   createdAt  DateTime @default(now())
-  user       User @relation(fields: [userId], references: [id])
-  sessionId  String @db.ObjectId
+  user       User     @relation(fields: [userId], references: [id])
+  sessionId  String   @db.ObjectId
   session    ChatSession @relation(fields: [sessionId], references: [id])
 }
 

@@ -55,7 +55,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
       headerName: "Price(Kes)",
       width: 160,
       renderCell: (params) => {
-        return <div className="font-bold slate-800">{params.row.price}</div>;
+        return <div className="slate-800 font-bold">{params.row.price}</div>;
       },
     },
     { field: "category", headerName: "Category", width: 120 },
@@ -92,7 +92,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
       width: 170,
       renderCell: (params) => {
         return (
-          <div className="flex justify-between gap-4 w-full">
+          <div className="flex w-full justify-between gap-4">
             <ActionsBtn
               icon={MdCached}
               onClick={() => {
@@ -108,7 +108,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
             <ActionsBtn
               icon={MdRemoveRedEye}
               onClick={() => {
-                router.push(`/product/${params.row.id}`);
+                router.push(`manage-products/product/${params.row.id}`);
               }}
             />
           </div>
@@ -137,7 +137,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
           setIsLoading(false);
         });
     },
-    [router]
+    [router],
   );
 
   const handleDelete = useCallback(
@@ -172,11 +172,11 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({
         console.error("Delete Product Error:", error);
       }
     },
-    [storage, router]
+    [storage, router],
   );
 
   return (
-    <div className="max-w-[1250px] m-auto text-xl">
+    <div className="m-auto max-w-[1250px] text-xl">
       {/* Add spinner */}
       {isLoading && <Spinner />}
       <div className="mb-4 mt-4">
