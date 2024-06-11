@@ -12,12 +12,15 @@ import { toast } from "react-toastify";
 import SetQuantity from "@/app/components/SetQuantity";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
+import { ScaleLoader } from "react-spinners";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import ButtonLoader from "@/app/components/ButtonLoader";
 
 interface ProductDetailsProps {
   product: any;
@@ -47,8 +50,11 @@ const Horizontal = () => {
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const { handleAddProductToCart, cartProducts } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [newDescription, setNewDescription] = useState(product.description);
+  const [newName, setNewName] = useState(product.name);
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -105,21 +111,45 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     });
   }, [cartProduct]);
 
-  const handleEditClick = () => {
-    setIsEditing(true);
+  const handleEditClickName = () => {
+    setIsEditingName(true);
   };
 
-  const handleSaveClick = async () => {
+  const handleEditClickDescription = () => {
+    setIsEditingDescription(true);
+  };
+
+  const handleSaveClickName = async () => {
+    setIsLoading(true);
+    try {
+      await axios.put(`/api/product/updateproductname`, {
+        id: product.id,
+        name: newName,
+      });
+      toast.success("Name updated successfully");
+      setIsEditingName(false);
+      router.refresh(); // Reload the page after a successful update
+    } catch (error) {
+      toast.error("Failed to update name");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveClickDescription = async () => {
+    setIsLoading(true);
     try {
       await axios.put(`/api/product/updateproduct`, {
         id: product.id,
         description: newDescription,
       });
       toast.success("Description updated successfully");
-      setIsEditing(false);
+      setIsEditingDescription(false);
       router.refresh(); // Reload the page after a successful update
     } catch (error) {
       toast.error("Failed to update description");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -131,13 +161,51 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         handleColorSelect={handleColorSelect}
       />
       <div className="flex flex-col gap-1 text-sm text-slate-500">
-        <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
+        <div className="flex flex-row gap-2">
+          {isEditingName ? (
+            <textarea
+              className="w-3/4 border p-3"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+            />
+          ) : (
+            <h2 className="text-3xl font-medium text-slate-700">
+              {product.name}
+            </h2>
+          )}
+          {isEditingName ? (
+            <ButtonLoader
+              label={
+                isLoading ? <ScaleLoader color="#fff" height={15} /> : "Save"
+              }
+              onClick={handleSaveClickName}
+              disabled={isLoading}
+              small
+            />
+          ) : (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CiEdit
+                    size={24}
+                    className="cursor-pointer"
+                    onClick={handleEditClickName}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-900 text-white">
+                  <p>Edit Product Name</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
+
         <div className="flex items-center gap-2">
           <Rating value={productRating} readOnly />
           <div>{product.reviews.length} Reviews</div>
         </div>
         <Horizontal />
-        {isEditing ? (
+        {isEditingDescription ? (
           <textarea
             className="border p-2"
             value={newDescription}
@@ -146,8 +214,14 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         ) : (
           <div className="text-justify">{product.description}</div>
         )}
-        {isEditing ? (
-          <Button label="Save" onClick={handleSaveClick} />
+        {isEditingDescription ? (
+          <ButtonLoader
+            label={
+              isLoading ? <ScaleLoader color="#fff" height={15} /> : "Save"
+            }
+            onClick={handleSaveClickDescription}
+            disabled={isLoading}
+          />
         ) : (
           <TooltipProvider>
             <Tooltip>
@@ -155,7 +229,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
                 <FaEdit
                   size={24}
                   className="cursor-pointer"
-                  onClick={handleEditClick}
+                  onClick={handleEditClickDescription}
                 />
               </TooltipTrigger>
               <TooltipContent className="bg-slate-900 text-white">
