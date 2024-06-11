@@ -63,6 +63,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const [isEditingBrand, setIsEditingBrand] = useState(false);
   const [isEditingPrice, setIsEditingPrice] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [newDescription, setNewDescription] = useState(product.description);
   const [newName, setNewName] = useState(product.name);
   const [newBrand, setNewBrand] = useState(product.brand);
@@ -218,7 +219,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   //Toggle between In stock and out of stock
   const handleToggleStatus = useCallback(
     async (id: string, inStock: boolean) => {
-      setIsLoading(true);
+      setIsPending(true);
       try {
         await axios.put("/api/product", { id, inStock: !inStock });
         toast.success("Product Status Changed");
@@ -227,7 +228,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         toast.error("OPPS!..Something went wrong");
         console.error("Error toggling product status:", err);
       } finally {
-        setIsLoading(false);
+        setIsPending(false);
       }
     },
     [router],
@@ -375,7 +376,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
             {product.inStock ? "In Stock ✅" : "Out of Stock ❌"}
           </div>
-          {isLoading ? (
+          {isPending ? (
             <HashLoader size={25} color="#FFA500" />
           ) : (
             <MdCached
