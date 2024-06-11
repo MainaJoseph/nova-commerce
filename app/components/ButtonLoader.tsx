@@ -28,7 +28,7 @@ const ButtonLoader: React.FC<ButtonLoaderProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex w-full items-center justify-center gap-2 rounded-md border-pink-500 transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-70 ${clear ? "bg-rose-500" : "bg-pink-500"} ${outline ? "bg-pink-500" : "bg-pink-500"} ${google ? "border-slate-300 bg-slate-100" : "border-pink-500 bg-pink-500"} ${google ? "text-black" : "text-white"} ${outline ? "border-slate-500" : "border-pink-500"} ${outline ? "text-white" : "text-black"} ${small ? "text-sm font-light" : "text-md font-semibold"} ${small ? "border-1[px] px-2 py-1" : "border-2 px-4 py-3"} ${custom ? custom : ""} `}
+      className={`flex w-full items-center justify-center gap-2 rounded-md border-orange-500 transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-70 ${clear ? "bg-rose-500" : "bg-orange-500"} ${outline ? "bg-orange-500" : "bg-orange-500"} ${google ? "border-slate-300 bg-slate-100" : "border-orange-500 bg-orange-500"} ${google ? "text-black" : "text-white"} ${outline ? "border-slate-500" : "border-orange-500"} ${outline ? "text-white" : "text-black"} ${small ? "text-sm font-light" : "text-md font-semibold"} ${small ? "border-1[px] px-2 py-1" : "border-2 px-4 py-3"} ${custom ? custom : ""} `}
     >
       {icon && <Icons.FcGoogle size={24} />} {label}
     </button>

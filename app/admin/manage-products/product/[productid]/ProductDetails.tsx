@@ -52,9 +52,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingBrand, setIsEditingBrand] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [newDescription, setNewDescription] = useState(product.description);
   const [newName, setNewName] = useState(product.name);
+  const [newBrand, setNewBrand] = useState(product.brand);
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -111,14 +113,22 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     });
   }, [cartProduct]);
 
+  // handle edit for product name
   const handleEditClickName = () => {
     setIsEditingName(true);
   };
 
+  // handle edit for product description
   const handleEditClickDescription = () => {
     setIsEditingDescription(true);
   };
 
+  // handle edit for product brand
+  const handleEditClickBrand = () => {
+    setIsEditingBrand(true);
+  };
+
+  // Save edited product name
   const handleSaveClickName = async () => {
     setIsLoading(true);
     try {
@@ -136,6 +146,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
   };
 
+  // Save edited product description
   const handleSaveClickDescription = async () => {
     setIsLoading(true);
     try {
@@ -148,6 +159,24 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       router.refresh(); // Reload the page after a successful update
     } catch (error) {
       toast.error("Failed to update description");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Save edited product brand
+  const handleSaveClickBrand = async () => {
+    setIsLoading(true);
+    try {
+      await axios.put(`/api/product/updateproductbrand`, {
+        id: product.id,
+        brand: newBrand,
+      });
+      toast.success("Brand updated successfully");
+      setIsEditingBrand(false);
+      router.refresh(); // Reload the page after a successful update
+    } catch (error) {
+      toast.error("Failed to update brand");
     } finally {
       setIsLoading(false);
     }
@@ -207,7 +236,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <Horizontal />
         {isEditingDescription ? (
           <textarea
-            className="border p-2"
+            className="border p-5"
             value={newDescription}
             onChange={(e) => setNewDescription(e.target.value)}
           />
@@ -239,14 +268,56 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           </TooltipProvider>
         )}
         <Horizontal />
+
         <div>
-          <span className="font-semibold">CATEGORY:</span> {product.category}
+          <span className="font-semibold">CATEGORY:</span>
+          <div className="text-md font-medium text-slate-700">
+            {product.category}
+          </div>
         </div>
         <div>
-          <span className="font-semibold">BRAND:</span> {product.brand}
+          <span className="font-semibold">BRAND:</span>
+          <div className="flex flex-row gap-2">
+            {isEditingBrand ? (
+              <textarea
+                className="w-3/4 border p-3"
+                value={newBrand}
+                onChange={(e) => setNewBrand(e.target.value)}
+              />
+            ) : (
+              <h2 className="text-md font-medium text-slate-700">
+                {product.brand}
+              </h2>
+            )}
+            {isEditingBrand ? (
+              <ButtonLoader
+                label={
+                  isLoading ? <ScaleLoader color="#fff" height={15} /> : "Save"
+                }
+                onClick={handleSaveClickBrand}
+                disabled={isLoading}
+                small
+              />
+            ) : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CiEdit
+                      size={24}
+                      className="cursor-pointer"
+                      onClick={handleEditClickBrand}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-slate-900 text-white">
+                    <p>Edit Brand</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
         </div>
         <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
-          {product.inStock ? "in Stock ✅" : "out of Stock ❌"}
+          {product.inStock ? "In Stock ✅" : "Out of Stock ❌"}
         </div>
         <Horizontal />
         {isProductInCart ? (
