@@ -13,7 +13,7 @@ import SetQuantity from "@/app/components/SetQuantity";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
-import { ScaleLoader } from "react-spinners";
+import { HashLoader, ScaleLoader } from "react-spinners";
 import {
   Tooltip,
   TooltipContent,
@@ -21,6 +21,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ButtonLoader from "@/app/components/ButtonLoader";
+import ActionsBtn from "@/app/components/ActionsBtn";
+import { MdCached } from "react-icons/md";
 
 interface ProductDetailsProps {
   product: any;
@@ -182,6 +184,24 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
   };
 
+  //Toogle between Instock and out of stock
+  const handleToggleStatus = useCallback(
+    async (id: string, inStock: boolean) => {
+      setIsLoading(true);
+      try {
+        await axios.put("/api/product", { id, inStock: !inStock });
+        toast.success("Product Status Changed");
+        router.refresh();
+      } catch (err) {
+        toast.error("OPPS!..Something went wrong");
+        console.error("Error toggling product status:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [router],
+  );
+
   return (
     <div className="grid gap-12 sm:grid-cols-1 md:grid-cols-2">
       <ProductImage
@@ -316,9 +336,21 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             )}
           </div>
         </div>
-        <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
-          {product.inStock ? "In Stock ✅" : "Out of Stock ❌"}
+        <div className="flex flex-row items-center gap-3">
+          <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
+            {product.inStock ? "In Stock ✅" : "Out of Stock ❌"}
+          </div>
+          {isLoading ? (
+            <HashLoader size={25} color="#FFA500" />
+          ) : (
+            <MdCached
+              size={25}
+              onClick={() => handleToggleStatus(product.id, product.inStock)}
+              className="cursor-pointer"
+            />
+          )}
         </div>
+
         <Horizontal />
         {isProductInCart ? (
           <>
