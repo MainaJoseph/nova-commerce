@@ -21,7 +21,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import ButtonLoader from "@/app/components/ButtonLoader";
-import ActionsBtn from "@/app/components/ActionsBtn";
 import { MdCached } from "react-icons/md";
 
 interface ProductDetailsProps {
@@ -49,16 +48,25 @@ const Horizontal = () => {
   return <hr className="my-2 w-[30%]" />;
 };
 
+export const FormatPrice = (amount: number) => {
+  return new Intl.NumberFormat("en-KE", {
+    style: "currency",
+    currency: "KES",
+  }).format(amount);
+};
+
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const { handleAddProductToCart, cartProducts } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingBrand, setIsEditingBrand] = useState(false);
+  const [isEditingPrice, setIsEditingPrice] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [newDescription, setNewDescription] = useState(product.description);
   const [newName, setNewName] = useState(product.name);
   const [newBrand, setNewBrand] = useState(product.brand);
+  const [newPrice, setNewPrice] = useState(product.price);
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -130,6 +138,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     setIsEditingBrand(true);
   };
 
+  // handle edit for product price
+  const handleEditClickPrice = () => {
+    setIsEditingPrice(true);
+  };
+
   // Save edited product name
   const handleSaveClickName = async () => {
     setIsLoading(true);
@@ -184,7 +197,25 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
   };
 
-  //Toogle between Instock and out of stock
+  // Save edited product price
+  const handleSaveClickPrice = async () => {
+    setIsLoading(true);
+    try {
+      await axios.put(`/api/product/updateproductprice`, {
+        id: product.id,
+        price: newPrice,
+      });
+      toast.success("Price updated successfully");
+      setIsEditingPrice(false);
+      router.refresh(); // Reload the page after a successful update
+    } catch (error) {
+      toast.error("Failed to update price");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  //Toggle between In stock and out of stock
   const handleToggleStatus = useCallback(
     async (id: string, inStock: boolean) => {
       setIsLoading(true);
@@ -295,6 +326,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             {product.category}
           </div>
         </div>
+        {/* ///////////////////////////////////////////////////////////////////////////////////// */}
+        <Horizontal />
         <div>
           <span className="font-semibold">BRAND:</span>
           <div className="flex flex-row gap-2">
@@ -335,6 +368,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
               </TooltipProvider>
             )}
           </div>
+          {/* //////////////////////////////////////////////////////////////////////////////////// */}
+          <Horizontal />
         </div>
         <div className="flex flex-row items-center gap-3">
           <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
@@ -350,6 +385,50 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
             />
           )}
         </div>
+
+        <Horizontal />
+
+        {/* //////////////////////////////////////////////////////////////////////////////// */}
+
+        <div className="flex items-center gap-2 font-semibold text-slate-900">
+          {isEditingPrice ? (
+            <input
+              type="number"
+              className="w-24 border p-2"
+              value={newPrice}
+              onChange={(e) => setNewPrice(Number(e.target.value))}
+            />
+          ) : (
+            FormatPrice(product.price)
+          )}
+          {isEditingPrice ? (
+            <ButtonLoader
+              label={
+                isLoading ? <ScaleLoader color="#fff" height={15} /> : "Save"
+              }
+              onClick={handleSaveClickPrice}
+              disabled={isLoading}
+              small
+            />
+          ) : (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CiEdit
+                    size={24}
+                    className="cursor-pointer"
+                    onClick={handleEditClickPrice}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-900 text-white">
+                  <p>Edit Price</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
+
+        {/* //////////////////////////////////////////////////////////////////////////////// */}
 
         <Horizontal />
         {isProductInCart ? (
