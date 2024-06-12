@@ -33,12 +33,17 @@ export interface SelectedImgType {
 }
 
 const Horizontal = () => {
-  return <hr className="w-[30%] my-2" />;
+  return <hr className="my-2 w-[30%]" />;
 };
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const { handleAddProductToCart, cartProducts } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
+
+  const discountedPrice = product.discount
+    ? product.price * (1 - product.discount / 100)
+    : product.price;
+
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -47,19 +52,17 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     brand: product.brand,
     selectedImg: { ...product.images[0] },
     quantity: 1,
-    price: product.price,
+    price: discountedPrice,
   });
 
   const router = useRouter();
-
-  console.log(cartProducts);
 
   useEffect(() => {
     setIsProductInCart(false);
 
     if (cartProducts) {
       const existingIndex = cartProducts.findIndex(
-        (item) => item.id === product.id
+        (item) => item.id === product.id,
       );
       if (existingIndex > -1) {
         setIsProductInCart(true);
@@ -98,13 +101,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   }, [cartProduct]);
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="grid gap-12 sm:grid-cols-1 md:grid-cols-2">
       <ProductImage
         cartProduct={cartProduct}
         product={product}
         handleColorSelect={handleColorSelect}
       />
-      <div className="flex flex-col gap-1 text-slate-500 text-sm">
+      <div className="flex flex-col gap-1 text-sm text-slate-500">
         <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
         <div className="flex items-center gap-2">
           <Rating value={productRating} readOnly />
@@ -123,9 +126,25 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
           {product.inStock ? "in Stock ✅" : "out of Stock ❌"}
         </div>
         <Horizontal />
+        <div className="flex flex-col items-start gap-2">
+          {product.discount ? (
+            <div className="flex flex-col gap-1">
+              <span className="text-rose-500 line-through">
+                Ksh {product.price}
+              </span>
+              <span className="font-semibold text-black">
+                Ksh {discountedPrice.toFixed(2)}
+              </span>
+              <span className="text-green-500">({product.discount} % off)</span>
+            </div>
+          ) : (
+            <div className="font-semibold">{product.price} Ksh</div>
+          )}
+        </div>
+        <Horizontal />
         {isProductInCart ? (
           <>
-            <p className="mb-2 text-slate-500 flex items-center gap-1">
+            <p className="mb-2 flex items-center gap-1 text-slate-500">
               <MdCheckCircle className="text-teal-400" size={20} />
               <span>Product Added To Cart</span>
             </p>

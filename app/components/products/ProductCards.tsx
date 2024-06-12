@@ -17,15 +17,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
     data.reviews.reduce((acc: number, item: any) => item.rating + acc, 0) /
     data.reviews.length;
 
+  const discountedPrice = data.discount
+    ? data.price * (1 - data.discount / 100)
+    : data.price;
+
   return (
     <div
       onClick={() => router.push(`/product/${data.id}`)}
-      className="col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-sm p-2 transition hover:scale-105 text-center text-sm mt-12"
+      className="col-span-1 mt-12 cursor-pointer rounded-sm border-[1.2px] border-slate-200 bg-slate-50 p-2 text-center text-sm transition hover:scale-105"
     >
-      <div className="flex flex-col items-center w-full gap-1">
-        <div className="aspect-square overflow-hidden relative w-full">
+      <div className="flex w-full flex-col items-center gap-1">
+        <div className="relative aspect-square w-full overflow-hidden">
           <Image
-            className="w-full h-full object-contain"
+            className="h-full w-full object-contain"
             src={data.images[0].image}
             alt={data.name}
             width={200}
@@ -37,7 +41,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           <Rating value={productRating} readOnly />
         </div>
         <div>{data.reviews.length} reviews</div>
-        <div className="font-semibold">{FormatPrice(data.price)}</div>
+        {data.discount ? (
+          <div>
+            <div className="text-rose-500 line-through">
+              {FormatPrice(data.price)}
+            </div>
+            <div className="font-semibold text-black">
+              {FormatPrice(discountedPrice)}
+            </div>
+            <div className="text-green-500">({data.discount}% off)</div>
+          </div>
+        ) : (
+          <div className="font-semibold">{FormatPrice(data.price)}</div>
+        )}
       </div>
     </div>
   );

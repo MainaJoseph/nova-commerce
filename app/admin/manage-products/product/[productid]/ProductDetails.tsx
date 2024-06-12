@@ -62,12 +62,14 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingBrand, setIsEditingBrand] = useState(false);
   const [isEditingPrice, setIsEditingPrice] = useState(false);
+  const [isEditingDiscount, setIsEditingDiscount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [newDescription, setNewDescription] = useState(product.description);
   const [newName, setNewName] = useState(product.name);
   const [newBrand, setNewBrand] = useState(product.brand);
   const [newPrice, setNewPrice] = useState(product.price);
+  const [newDiscount, setNewDiscount] = useState(product.discount || 0);
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: product.id,
     name: product.name,
@@ -144,6 +146,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     setIsEditingPrice(true);
   };
 
+  // handle edit for product discount
+  const handleEditClickDiscount = () => {
+    setIsEditingDiscount(true);
+  };
+
   // Save edited product name
   const handleSaveClickName = async () => {
     setIsLoading(true);
@@ -216,7 +223,25 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
     }
   };
 
-  //Toggle between In stock and out of stock
+  // Save edited product discount
+  const handleSaveClickDiscount = async () => {
+    setIsLoading(true);
+    try {
+      await axios.put(`/api/product/updateproductdiscount`, {
+        id: product.id,
+        discount: newDiscount,
+      });
+      toast.success("Discount updated successfully");
+      setIsEditingDiscount(false);
+      router.refresh(); // Reload the page after a successful update
+    } catch (error) {
+      toast.error("Failed to update discount");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Toggle between In stock and out of stock
   const handleToggleStatus = useCallback(
     async (id: string, inStock: boolean) => {
       setIsPending(true);
@@ -432,6 +457,47 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         {/* //////////////////////////////////////////////////////////////////////////////// */}
 
         <Horizontal />
+
+        <div className="flex items-center gap-2 font-semibold text-slate-900">
+          {isEditingDiscount ? (
+            <input
+              type="number"
+              className="w-24 border p-2"
+              value={newDiscount}
+              onChange={(e) => setNewDiscount(Number(e.target.value))}
+            />
+          ) : (
+            `${product.discount}%`
+          )}
+          {isEditingDiscount ? (
+            <ButtonLoader
+              label={
+                isLoading ? <ScaleLoader color="#fff" height={15} /> : "Save"
+              }
+              onClick={handleSaveClickDiscount}
+              disabled={isLoading}
+              small
+            />
+          ) : (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <CiEdit
+                    size={24}
+                    className="cursor-pointer"
+                    onClick={handleEditClickDiscount}
+                  />
+                </TooltipTrigger>
+                <TooltipContent className="bg-slate-900 text-white">
+                  <p>Edit Discount</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </div>
+
+        <Horizontal />
+
         {isProductInCart ? (
           <>
             <p className="mb-2 flex items-center gap-1 text-slate-500">

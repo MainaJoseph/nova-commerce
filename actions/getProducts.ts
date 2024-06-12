@@ -8,11 +8,7 @@ export interface IProductParams {
 export default async function getProducts(params: IProductParams) {
   try {
     const { category, searchTerm } = params;
-    let searchString = searchTerm;
-
-    if (!searchTerm) {
-      searchString = "";
-    }
+    let searchString = searchTerm || "";
 
     let query: any = {};
 
@@ -29,6 +25,8 @@ export default async function getProducts(params: IProductParams) {
               contains: searchString,
               mode: "insensitive",
             },
+          },
+          {
             description: {
               contains: searchString,
               mode: "insensitive",
