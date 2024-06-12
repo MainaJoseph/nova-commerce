@@ -33,7 +33,7 @@ const SelectColor: React.FC<SelectColorProps> = ({
       setFile(value);
       addImageToState({ ...item, image: value });
     },
-    [addImageToState, item]
+    [addImageToState, item],
   );
 
   const handleCheck = useCallback(
@@ -45,12 +45,12 @@ const SelectColor: React.FC<SelectColorProps> = ({
         removeImageFromState(item);
       }
     },
-    [item, removeImageFromState]
+    [item, removeImageFromState],
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-auto border-b-[1.2px] border-slate-400 items-center p-2">
-      <div className="flex flex-row gap-2 items-center h-[70px]">
+    <div className="grid grid-cols-1 items-center overflow-y-auto border-b-[1.2px] border-slate-400 p-2 md:grid-cols-2">
+      <div className="flex h-[70px] flex-row items-center gap-2">
         <input
           id={item.color}
           type="checkbox"
@@ -58,7 +58,14 @@ const SelectColor: React.FC<SelectColorProps> = ({
           onChange={handleCheck}
           className="cursor-pointer"
         />
-        <label htmlFor={item.color} className="font-medium cursor-pointer ">
+        <label
+          htmlFor={item.color}
+          className="flex cursor-pointer items-center gap-2 font-medium"
+        >
+          <div
+            style={{ backgroundColor: item.colorCode }}
+            className="h-4 w-4 rounded-full border-[1px] border-slate-500"
+          ></div>
           {item.color}
         </label>
       </div>
@@ -69,7 +76,7 @@ const SelectColor: React.FC<SelectColorProps> = ({
           </div>
         )}
         {file && (
-          <div className="flex flex-row gap-2 text-sm col-span-2 items-center justify-between">
+          <div className="col-span-2 flex flex-row items-center justify-between gap-2 text-sm">
             <p>{file?.name}</p>
             <div className="w-[70px]">
               <Button

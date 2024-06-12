@@ -39,6 +39,11 @@ const AddProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState<ImageType[] | null>();
   const [isProductCreated, setIsProductCreated] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredColors = colors.filter((color) =>
+    color.color.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const {
     formState: { errors },
@@ -123,7 +128,7 @@ const AddProductForm = () => {
                       console.log("Error getting downloadable URL", error);
                       reject(error);
                     });
-                }
+                },
               );
             });
           }
@@ -162,7 +167,7 @@ const AddProductForm = () => {
         shouldTouch: true,
       });
     },
-    [setValue]
+    [setValue],
   );
 
   useEffect(() => {
@@ -191,7 +196,7 @@ const AddProductForm = () => {
     setImages((prev) => {
       if (prev) {
         const filteredImages = prev.filter(
-          (item) => item.color !== value.color
+          (item) => item.color !== value.color,
         );
         return filteredImages;
       }
@@ -201,16 +206,16 @@ const AddProductForm = () => {
 
   return (
     <>
-      <div className="space-y-4 w-full">
+      <div className="w-full space-y-4">
         {" "}
         {/* Add a container with spacing */}
-        <div className="flex gap-4 items-center justify-center">
+        <div className="flex items-center justify-center gap-4">
           {" "}
           {/* Add spacing to the heading and icon */}
           <Heading title="Add Product" center />
           <FcEngineering size={24} className="mt-0" />
         </div>
-        <hr className="bg-orange-500 w-full h-px" />
+        <hr className="h-px w-full bg-orange-500" />
         <Input
           id="name"
           label="Name"
@@ -251,9 +256,9 @@ const AddProductForm = () => {
         register={register}
         label="This Product Is In Stock"
       />
-      <div className="w-full font-medium mt-3">
-        <div className="mb-2 font-semibold mt-1 ">Select a Category</div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-[450px] overflow-y-auto">
+      <div className="mt-3 w-full font-medium">
+        <div className="mb-2 mt-1 font-semibold">Select a Category</div>
+        <div className="grid max-h-[450px] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-3">
           {Categories.map((item) => {
             if (item.label === "All") {
               return null;
@@ -272,28 +277,38 @@ const AddProductForm = () => {
           })}
         </div>
       </div>
-      <div className="w-full flex flex-col flex-wrap gap-4 mt-3 mb-3">
+      <div className="mb-3 mt-3 flex w-full flex-col flex-wrap gap-4">
         <div>
-          <div className="font-bold ">
+          <div className="font-bold">
             Select the available product colors and Upload their images
           </div>
           <div className="text-small">
             You must upload an image for each of the color selected otherwise
-            your color selection will be ingnored
+            your color selection will be ignored
           </div>
+          {/* // searchbar to search for the colors */}
+          <input
+            type="text"
+            placeholder="Search colors"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="mt-2 rounded border border-gray-300 p-2"
+          />
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          {colors.map((item, index) => {
-            return (
-              <SelectColor
-                key={index}
-                item={item}
-                addImageToState={addImageToState}
-                removeImageFromState={removeImageFromState}
-                isProductCreated={isProductCreated}
-              />
-            );
-          })}
+        <div className="max-h-[300px] overflow-y-auto">
+          <div className="grid grid-cols-2 gap-3">
+            {filteredColors.map((item, index) => {
+              return (
+                <SelectColor
+                  key={index}
+                  item={item}
+                  addImageToState={addImageToState}
+                  removeImageFromState={removeImageFromState}
+                  isProductCreated={isProductCreated}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
       <Button
