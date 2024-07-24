@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/tooltip";
 import Spinner from "@/app/components/Spinner";
 import Heading from "@/app/components/Heading";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -32,35 +33,41 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [rows, setRows] = useState<User[]>([]);
 
+  const router = useRouter();
+
   useEffect(() => {
     const filteredUsers = users.filter(
-      (user) => user.role === "ADMIN" || user.role === "AGENT"
+      (user) => user.role === "ADMIN" || user.role === "AGENT",
     );
     setRows(filteredUsers);
   }, [users]);
 
-  const updateUserRole = useCallback(async (id: string, role: string) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.put("/api/users/updateUserRole", {
-        id,
-        role,
-      });
-      const updatedUser = response.data;
-      setRows((prevRows) =>
-        prevRows.map((user) =>
-          user.id === updatedUser.id
-            ? { ...user, role: updatedUser.role }
-            : user
-        )
-      );
-      toast.success("User role changed successfully");
-    } catch (error) {
-      toast.error("Failed to change user role");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const updateUserRole = useCallback(
+    async (id: string, role: string) => {
+      setIsLoading(true);
+      try {
+        const response = await axios.put("/api/users/updateUserRole", {
+          id,
+          role,
+        });
+        const updatedUser = response.data;
+        setRows((prevRows) =>
+          prevRows.map((user) =>
+            user.id === updatedUser.id
+              ? { ...user, role: updatedUser.role }
+              : user,
+          ),
+        );
+        toast.success("User role changed successfully");
+        router.refresh();
+      } catch (error) {
+        toast.error("Failed to change user role");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [router],
+  );
 
   const deleteUser = async (userId: string) => {
     const isAdmin = rows.find((user) => user.id === userId)?.role === "ADMIN";
@@ -73,6 +80,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
       await axios.delete("/api/users/deleteUsers", { data: { id: userId } });
       setRows((prevRows) => prevRows.filter((user) => user.id !== userId));
       toast.success("User deleted successfully.");
+      router.refresh();
     } catch (error) {
       console.error("Error deleting user:", error);
       toast.error("Failed to delete user.");
@@ -111,7 +119,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
             bg = "bg-gray-400";
         }
         return (
-          <div className={`${bg} text-white text-center rounded-full p-1`}>
+          <div className={`${bg} rounded-full p-1 text-center text-white`}>
             {params.value}
           </div>
         );
@@ -124,16 +132,16 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
       renderCell: (params) => {
         return (
           <div>
-            <div className="flex justify-between gap-4 w-full">
+            <div className="flex w-full justify-between gap-4">
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
                     <button
                       onClick={() => updateUserRole(params.row.id, "ADMIN")}
                       disabled={isLoading || params.row.role === "ADMIN"}
-                      className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      className={`rounded-md border-[1px] border-slate-400 px-2 py-1 focus:outline-none ${
                         params.row.role === "ADMIN"
-                          ? "bg-none cursor-not-allowed text-slate-700 hover:border-rose-400 hover:text-rose-400"
+                          ? "cursor-not-allowed bg-none text-slate-700 hover:border-rose-400 hover:text-rose-400"
                           : "bg-none text-slate-700"
                       }`}
                     >
@@ -152,9 +160,9 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
                     <button
                       onClick={() => updateUserRole(params.row.id, "USER")}
                       disabled={isLoading || params.row.role === "USER"}
-                      className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      className={`rounded-md border-[1px] border-slate-400 px-2 py-1 focus:outline-none ${
                         params.row.role === "USER"
-                          ? "bg-none cursor-not-allowed text-teal-400"
+                          ? "cursor-not-allowed bg-none text-teal-400"
                           : "bg-none text-teal-400"
                       }`}
                     >
@@ -173,9 +181,9 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
                     <button
                       onClick={() => updateUserRole(params.row.id, "AGENT")}
                       disabled={isLoading || params.row.role === "AGENT"}
-                      className={`px-2 py-1 border-[1px] border-slate-400 rounded-md focus:outline-none ${
+                      className={`rounded-md border-[1px] border-slate-400 px-2 py-1 focus:outline-none ${
                         params.row.role === "AGENT"
-                          ? "bg-none cursor-not-allowed text-purple-500"
+                          ? "cursor-not-allowed bg-none text-purple-500"
                           : "bg-none text-purple-500"
                       }`}
                     >
@@ -194,7 +202,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
                     <button
                       onClick={() => deleteUser(params.row.id)}
                       disabled={isLoading}
-                      className="px-2 py-1 rounded-md border-[1px] border-slate-400 focus:outline-none"
+                      className="rounded-md border-[1px] border-slate-400 px-2 py-1 focus:outline-none"
                     >
                       <MdDelete size={21} />
                     </button>
@@ -212,7 +220,7 @@ const ManageUsersClient: React.FC<ManageUsersClientProps> = ({ users }) => {
   ];
 
   return (
-    <div className="max-w-[1250px] m-auto text-xl">
+    <div className="m-auto max-w-[1250px] text-xl">
       {isLoading && <Spinner />}
       <div className="mb-4 mt-4">
         <Heading title="Manage Users" center />
