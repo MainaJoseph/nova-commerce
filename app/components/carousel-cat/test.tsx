@@ -34,12 +34,13 @@ export function Mover() {
       "TVs & Audio",
       "Appliances",
       "Health and Beauty",
+      "Home and Office",
       "Fashion",
       "Computing",
       "Supermarket",
       "Sporting",
       "Automobile",
-      "Others",
+      "Other",
     ],
     [],
   );
@@ -56,7 +57,7 @@ export function Mover() {
       "Supermarket",
       "Sporting",
       "Automobile",
-      "Others",
+      "Other",
     ],
     [],
   );
@@ -109,93 +110,46 @@ export function Mover() {
     [router, params, cardCategories, cardTexts],
   );
 
-  const isLargeScreenCarousel = cardTexts.length > 6;
-
   return (
     <div className="relative mx-auto w-full max-w-screen-xl overflow-hidden">
       <Container>
-        {isLargeScreenCarousel ? (
-          <Carousel
-            opts={{ align: "start" }}
-            className="relative hidden w-full lg:block"
-          >
-            <CarouselContent style={{ borderRadius: "5px" }}>
-              {cardTexts.map((text, index) => (
-                <CarouselItem key={index} className="basis-1/6 p-1">
-                  <div
-                    className={`cursor-pointer ${cardColors[index]}`}
-                    style={{
-                      transition: "transform 0.3s",
-                      transform: "scale(1)",
-                    }}
-                    onClick={() => handleClick(text)}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.1)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  >
-                    <CardContent
-                      className="flex aspect-square items-center justify-center p-6"
-                      style={{ borderRadius: "5px" }}
-                    >
-                      <div
-                        className="relative h-full w-full overflow-hidden"
-                        style={{ borderRadius: "5px" }}
-                      >
-                        <Image
-                          src={cardImages[index]}
-                          alt={text}
-                          layout="fill"
-                          objectFit="cover"
-                        />
-                      </div>
-                    </CardContent>
-                  </div>
-                  <div className="py-2 text-center text-sm">{text}</div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 transform bg-slate-400 hover:bg-slate-200" />
-            <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 transform bg-slate-400 hover:bg-slate-200" />
-          </Carousel>
-        ) : (
-          <div className="hidden grid-cols-6 gap-4 lg:grid">
-            {cardTexts.map((text, index) => (
-              <div
-                key={index}
-                className={`cursor-pointer ${cardColors[index]} p-1`}
-                style={{
-                  transition: "transform 0.3s",
-                  transform: "scale(1)",
-                }}
-                onClick={() => handleClick(text)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.1)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
+        <div className="hidden grid-cols-6 gap-4 lg:grid">
+          {cardTexts.map((text, index) => (
+            <div
+              key={index}
+              className={`cursor-pointer ${cardColors[index]} p-1`}
+              style={{
+                transition: "transform 0.3s",
+                transform: "scale(1)",
+              }}
+              onClick={() => handleClick(text)}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.1)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
+            >
+              <CardContent
+                className="flex aspect-square items-center justify-center p-6"
+                style={{ borderRadius: "5px" }}
               >
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <div
-                    className="relative h-full w-full overflow-hidden"
-                    style={{ borderRadius: "5px" }}
-                  >
-                    <Image
-                      src={cardImages[index]}
-                      alt={text}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
-                </CardContent>
-                <div className="py-2 text-center text-sm">{text}</div>
-              </div>
-            ))}
-          </div>
-        )}
+                <div
+                  className="relative h-full w-full overflow-hidden"
+                  style={{ borderRadius: "5px" }}
+                >
+                  <Image
+                    src={cardImages[index]}
+                    alt={text}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+              </CardContent>
+              <div className="py-2 text-center text-sm">{text}</div>
+            </div>
+          ))}
+        </div>
 
         <Carousel
           opts={{ align: "start" }}
@@ -218,7 +172,10 @@ export function Mover() {
                     (e.currentTarget.style.transform = "scale(1)")
                   }
                 >
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <CardContent
+                    className="flex aspect-square items-center justify-center p-6"
+                    style={{ borderRadius: "5px" }}
+                  >
                     <div
                       className="relative h-full w-full overflow-hidden"
                       style={{ borderRadius: "5px" }}
