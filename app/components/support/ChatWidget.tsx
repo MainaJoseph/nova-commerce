@@ -371,7 +371,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ currentUser }) => {
                   </button>
                 </div>
                 <p className="mt-2 text-center text-xs text-gray-400">
-                  Powered by Nova Support
+                  Powered by Nova Support.
                 </p>
               </div>
             </>
