@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Rating } from "@mui/material";
 import SetColor from "@/app/components/products/SetColor";
 import Button from "@/app/components/Button";
-import ProductImage from "@/app/components/products/ProductImage";
 import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/tooltip";
 import ButtonLoader from "@/app/components/ButtonLoader";
 import { MdCached } from "react-icons/md";
+import ProductImage from "@/app/components/products/ProductImage";
 
 interface ProductDetailsProps {
   product: any;
@@ -265,6 +265,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         cartProduct={cartProduct}
         product={product}
         handleColorSelect={handleColorSelect}
+        handleQtyIncrease={handleQtyIncrease}
+        handleQtyDecrease={handleQtyDecrease}
+        handleAddProductToCart={handleAddProductToCart}
+        isProductInCart={isProductInCart}
       />
       <div className="flex flex-col gap-1 text-sm text-slate-500">
         <div className="flex flex-row gap-2">
