@@ -1,9 +1,18 @@
+"use client";
+
+import { SafeUser } from "@/types";
 import ProfileDropDownMenu from "./ProfileDropDownMenu";
 
-const ProfileDropDownMenuClient = () => {
+interface ProfileDropDownMenuClientProps {
+  currentUser: SafeUser | null;
+}
+
+const ProfileDropDownMenuClient: React.FC<ProfileDropDownMenuClientProps> = ({
+  currentUser,
+}) => {
   return (
     <div>
-      <ProfileDropDownMenu />
+      <ProfileDropDownMenu currentUser={currentUser} />
     </div>
   );
 };

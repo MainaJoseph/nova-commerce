@@ -39,7 +39,7 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
         },
         {
           skipNull: true,
-        }
+        },
       );
 
       router.push(url);
@@ -49,16 +49,22 @@ const CategoryNav: React.FC<CategoryNavProps> = ({
   return (
     <div
       onClick={handleClick}
-      className={`flex items-start justify-start  gap-1 p-2 border-b-2 hover:text-orange-500 transition cursor-pointer 
-    ${
-      selected
-        ? "border-b-orange-500 text-orange-500"
-        : "border-tranparent text-slate-500"
-    }
-    `}
+      className={`group relative flex cursor-pointer items-center justify-start gap-2 border-b-2 px-4 py-3 transition-all duration-300 hover:border-orange-400 hover:bg-orange-50 ${
+        selected
+          ? "border-orange-500 bg-orange-50 font-semibold text-orange-600"
+          : "border-transparent text-slate-600 hover:text-orange-500"
+      } `}
     >
-      <Icon size={20} />
-      <div className="font-medium text-sm">{label}</div>
+      <Icon
+        size={20}
+        className={`transition-transform duration-300 ${selected ? "scale-110" : "group-hover:scale-110"} `}
+      />
+      <div className="whitespace-nowrap text-sm font-medium">{label}</div>
+
+      {/* Active indicator dot */}
+      {selected && (
+        <div className="absolute bottom-0 left-4 mb-[-3px] h-1 w-1 rounded-full bg-orange-500" />
+      )}
     </div>
   );
 };

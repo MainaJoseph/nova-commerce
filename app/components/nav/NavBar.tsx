@@ -3,7 +3,6 @@ import Container from "../Container";
 import { Redressed } from "next/font/google";
 import { FcEngineering } from "react-icons/fc";
 import CartCount from "./CartCount";
-import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import CategoriesNav from "./CategoriesNav";
 import SearchBar from "../SearchBar";
@@ -26,22 +25,13 @@ const NavBar = async () => {
   };
 
   return (
-    <div
-      className="
-    sticky
-    top-0
-    w-full
-    bg-slate-200
-    z-30
-    shadow-sm
-    "
-    >
-      <div className="py-4 border-b-[1px]">
+    <div className="sticky top-0 z-30 w-full bg-slate-100 shadow-sm">
+      <div className="border-b-[1px] py-4">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
             <Link
               href="/"
-              className={`${redressed.className} font-bold text-3xl flex flex-row`}
+              className={`${redressed.className} flex flex-row text-3xl font-bold`}
             >
               Nova
               <span className="mt-2">
@@ -53,8 +43,7 @@ const NavBar = async () => {
             </div>
             <div className="flex items-center gap-6 md:gap-8">
               <CartCount />
-              <ProfileDropDownMenuClient />
-              <UserMenu currentUser={currentUser} />
+              <ProfileDropDownMenuClient currentUser={currentUser} />
             </div>
           </div>
         </Container>
