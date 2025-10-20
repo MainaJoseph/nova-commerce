@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Mover } from "../carousel-cat/Mover";
 import { Sparkles, TrendingUp, Package, LucideIcon } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -211,10 +210,6 @@ const Slider = () => {
           ))}
         </div>
       </Carousel>
-
-      <div className="mt-8 flex justify-center pl-5 lg:p-0">
-        <Mover />
-      </div>
     </div>
   );
 };
