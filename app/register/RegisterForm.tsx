@@ -5,7 +5,6 @@ import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "sonner";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SafeUser } from "@/types";
 import {
@@ -18,6 +17,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import EmailVerification from "./EmailVerification";
 
 interface RegisterFormProps {
   currentUser: SafeUser | null;
@@ -25,6 +26,10 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showVerification, setShowVerification] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState("");
+  const [registeredUserId, setRegisteredUserId] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -50,29 +55,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
     setIsLoading(true);
     axios
       .post("/api/register", data)
-      .then(() => {
-        toast.success("Account created successfully!", {
-          description: "Signing you in...",
-        });
-
-        signIn("credentials", {
-          email: data.email,
-          password: data.password,
-          redirect: false,
-        }).then((callback) => {
-          if (callback?.ok) {
-            toast.success("Welcome to Nova!", {
-              description: "You're all set to start shopping.",
-            });
-            router.replace("/cart");
-            router.refresh();
-          }
-          if (callback?.error) {
-            toast.error("Sign in failed", {
-              description: callback.error,
-            });
-          }
-        });
+      .then((response) => {
+        if (response.data.requiresVerification) {
+          toast.success("Account created!", {
+            description: "Please check your email for the verification code.",
+          });
+          setRegisteredEmail(data.email);
+          setRegisteredUserId(response.data.userId);
+          setShowVerification(true);
+        }
       })
       .catch((error) => {
         toast.error("Registration failed", {
@@ -103,6 +94,16 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
           <p className="text-sm text-gray-500">Redirecting you...</p>
         </div>
       </div>
+    );
+  }
+
+  if (showVerification) {
+    return (
+      <EmailVerification
+        email={registeredEmail}
+        userId={registeredUserId}
+        onBack={() => setShowVerification(false)}
+      />
     );
   }
 

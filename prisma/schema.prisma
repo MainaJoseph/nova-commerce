@@ -4,12 +4,12 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Account {
-  id                 String @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String @db.ObjectId
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
   type               String
   provider           String
   providerAccountId  String
@@ -25,18 +25,19 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
+
 model User {
-  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
   name               String?
-  email              String? @unique
+  email              String?         @unique
   emailVerified      DateTime?
   image              String?
   hashedPassword     String?
-  active             Boolean @default(false)
-  createdAt          DateTime? @default(now())
-  updatedAt          DateTime? @updatedAt @default(now())
-  role               Role @default(USER)
-  lastUsernameChange DateTime? @default(now())
+  active             Boolean         @default(false)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt @default(now())
+  role               Role            @default(USER)
+  lastUsernameChange DateTime?       @default(now())
   accounts           Account[]
   orders             Order[]
   reviews            Review[]
@@ -46,102 +47,100 @@ model User {
 }
 
 model ActivateToken {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  token       String @unique
-  activateAt  DateTime?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt @default(now())
-  user        User @relation(fields: [userId], references: [id])
-  userId      String @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  token      String    @unique
+  activateAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt @default(now())
+  expiresAt  DateTime
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String    @db.ObjectId
 }
 
 model Product {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  description  String
-  price        Float
-  discount     Float? 
-  brand        String
-  category     String
-  inStock      Boolean
-  images       Image[]
-  reviews      Review[]
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  price       Float
+  discount    Float?
+  brand       String
+  category    String
+  inStock     Boolean
+  images      Image[]
+  reviews     Review[]
 }
 
 model Review {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId       String  @db.ObjectId
-  productId    String  @db.ObjectId
-  rating       Int
-  comment      String
-  createdDate  DateTime @default(now())
-  pinned       Boolean  @default(false)
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  productId   String   @db.ObjectId
+  rating      Int
+  comment     String
+  createdDate DateTime @default(now())
+  pinned      Boolean  @default(false)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Order {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  userId   String @db.ObjectId
-  amount   Float
-  currency String
-  status   String
-  deliveryStatus String?
-  createdDate    DateTime @default(now())
-  paymentIntentId  String @unique
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String            @db.ObjectId
+  amount           Float
+  currency         String
+  status           String
+  deliveryStatus   String?
+  createdDate      DateTime          @default(now())
+  paymentIntentId  String            @unique
   products         CartProductType[]
   address          Address?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
-
 model ChatMessage {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  sender     String
-  text       String
-  type       String
-  timestamp  String
-  createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id])
-  sessionId  String   @db.ObjectId
-  session    ChatSession @relation(fields: [sessionId], references: [id])
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String      @db.ObjectId
+  sender    String
+  text      String
+  type      String
+  timestamp String
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String      @db.ObjectId
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }
 
 model ChatSession {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String     @db.ObjectId
-  createdAt  DateTime   @default(now())
-  messages   ChatMessage[]
-  user       User       @relation(fields: [userId], references: [id])
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String        @db.ObjectId
+  createdAt DateTime      @default(now())
+  messages  ChatMessage[]
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 type CartProductType {
-  id String
-  name String
+  id          String
+  name        String
   description String
-  category String
-  brand String
+  category    String
+  brand       String
   selectedImg Image
-  quantity Int
-  price Float
+  quantity    Int
+  price       Float
 }
 
 type Image {
-  color String
+  color     String
   colorCode String
-  image String
+  image     String
 }
 
 type Address {
-  city String
-  country String
-  line1 String
-  line2 String?
+  city        String
+  country     String
+  line1       String
+  line2       String?
   postal_code String
-  state String
+  state       String
 }
 
 enum Role {
