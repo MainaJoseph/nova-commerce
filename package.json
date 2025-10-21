@@ -79,6 +79,7 @@
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.3",
     "slick-carousel": "^1.8.1",
+    "sonner": "^2.0.7",
     "stripe": "^14.4.0",
     "swiper": "^11.1.0",
     "tailwind-merge": "^2.2.1",

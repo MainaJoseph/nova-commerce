@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 type cartContextType = {
   cartTotalQty: number;
@@ -32,7 +32,7 @@ interface Props {
 export const CartContextProvider = (props: Props) => {
   const [cartTotalQty, setCartTotalQty] = useState(0);
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
-    null
+    null,
   );
   const [cartTotalAmount, setCartTotalAmount] = useState(0);
   const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
@@ -61,7 +61,7 @@ export const CartContextProvider = (props: Props) => {
 
             return acc;
           },
-          { total: 0, qty: 0 }
+          { total: 0, qty: 0 },
         );
         setCartTotalQty(qty);
         setCartTotalAmount(total);
@@ -102,7 +102,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("novaItems", JSON.stringify(filteredProducts));
       }
     },
-    [cartProducts]
+    [cartProducts],
   );
 
   const handleCartQtyIncrease = useCallback(
@@ -115,7 +115,7 @@ export const CartContextProvider = (props: Props) => {
         updatedCart = [...cartProducts];
 
         const existingIndex = cartProducts.findIndex(
-          (item) => item.id === product.id
+          (item) => item.id === product.id,
         );
         if (existingIndex > -1) {
           updatedCart[existingIndex].quantity = ++updatedCart[existingIndex]
@@ -125,7 +125,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("novaItems", JSON.stringify(updatedCart));
       }
     },
-    [cartProducts]
+    [cartProducts],
   );
 
   const handleCartQtyDecrease = useCallback(
@@ -138,7 +138,7 @@ export const CartContextProvider = (props: Props) => {
         updatedCart = [...cartProducts];
 
         const existingIndex = cartProducts.findIndex(
-          (item) => item.id === product.id
+          (item) => item.id === product.id,
         );
         if (existingIndex > -1) {
           updatedCart[existingIndex].quantity = --updatedCart[existingIndex]
@@ -148,7 +148,7 @@ export const CartContextProvider = (props: Props) => {
         localStorage.setItem("novaItems", JSON.stringify(updatedCart));
       }
     },
-    [cartProducts]
+    [cartProducts],
   );
 
   const handleClearCart = useCallback(() => {
@@ -169,7 +169,7 @@ export const CartContextProvider = (props: Props) => {
       setPaymentIntent(val);
       localStorage.setItem("novaPaymentIntent", JSON.stringify(val));
     },
-    [paymentIntent]
+    [paymentIntent],
   );
 
   const value = {

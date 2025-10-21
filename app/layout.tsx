@@ -5,8 +5,7 @@ import NavBar from "./components/nav/NavBar";
 import Footer from "./components/footer/Footer";
 import Navy from "./components/navy/Navy";
 import CartProvider from "@/providers/CartProvider";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "sonner";
 import SignUpNav from "./components/nav/SignUpNav";
 
 import { getCurrentUser } from "@/actions/getCurrentUser";
@@ -33,13 +32,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} text-slate-700`}>
-        <ToastContainer
-          position="top-center"
-          className="mr-6"
-          autoClose={3000}
-          theme="dark"
-          closeOnClick
-        />
+        <Toaster position="top-right" theme="light" richColors />
 
         <CartProvider>
           <div className="flex min-h-screen flex-col">
