@@ -77,7 +77,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
           <span className="text-sm font-medium text-gray-500 md:hidden">
             Price:
           </span>
-          <span className="whitespace-nowrap text-base font-semibold text-gray-900 md:text-lg">
+          <span className="whitespace-nowrap text-base font-semibold text-gray-900 md:text-sm">
             {FormatPrice(item.price)}
           </span>
         </div>
@@ -112,7 +112,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
             <span className="text-sm font-medium text-gray-500 md:hidden">
               Total:
             </span>
-            <span className="whitespace-nowrap text-lg font-bold text-orange-600 md:text-xl">
+            <span className="whitespace-nowrap text-sm font-bold text-orange-600 md:text-sm">
               {FormatPrice(item.price * item.quantity)}
             </span>
           </div>
