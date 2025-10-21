@@ -1,456 +1,279 @@
 import Link from "next/link";
 import Container from "../Container";
-import FooterList from "./FooterList";
-import FooterListCol from "./FooterListCol";
-import { RiVisaLine, RiTwitterXFill } from "react-icons/ri";
-import { GiReceiveMoney } from "react-icons/gi";
-import { FaCcMastercard } from "react-icons/fa";
-import { FiFacebook } from "react-icons/fi";
-import { AiFillInstagram, AiFillYoutube, AiOutlineSlack } from "react-icons/ai";
+import {
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+  CreditCard,
+  Smartphone,
+  Wallet,
+} from "lucide-react";
+import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer
-      className="bg-slate-700 text-slate-200 text-xs mt-0"
-      style={{ fontSize: "11px" }}
-    >
+    <footer className="bg-gray-900 text-gray-300">
       <Container>
-        <div className="flex flex-row justify-between pt-16 pb-8 ">
-          <FooterList>
-            <h3 className="font-bold mb-2 text-sm">Need Help?</h3>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Chat with Us
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Help Center
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Contact Us
-            </Link>
-
-            <h3 className="text-sm font-bold mb-2 mt-2">USEFUL LINKS</h3>
-            <Link href="#" className="hover:underline">
-              Track Your Order{" "}
-            </Link>
-            <Link href="#" className="hover:underline">
-              Shipping and delivery
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Return Policy
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              How to Order?
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Dispute Resolution Policy
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Corporate and Bulk Purchase
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Advertise with Nova
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Report a Product
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Nova Payment Information Guidelines
-            </Link>
-          </FooterList>
-          <FooterList>
-            <h3 className="text-sm font-bold mb-2">About Nova</h3>
-            <Link href="#" className="hover:underline">
-              {" "}
-              About us
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Returns and Refunds Policy
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Nova Careers
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Nova Express
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Terms and Conditions
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Store Credit Terms and Conditions
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Privacy Notice
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Cookies Notice
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Flash Sales
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Black Friday 2023
-            </Link>
-          </FooterList>
-
-          <FooterList>
-            <h3 className="text-sm font-bold mb-2">Make Money with Nova</h3>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Sell on Nova
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Vendor Hub
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Become a Sales Consultant
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Become a Logistics Service Partner
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Nova City Partner Program
-            </Link>
-
-            <p className="mt-4 hover:text-orange-500 sm:hidden md:block">
-              &copy; {new Date().getFullYear()} Nova. All rights reserved
+        {/* Main Footer Content */}
+        <div className="grid gap-8 py-16 md:grid-cols-2 lg:grid-cols-4">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <h3 className="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-2xl font-bold text-transparent">
+              Nova
+            </h3>
+            <p className="text-sm leading-relaxed">
+              Your trusted online shopping destination. Shop the latest products
+              with fast delivery and excellent customer service.
             </p>
-          </FooterList>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-orange-400" />
+                <span>info@nova.com</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-orange-400" />
+                <span>+254 XXX XXX XXX</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-orange-400" />
+                <span>Nairobi, Kenya</span>
+              </div>
+            </div>
+          </div>
 
-          <FooterListCol>
-            <h3 className="text-sm font-bold mb-2 ">NOVA INTERNATIONAL</h3>
-            <div className="flex flex-wrap">
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Algeria
+          {/* Quick Links */}
+          <div>
+            <h4 className="mb-4 text-lg font-semibold text-white">
+              Quick Links
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  About Us
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Tanzania
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Contact Us
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Uganda
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Track Order
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Tunisia
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Shipping Info
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Morocco
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Returns Policy
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Ivory Coast
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Help Center
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Zando
+              </li>
+            </ul>
+          </div>
+
+          {/* Customer Service */}
+          <div>
+            <h4 className="mb-4 text-lg font-semibold text-white">
+              Customer Service
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  FAQ
                 </Link>
-              </div>
-              <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 mb-2">
-                <Link href="#" className="hover:underline">
-                  Sudan
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#"
+                  className="transition-colors hover:text-orange-400"
+                >
+                  Dispute Resolution
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Download & Social */}
+          <div className="space-y-6">
+            <div>
+              <h4 className="mb-4 text-lg font-semibold text-white">
+                Download App
+              </h4>
+              <div className="space-y-3">
+                <Link
+                  href="#"
+                  className="flex items-center gap-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 transition-all hover:border-orange-500 hover:bg-gray-700"
+                >
+                  <Smartphone className="h-6 w-6 text-orange-400" />
+                  <div>
+                    <div className="text-xs">Get it on</div>
+                    <div className="text-sm font-semibold text-white">
+                      Google Play
+                    </div>
+                  </div>
+                </Link>
+                <Link
+                  href="#"
+                  className="flex items-center gap-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-2 transition-all hover:border-orange-500 hover:bg-gray-700"
+                >
+                  <Smartphone className="h-6 w-6 text-orange-400" />
+                  <div>
+                    <div className="text-xs">Download on</div>
+                    <div className="text-sm font-semibold text-white">
+                      App Store
+                    </div>
+                  </div>
                 </Link>
               </div>
             </div>
-          </FooterListCol>
+
+            <div>
+              <h4 className="mb-4 text-lg font-semibold text-white">
+                Follow Us
+              </h4>
+              <div className="flex gap-3">
+                <Link
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition-all hover:bg-orange-500"
+                >
+                  <Facebook className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition-all hover:bg-orange-500"
+                >
+                  <Twitter className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition-all hover:bg-orange-500"
+                >
+                  <Instagram className="h-5 w-5" />
+                </Link>
+                <Link
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 transition-all hover:bg-orange-500"
+                >
+                  <Youtube className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* lower div */}
-
-        <div className="flex flex-row  justify-between   pt-0 pb-8 ">
-          <FooterList>
-            <h3 className="text-sm font-bold mb-2">Join Us</h3>
-            <div className="flex gap-3">
-              <Link href="#">
-                <FiFacebook size={19} className="mt-1 hover:text-orange-500" />
-              </Link>
-              <Link href="#">
-                <RiTwitterXFill
-                  size={19}
-                  className="mt-1 hover:text-orange-500"
-                />
-              </Link>
-              <Link href="#" className="hover:text-orange-500">
-                <AiFillInstagram size={24} />
-              </Link>
-              <Link href="#" className="hover:text-orange-500">
-                <AiFillYoutube size={24} />
-              </Link>
+        {/* Payment Methods */}
+        <div className="border-t border-gray-800 py-8">
+          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+            <div className="flex items-center gap-2 text-sm">
+              <CreditCard className="h-5 w-5 text-orange-400" />
+              <span className="font-semibold text-white">We Accept:</span>
             </div>
-          </FooterList>
+            <div className="flex items-center gap-4">
+              <FaCcVisa className="h-8 w-12 text-gray-400 transition-colors hover:text-white" />
+              <FaCcMastercard className="h-8 w-12 text-gray-400 transition-colors hover:text-white" />
+              <div className="flex h-8 w-12 items-center justify-center rounded bg-green-600 transition-colors hover:bg-green-500">
+                <span className="text-xs font-bold text-white">M-PESA</span>
+              </div>
+              <div className="flex items-center gap-1 rounded bg-gray-800 px-3 py-1">
+                <span className="text-xs font-semibold text-orange-400">
+                  Nova
+                </span>
+                <Wallet className="h-3 w-3 text-orange-400" />
+                <span className="text-xs text-gray-400">Pay</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <FooterList>
-            <h3 className="text-sm font-bold mb-2">Payment Methods</h3>
-            <div className="flex gap-3 ">
-              <Link href="#">
-                <GiReceiveMoney size={24} className="hover:text-orange-500" />
-              </Link>
-              <Link href="#">
-                <RiVisaLine size={24} className="hover:text-orange-500" />
-              </Link>
-              <Link href="#">
-                <FaCcMastercard size={24} className="hover:text-orange-500" />
-              </Link>
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 py-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
+            <p className="text-center text-gray-400">
+              © {currentYear} Nova. All rights reserved.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="#"
-                style={{ fontSize: "12px" }}
-                className="mt-1 flex flex-row hover:text-orange-500"
+                className="transition-colors hover:text-orange-400"
               >
-                Nova <AiOutlineSlack size={19} /> Pay
+                Privacy
+              </Link>
+              <span className="text-gray-700">|</span>
+              <Link
+                href="#"
+                className="transition-colors hover:text-orange-400"
+              >
+                Terms
+              </Link>
+              <span className="text-gray-700">|</span>
+              <Link
+                href="#"
+                className="transition-colors hover:text-orange-400"
+              >
+                Sitemap
               </Link>
             </div>
-          </FooterList>
-
-          {/* ..................................................................  for Formating*/}
-          <FooterList>
-            <div className="flex gap-2"></div>
-          </FooterList>
-          <FooterList>
-            <div className="flex gap-2">
-              <p className="mt-4 hover:text-orange-500 md:hidden">
-                &copy; {new Date().getFullYear()} Nova. All rights reserved
-              </p>
-            </div>
-          </FooterList>
-
-          {/* ............................................................................ end*/}
-        </div>
-
-        <div className="flex flex-row  justify-between   pt-0 pb-8 ">
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Adidas
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              AILYONS
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Apple
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Asus
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Bruhm
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Canon
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Cantu
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Coke
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Dell
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Dove
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Dr.Rashel
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Epson
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Garnier
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Hisense
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              HP
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Infinix
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              itel
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Jameson
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              L Oréal Paris
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Lenovo
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Logitech
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Maybeline
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Mika
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              NIVEA
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Nunix
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Oppo
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Ramtons
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Roch
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Samsung
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Sandisk
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Skyworth
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Sony
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              TCL
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Tecno
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Transcend
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Tusker
-            </Link>
-          </FooterList>
-          <FooterList>
-            <Link href="#" className="hover:underline">
-              {" "}
-              USN
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Vision Plus
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              Vitron
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              VON
-            </Link>
-            <Link href="#" className="hover:underline">
-              {" "}
-              XIAOMI
-            </Link>
-          </FooterList>
-        </div>
-
-        <div className="border-b border-gray-300 my-1"></div>
-
-        <div className="flex flex-row justify-center pt-3 pb-8 gap-6 ">
-          <Link
-            href="#"
-            style={{ fontSize: "13px" }}
-            className=" flex flex-row hover:text-sky-600"
-          >
-            <AiOutlineSlack size={23} />
-            <span className="mt-1">Party</span>
-          </Link>
-
-          <Link
-            href="#"
-            style={{ fontSize: "13px" }}
-            className=" flex flex-row hover:text-orange-500"
-          >
-            <span className="mt-1">Nova</span>
-            <AiOutlineSlack size={23} />
-            <span className="mt-1">Pay</span>
-          </Link>
+          </div>
         </div>
       </Container>
     </footer>

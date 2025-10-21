@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import NavBar from "./components/nav/NavBar";
 import Footer from "./components/footer/Footer";
-import Navy from "./components/navy/Navy";
 import CartProvider from "@/providers/CartProvider";
 import { Toaster } from "sonner";
 import SignUpNav from "./components/nav/SignUpNav";
@@ -44,7 +43,6 @@ export default async function RootLayout({
             </main>
             <Frequents />
             <Playstore />
-            <Navy />
             <Footer />
             <ChatWidget currentUser={currentUser} />
           </div>
